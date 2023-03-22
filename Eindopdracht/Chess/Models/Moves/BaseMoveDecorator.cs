@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Chess.Models.Movess
+namespace Chess.Models.Moves
 {
     public class BaseMoveDecorator
     {

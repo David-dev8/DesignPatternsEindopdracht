@@ -1,4 +1,5 @@
-﻿using Chess.Models.Movesment;
+using Chess.Models.Games;
+using Chess.Models.Movesment;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,15 @@ namespace Chess.Models.Pieces
 {
     public class Piece
     {
-        public string Name { get; set; }
+        public MovementPattern Movement { get; set; }
         public Color Color { get; set; }
+        public Square Square { get; set; }
+
+        public Piece(Color color, MovementPattern movementPattern) 
+        {
+            Color = color;
+            Movement = movementPattern;
+            Square = null;
+        }
     }
 }
