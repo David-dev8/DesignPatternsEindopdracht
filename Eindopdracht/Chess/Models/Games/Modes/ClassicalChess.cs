@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Chess.Models.Game.Modes
+namespace Chess.Models.Games.Modes
 {
     public class ClassicalChess
     {

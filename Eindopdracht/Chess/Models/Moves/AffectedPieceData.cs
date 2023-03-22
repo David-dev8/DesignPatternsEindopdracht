@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Chess.Models.Game.Modes
+namespace Chess.Models.Moves
 {
-    public class AtomicChess
+    public class AffectedPieceData
     {
     }
 }

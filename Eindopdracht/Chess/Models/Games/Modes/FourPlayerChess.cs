@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Chess.Models.Piece
+namespace Chess.Models.Games.Modes
 {
-    public class AtomicPieceFactory
+    public class FourPlayerChess
     {
     }
 }

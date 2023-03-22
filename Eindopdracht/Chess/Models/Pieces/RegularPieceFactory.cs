@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Chess.Models.Move
+namespace Chess.Models.Pieces
 {
-    public class ExplosiveMoveFactory
+    public class RegularPieceFactory
     {
     }
 }

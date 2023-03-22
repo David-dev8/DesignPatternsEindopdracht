@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Chess.Models.Move
+namespace Chess.Models.Moves
 {
-    public class MoveFactory
+    public enum MoveOptions
     {
+        PROMOTION,
+        CASTLING
     }
 }
