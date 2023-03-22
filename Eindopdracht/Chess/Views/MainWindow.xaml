@@ -12,6 +12,9 @@
             <DataTemplate DataType="{x:Type viewmodels:GameModeSelectViewModel}">
                 <local:GameModeSelectView />
             </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodels:GameViewModel}">
+                <local:GameView />
+            </DataTemplate>
         </Grid.Resources>
         <Frame Content="{Binding CurrentViewModel}" />
     </Grid>
