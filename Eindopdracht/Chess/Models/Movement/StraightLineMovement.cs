@@ -1,4 +1,5 @@
 ﻿using Chess.Models.Games;
+using Chess.Models.Movement;
 using Chess.Models.Moves;
 using Chess.Models.Pieces;
 using System;
@@ -8,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 
-namespace Chess.Models.Movesment
+namespace Chess.Models.Movement
 {
     public class StraightLineMovement : ContinuousMovement
     {

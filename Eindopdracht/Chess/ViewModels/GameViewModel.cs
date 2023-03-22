@@ -14,11 +14,11 @@ namespace Chess.ViewModels
     public class GameViewModel : BaseViewModel
     {
         private Square _selectedSquare;
+        private IList<Move> _activeMoves;
 
         public Game Game { get; set; }
         public ICommand UndoMoveCommand { get; set; }
         public ICommand QuitCommand { get; set; }
-        public ObservableCollection<Move> ActiveMoves { get; } = new ObservableCollection<Move>();
         public Square SelectedSquare
         {
             get
@@ -28,22 +28,19 @@ namespace Chess.ViewModels
             set
             {
                 _selectedSquare = value;
-
-                Move selectedMove = ActiveMoves.FirstOrDefault(activeMove => activeMove.Destination == _selectedSquare);
-                if(selectedMove != null)
-                {
-                    // Selected a possible move, execute the move
-                    Game.MakeMove(selectedMove);
-                    ActiveMoves.Clear();
-                }
-                // Does the selected square have a piece from the current player?
-                else if(_selectedSquare.Piece.Color == Game.CurrentPlayer.Color) 
-                {
-                    // Generate possible moves
-                    ActiveMoves.Clear();
-                    ActiveMoves.Add(_selectedSquare.Piece.MovementPattern); // TODO
-                }
-
+                NotifyPropertyChanged();
+                DetermineActiveMoves();
+            }
+        }
+        public IList<Move> ActiveMoves
+        {
+            get
+            {
+                return _activeMoves;
+            }
+            set
+            {
+                _activeMoves = value;
                 NotifyPropertyChanged();
             }
         }
@@ -53,6 +50,7 @@ namespace Chess.ViewModels
             Game = game;
             UndoMoveCommand = new RelayCommand(UndoMove);
             QuitCommand = new RelayCommand(Quit);
+            ActiveMoves = new List<Move>();
         }
 
         private void UndoMove()
@@ -63,6 +61,26 @@ namespace Chess.ViewModels
         private void Quit()
         {
 
+        }
+
+        private void DetermineActiveMoves()
+        {
+            ActiveMoves = new List<Move>();
+            if(_selectedSquare?.Piece != null)
+            {
+                Move selectedMove = ActiveMoves.FirstOrDefault(activeMove => activeMove.Destination == _selectedSquare);
+                if(selectedMove != null)
+                {
+                    // Selected a possible move, execute the move
+                    Game.MakeMove(selectedMove);
+                }
+                // Does the selected square have a piece from the current player?
+                else if(_selectedSquare.Piece.Color == Game.CurrentPlayer.Color)
+                {
+                    // Generate possible moves
+                    ActiveMoves = new List<Move>() { new Move() { Destination = Game.Squares[0][0] } }; // TODO
+                }
+            }
         }
     }
 }

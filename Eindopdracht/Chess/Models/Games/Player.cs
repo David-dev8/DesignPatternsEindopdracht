@@ -9,6 +9,7 @@ namespace Chess.Models.Games
 {
     public class Player
     {
+        public string Name { get; set; } = "Harold";
         public Color Color { get; set; }
     }
 }

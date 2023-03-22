@@ -10,7 +10,13 @@
         <ResourceDictionary Source="../ResourceDictionaries/GameViewResources.xaml" />
     </UserControl.Resources>
     <Grid>
-        <ListView Height="400" Width="400" BorderThickness="0" ItemsSource="{Binding Game.Squares,Converter={StaticResource CollectionFlattenConverter}}"
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <ListView Grid.Column="0" BorderThickness="0" 
+                  ItemsSource="{Binding Game.Squares,Converter={StaticResource CollectionFlattenConverter}}"
+                  Height="Auto" Width="{Binding ActualHeight, RelativeSource={RelativeSource Self}}"
                   SelectedItem="{Binding SelectedSquare,Mode=TwoWay}">
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
@@ -26,7 +32,17 @@
                                     <Trigger Property="IsSelected" Value="True">
                                         <Setter TargetName="Border" Property="BorderBrush" Value="Black"/>
                                         <Setter TargetName="Border" Property="BorderThickness" Value="1"/>
+                                        <Setter TargetName="Border" Property="Opacity" Value="0.5"/>
                                     </Trigger>
+                                    <DataTrigger Value="True">
+                                        <DataTrigger.Binding>
+                                            <MultiBinding Converter="{StaticResource IsSquareContainedInMovesConverter}">
+                                                <Binding Path="." />
+                                                <Binding Path="DataContext.ActiveMoves" RelativeSource="{RelativeSource AncestorType=ListView}" />
+                                            </MultiBinding>
+                                        </DataTrigger.Binding>
+                                        <Setter Property="Background" Value="Red" />
+                                    </DataTrigger>
                                 </ControlTemplate.Triggers>
                             </ControlTemplate>
                         </Setter.Value>
@@ -44,5 +60,15 @@
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ListView>
+        <StackPanel Grid.Column="1">
+            <TextBlock>Players</TextBlock>
+            <ItemsControl ItemsSource="{Binding Game.Players}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Name}" />
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </StackPanel>
     </Grid>
 </UserControl>

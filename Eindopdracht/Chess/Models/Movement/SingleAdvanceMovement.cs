@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Chess.Models.Movesment
+namespace Chess.Models.Movement
 {
     public class SingleAdvanceMovement : MovementPattern
     {

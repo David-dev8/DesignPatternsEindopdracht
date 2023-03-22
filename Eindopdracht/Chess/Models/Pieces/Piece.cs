@@ -1,5 +1,5 @@
 using Chess.Models.Games;
-using Chess.Models.Movesment;
+using Chess.Models.Movement;
 using System;
 using System.Collections.Generic;
 using System.Linq;

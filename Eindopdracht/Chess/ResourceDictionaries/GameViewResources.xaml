@@ -3,4 +3,5 @@
                     xmlns:converters="clr-namespace:Chess.Converters">
     <converters:ArrayFlattenConverter x:Key="CollectionFlattenConverter" />
     <converters:DiagonalAlternationToBrushConverter x:Key="AlternationBrushConverter" />
+    <converters:IsSquareContainedInMovesConverter x:Key="IsSquareContainedInMovesConverter" />
 </ResourceDictionary>
