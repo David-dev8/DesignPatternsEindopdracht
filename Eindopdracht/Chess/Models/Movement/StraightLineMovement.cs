@@ -25,7 +25,7 @@ namespace Chess.Models.Movement
             possibleMoves.AddRange(GetPossibleMovesForSpecificDirection(grid, currentSquare, currentLocation, -1, 0));
             possibleMoves.AddRange(GetPossibleMovesForSpecificDirection(grid, currentSquare, currentLocation, 1, 0));
             possibleMoves.AddRange(GetPossibleMovesForSpecificDirection(grid, currentSquare, currentLocation, 0, -1));
-            possibleMoves.AddRange(GetPossibleMovesForSpecificDirection(grid, currentSquare, currentLocation, 0, 1));
+            possibleMoves.AddRange(GetPossibleMovesForSpecificDirection(grid, currentSquare, currentLocation, 0, 1)); // TODO met array
 
             return possibleMoves;
         }

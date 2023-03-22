@@ -21,7 +21,7 @@ namespace Chess.Models.Movement
             Square currentSquare = piece.Square;
             Location currentLocation = GetCurrentLocation(grid, currentSquare);
 
-            possibleMoves.AddRange(GetPossibleMovesForSpecificDirection(grid, currentSquare, currentLocation, -1, -1));
+            possibleMoves.AddRange(GetPossibleMovesForSpecificDirection(grid, currentSquare, currentLocation, -1, -1)); // TODO array
             possibleMoves.AddRange(GetPossibleMovesForSpecificDirection(grid, currentSquare, currentLocation, -1, 1));
             possibleMoves.AddRange(GetPossibleMovesForSpecificDirection(grid, currentSquare, currentLocation, 1, -1));
             possibleMoves.AddRange(GetPossibleMovesForSpecificDirection(grid, currentSquare, currentLocation, 1, 1));

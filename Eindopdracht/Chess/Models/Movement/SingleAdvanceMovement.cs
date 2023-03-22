@@ -17,29 +17,44 @@ namespace Chess.Models.Movement
 
         public override IEnumerable<Move> GetPossibleMoves(Piece piece, Square[][] grid)
         {
-            List<Move> possibleMoves = new List<Move>();
+            IList<Move> possibleMoves = new List<Move>();
             Square currentSquare = piece.Square;
             Location currentLocation = GetCurrentLocation(grid, currentSquare);
 
-            Square upperAdjacentSquare = grid[currentLocation.Row + 1][currentLocation.Column];
-            if(!upperAdjacentSquare.IsOccupied())
+            Square upperAdjacentSquare = GetDestination(grid, currentLocation, 1, 0); // TODO opties voor promotion
+            if(upperAdjacentSquare != null && !upperAdjacentSquare.IsOccupied())
             {
                 possibleMoves.Add(moveFactory.CreateMove(currentSquare, upperAdjacentSquare));
             }
 
+
+            // TODO mustOccupied
+
             Square leftUpperAdjacentSquare = grid[currentLocation.Row + 1][currentLocation.Column - 1];
-            if (upperAdjacentSquare.IsOccupied())
+            if (leftUpperAdjacentSquare.IsOccupied())
             {
                 possibleMoves.Add(moveFactory.CreateMove(currentSquare, leftUpperAdjacentSquare));
             }
 
             Square rightUpperAdjacentSquare = grid[currentLocation.Row + 1][currentLocation.Column + 1];
-            if (upperAdjacentSquare.IsOccupied())
+            if (rightUpperAdjacentSquare.IsOccupied())
             {
                 possibleMoves.Add(moveFactory.CreateMove(currentSquare, rightUpperAdjacentSquare));
             }
 
             return possibleMoves;
+        }
+
+        private Move GetPossibleMoveForSpecificDirection(Square[][] grid, Square start, Location currentLocation, int rowDifference, int columnDifference)
+        {
+            Square destination = GetDestination(grid, currentLocation, rowDifference, columnDifference);
+            return destination != null ? moveFactory.CreateMove(start, destination) : null;
+        }
+
+        private IEnumerable<Square> GetAllPossibleDestinations()
+        {
+            IList<Square> possibleDestinations = new List<Square>();
+            possibleDestinations
         }
     }
 }

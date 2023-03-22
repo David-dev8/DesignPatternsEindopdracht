@@ -2,6 +2,7 @@
 using Chess.Models.Moves;
 using Chess.Models.Pieces;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,17 +18,23 @@ namespace Chess.Models.Movement
 
         public override IEnumerable<Move> GetPossibleMoves(Piece piece, Square[][] grid)
         {
-            throw new NotImplementedException();
+            IList<Move> possibleMoves = new List<Move>();
+            Location currentLocation = GetCurrentLocation(grid, piece.Square);
+            for(int rowDifference = 0; rowDifference <= 1; rowDifference++)
+            {
+                for(int columnDifference = -1; columnDifference <= 1; columnDifference++)
+                {
+                    if(rowDifference != 0 && columnDifference != 0)
+                    {
+                        Square destination = GetDestination(grid, currentLocation, rowDifference, columnDifference);
+                        if (destination != null)
+                        {
+                            possibleMoves.Add(moveFactory.CreateMove(piece.Square, destination));
+                        }
+                    }
+                }
+            }
+            return possibleMoves;
         }
-
-        //private Move GetPossibleMoveForSpecificDirection(Square[][] grid, Square start, Location currentLocation, int rowDifference, int columnDifference)
-        //{
-        //    Square adjacentSquare = grid[currentLocation.Row + rowDifference][currentLocation.Column + columnDifference];
-        //    if (adjacentSquare.IsOccupied())
-        //    {
-        //        return moveFactory.CreateMove(start, adjacentSquare);
-        //    }
-        //    return null;
-        //}
     }
 }
