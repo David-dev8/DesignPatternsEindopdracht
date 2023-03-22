@@ -15,7 +15,6 @@ namespace Chess.Base
             }
             set
             {
-                _currentViewModel?.Dispose();
                 _currentViewModel = value;
                 if(value != null)
                 {

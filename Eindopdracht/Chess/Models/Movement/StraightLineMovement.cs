@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Chess.Models.Movement
+namespace Chess.Models.Movesment
 {
     public class StraightLineMovement
     {

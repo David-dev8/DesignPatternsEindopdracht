@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Chess.Models.Move
+namespace Chess.Models.Games.Modes
 {
-    public class ExplosionCaptureDecorator
+    public class AtomicChess
     {
     }
 }

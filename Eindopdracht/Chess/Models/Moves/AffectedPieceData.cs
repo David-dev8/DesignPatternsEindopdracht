@@ -4,11 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Chess.Models.Move
+namespace Chess.Models.Movess
 {
-    public enum MoveOptions
+    public class AffectedPieceData
     {
-        PROMOTION,
-        CASTLING
     }
 }

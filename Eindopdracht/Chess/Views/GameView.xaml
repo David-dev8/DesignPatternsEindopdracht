@@ -6,7 +6,43 @@
              xmlns:local="clr-namespace:Chess.Views"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <ResourceDictionary Source="../ResourceDictionaries/GameViewResources.xaml" />
+    </UserControl.Resources>
     <Grid>
-            
+        <ListView Height="400" Width="400" BorderThickness="0" ItemsSource="{Binding Game.Squares,Converter={StaticResource CollectionFlattenConverter}}"
+                  SelectedItem="{Binding SelectedSquare,Mode=TwoWay}">
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="Margin" Value="0" />
+                    <Setter Property="Background" Value="{Binding Path=DataContext.Game.Squares.Length,RelativeSource={RelativeSource AncestorType=ListView},Converter={StaticResource AlternationBrushConverter}}" />
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type ListViewItem}">
+                                <Border x:Name="Border" Background="{TemplateBinding Background}" >
+                                    <ContentPresenter />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsSelected" Value="True">
+                                        <Setter TargetName="Border" Property="BorderBrush" Value="Black"/>
+                                        <Setter TargetName="Border" Property="BorderThickness" Value="1"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </ListView.ItemContainerStyle>
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <UniformGrid Columns="8" Rows="8" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock>Vakje</TextBlock>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ListView>
     </Grid>
 </UserControl>

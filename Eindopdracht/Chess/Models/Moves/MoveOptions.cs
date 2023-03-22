@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Chess.Models.Game
+namespace Chess.Models.Moves
 {
-    public class Player
+    public enum MoveOptions
     {
+        PROMOTION,
+        CASTLING
     }
 }
