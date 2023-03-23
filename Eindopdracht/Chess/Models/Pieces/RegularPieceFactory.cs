@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Chess.Models.Movement;
+using Chess.Models.Moves;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,38 +11,49 @@ namespace Chess.Models.Pieces
 {
     public class RegularPieceFactory : PieceFactory
     {
-        public RegularPieceFactory(Color color) : base(color)
+        public RegularPieceFactory(Color color) : base(color, new MoveFactory())
         {
+            
         }
 
-        public override Piece CreateBishop()
+        public override Piece CreateBischop()
         {
-            throw new NotImplementedException();
+            return new Piece("", color, new DiagonalMovement(moveFactory));
         }
 
         public override Piece CreateKing()
         {
-            throw new NotImplementedException();
+            CompositeMovement movementPattern = new CompositeMovement(moveFactory);
+            movementPattern.AddMovementPattern(new OneAdjacentMovement(moveFactory));
+            movementPattern.AddMovementPattern(new CastleMovement(moveFactory));
+            return new Piece("", color, movementPattern);
+
         }
 
         public override Piece CreateKnight()
         {
-            throw new NotImplementedException();
+            return new Piece("", color, new KnightMovement(moveFactory));
+
         }
 
         public override Piece CreatePawn()
         {
-            throw new NotImplementedException();
+            return new Piece("", color, new SingleAdvanceMovement(moveFactory));
+
         }
 
         public override Piece CreateQueen()
         {
-            throw new NotImplementedException();
+            CompositeMovement movementPattern = new CompositeMovement(moveFactory);
+            movementPattern.AddMovementPattern(new DiagonalMovement(moveFactory));
+            movementPattern.AddMovementPattern(new StraightLineMovement(moveFactory));
+            return new Piece("", color, movementPattern);
         }
 
         public override Piece CreateRook()
         {
-            throw new NotImplementedException();
+            return new Piece("", color, new StraightLineMovement(moveFactory));
+
         }
     }
 }

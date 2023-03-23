@@ -17,7 +17,7 @@ namespace Chess.Models.Movement
 
         protected IEnumerable<Move> GetPossibleMovesForSpecificDirection(Square[][] grid, Square start, Location currentLocation, int rowsPerStep, int columnsPerStep)
         {
-            List<Move> possibleMoves = new List<Move>();
+            IList<Move> possibleMoves = new List<Move>();
             Square destination = null;
             int nextRow = currentLocation.Row + rowsPerStep;
             int nextColumn = currentLocation.Column + columnsPerStep;

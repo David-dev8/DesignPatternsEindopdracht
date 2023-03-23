@@ -11,6 +11,14 @@ namespace Chess.Models.Movement
 {
     public class DiagonalMovement : ContinuousMovement
     {
+        private static readonly int[][] _possibleSteps =
+        {
+            new int[] { -1, -1 },
+            new int[] { -1, 1 },
+            new int[] { 1, -1 },
+            new int[] { 1, 1 }
+        };
+
         public DiagonalMovement(MoveFactory moveFactory) : base(moveFactory)
         {
         }
@@ -18,13 +26,12 @@ namespace Chess.Models.Movement
         public override IEnumerable<Move> GetPossibleMoves(Piece piece, Square[][] grid)
         {
             List<Move> possibleMoves = new List<Move>();
-            Square currentSquare = piece.Square;
-            Location currentLocation = GetCurrentLocation(grid, currentSquare);
+            Location currentLocation = GetCurrentLocation(grid, piece.Square);
 
-            possibleMoves.AddRange(GetPossibleMovesForSpecificDirection(grid, currentSquare, currentLocation, -1, -1));
-            possibleMoves.AddRange(GetPossibleMovesForSpecificDirection(grid, currentSquare, currentLocation, -1, 1));
-            possibleMoves.AddRange(GetPossibleMovesForSpecificDirection(grid, currentSquare, currentLocation, 1, -1));
-            possibleMoves.AddRange(GetPossibleMovesForSpecificDirection(grid, currentSquare, currentLocation, 1, 1));
+            foreach (int[] possibleStep in _possibleSteps)
+            {
+                possibleMoves.AddRange(GetPossibleMovesForSpecificDirection(grid, piece.Square, currentLocation, possibleStep[0], possibleStep[1]));
+            }
 
             return possibleMoves;
         }

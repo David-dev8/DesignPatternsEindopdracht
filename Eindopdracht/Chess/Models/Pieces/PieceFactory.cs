@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Chess.Models.Moves;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,10 +11,12 @@ namespace Chess.Models.Pieces
     public abstract class PieceFactory
     {
         public Color Color { get; set; }
+        protected MoveFactory moveFactory;
 
-        public PieceFactory(Color color) 
+        public PieceFactory(Color color, MoveFactory moveFactory) 
         { 
             Color = color;
+            this.moveFactory = moveFactory;
         }
 
         public abstract Piece CreateKing();

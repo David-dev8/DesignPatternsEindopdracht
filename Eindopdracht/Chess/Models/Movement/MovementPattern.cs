@@ -37,5 +37,13 @@ namespace Chess.Models.Movement
             }
             return null;
         }
+
+        protected Square GetDestination(Square[][] grid, Location currentLocation, int rowDifference, int columnDifference)
+        {
+            int newRow = currentLocation.Row + rowDifference;
+            int newColumn = currentLocation.Column + columnDifference;
+            return newRow <= grid.GetLength(0) && newColumn <= grid[newRow].Length ?
+                grid[currentLocation.Row + rowDifference][currentLocation.Column + columnDifference] : null;
+        }
     }
 }
