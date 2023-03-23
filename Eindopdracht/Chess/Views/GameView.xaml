@@ -62,7 +62,8 @@
                 <DataTemplate>
                     <Grid>
                         <customcontrols:SVGImage Visibility="{Binding Piece, Converter={StaticResource NullToVisibilityConverter}}" 
-                                                 Source="../Assets/queen.svg" Color="{Binding Piece.Color}" Height="20" />
+                                                 UriSource="{Binding Piece.Image,Converter={StaticResource RelativePathConverter},ConverterParameter='../Assets/'}"
+                                                 Color="{Binding Piece.Color}" Height="20" />
                     </Grid>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>

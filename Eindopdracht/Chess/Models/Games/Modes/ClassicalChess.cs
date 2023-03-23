@@ -59,28 +59,27 @@ namespace Chess.Models.Games.Modes
         protected override void SetUpPieces()
         {
             // TODO enum for color?
-            SetupPiecesForRanks(Squares[0], Squares[1], Color.FromRgb(255, 255, 255));
-            SetupPiecesForRanks(Squares[BOARD_SIZE - 1], Squares[BOARD_SIZE - 2], Color.FromRgb(0, 0, 0));
+            SetupPiecesForRanks(Squares[BOARD_SIZE - 1], Squares[BOARD_SIZE - 2], Players[0].Color);
+            SetupPiecesForRanks(Squares[0], Squares[1], Players[1].Color);
         }
 
         private void SetupPiecesForRanks(Square[] firstRank, Square[] secondRank, Color color)
         {
             pieceFactory.Color = color;
             
-            //firstRank[0].Piece = pieceFactory.CreateRook();
-            //firstRank[1].Piece = pieceFactory.CreateKnight();
-            //firstRank[2].Piece = pieceFactory.CreateBishop();
-            //firstRank[3].Piece = pieceFactory.CreateQueen();
-            //firstRank[4].Piece = pieceFactory.CreateKing();
-            //firstRank[5].Piece = pieceFactory.CreateBishop();
-            //firstRank[6].Piece = pieceFactory.CreateKnight();
-            //firstRank[7].Piece = pieceFactory.CreateRook(); // TODO method reference I think
+            firstRank[0].Piece = pieceFactory.CreateRook();
+            firstRank[1].Piece = pieceFactory.CreateKnight();
+            firstRank[2].Piece = pieceFactory.CreateBishop();
+            firstRank[3].Piece = pieceFactory.CreateQueen();
+            firstRank[4].Piece = pieceFactory.CreateKing();
+            firstRank[5].Piece = pieceFactory.CreateBishop();
+            firstRank[6].Piece = pieceFactory.CreateKnight();
+            firstRank[7].Piece = pieceFactory.CreateRook(); // TODO method reference I think
 
             // Pawns for every square on the second rank
             foreach(Square square in secondRank)
             {
-                square.Piece = new Piece("Assets/Images/regularKing.png", Color.FromRgb(100, 0, 0), new SingleAdvanceMovement(new MoveFactory()));
-                //square.Piece = pieceFactory.CreatePawn();
+                square.Piece = pieceFactory.CreatePawn();
             }
         }
     }

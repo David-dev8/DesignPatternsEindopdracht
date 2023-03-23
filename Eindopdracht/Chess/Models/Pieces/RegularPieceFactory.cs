@@ -16,9 +16,9 @@ namespace Chess.Models.Pieces
             
         }
 
-        public override Piece CreateBischop()
+        public override Piece CreateBishop()
         {
-            return new Piece("", color, new DiagonalMovement(moveFactory));
+            return new Piece("bishop.svg", Color, new DiagonalMovement(moveFactory));
         }
 
         public override Piece CreateKing()
@@ -26,19 +26,18 @@ namespace Chess.Models.Pieces
             CompositeMovement movementPattern = new CompositeMovement(moveFactory);
             movementPattern.AddMovementPattern(new OneAdjacentMovement(moveFactory));
             movementPattern.AddMovementPattern(new CastleMovement(moveFactory));
-            return new Piece("", color, movementPattern);
-
+            return new Piece("king.svg", Color, movementPattern);
         }
 
         public override Piece CreateKnight()
         {
-            return new Piece("", color, new KnightMovement(moveFactory));
+            return new Piece("knight.svg", Color, new KnightMovement(moveFactory));
 
         }
 
         public override Piece CreatePawn()
         {
-            return new Piece("", color, new SingleAdvanceMovement(moveFactory));
+            return new Piece("pawn.svg", Color, new SingleAdvanceMovement(moveFactory));
 
         }
 
@@ -47,12 +46,12 @@ namespace Chess.Models.Pieces
             CompositeMovement movementPattern = new CompositeMovement(moveFactory);
             movementPattern.AddMovementPattern(new DiagonalMovement(moveFactory));
             movementPattern.AddMovementPattern(new StraightLineMovement(moveFactory));
-            return new Piece("", color, movementPattern);
+            return new Piece("queen.svg", Color, movementPattern);
         }
 
         public override Piece CreateRook()
         {
-            return new Piece("", color, new StraightLineMovement(moveFactory));
+            return new Piece("rook.svg", Color, new StraightLineMovement(moveFactory));
 
         }
     }

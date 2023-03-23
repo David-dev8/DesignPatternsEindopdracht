@@ -10,9 +10,9 @@ namespace Chess.Models.Moves
     public class MoveFactory
     {
         // TODO void moet move worden
-        public void CreateMove(Square start, Square destination, MoveOptions[] options = null)
+        public Move CreateMove(Square start, Square destination, MoveOptions[] options = null)
         {
-
+            throw new NotImplementedException();
         }
     }
 }

@@ -6,4 +6,5 @@
     <converters:IsSquareContainedInMovesConverter x:Key="IsSquareContainedInMovesConverter" />
     <converters:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
     <converters:NullToBooleanConverter x:Key="NullToBooleanConverter" />
+    <converters:RelativePathConverter x:Key="RelativePathConverter" />
 </ResourceDictionary>

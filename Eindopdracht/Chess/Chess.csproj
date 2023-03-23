@@ -8,8 +8,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Views\queen.svg" />
-    <None Remove="Views\suitcase.svg" />
+    <None Remove="Assets\bishop.svg" />
+    <None Remove="Assets\king.svg" />
+    <None Remove="Assets\knight.svg" />
+    <None Remove="Assets\pawn.svg" />
+    <None Remove="Assets\rook.svg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -17,13 +20,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Assets\bishop.svg" />
+    <Resource Include="Assets\king.svg" />
+    <Resource Include="Assets\knight.svg" />
+    <Resource Include="Assets\pawn.svg" />
     <Resource Include="Assets\queen.svg" />
-    <Resource Include="Assets\regularKing.png" />
-    <Resource Include="Assets\regularQueen.png" />
-    <Resource Include="Assets\regularRook.png" />
-    <Resource Include="Assets\suitcase.svg" />
-    <Resource Include="Views\queen.svg" />
-    <Resource Include="Views\suitcase.svg" />
+    <Resource Include="Assets\rook.svg" />
   </ItemGroup>
 
 </Project>
