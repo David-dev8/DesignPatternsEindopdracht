@@ -14,9 +14,11 @@ namespace Chess.Models.Pieces
         public MovementPattern Movement { get; set; }
         public Color Color { get; set; }
         public Square Square { get; set; }
+        public string Image { get; set; }
 
-        public Piece(Color color, MovementPattern movementPattern) 
+        public Piece(string image, Color color, MovementPattern movementPattern) 
         {
+            Image = image;
             Color = color;
             Movement = movementPattern;
             Square = null;

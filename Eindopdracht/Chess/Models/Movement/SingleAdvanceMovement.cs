@@ -11,6 +11,8 @@ namespace Chess.Models.Movement
 {
     public class SingleAdvanceMovement : MovementPattern
     {
+        private static readonly MoveOptions[] _moveOptions = { MoveOptions.PROMOTION };
+
         public SingleAdvanceMovement(MoveFactory moveFactory) : base(moveFactory)
         {
         }
@@ -21,40 +23,21 @@ namespace Chess.Models.Movement
             Square currentSquare = piece.Square;
             Location currentLocation = GetCurrentLocation(grid, currentSquare);
 
-            Square upperAdjacentSquare = GetDestination(grid, currentLocation, 1, 0); // TODO opties voor promotion
-            if(upperAdjacentSquare != null && !upperAdjacentSquare.IsOccupied())
-            {
-                possibleMoves.Add(moveFactory.CreateMove(currentSquare, upperAdjacentSquare));
-            }
-
-
-            // TODO mustOccupied
-
-            Square leftUpperAdjacentSquare = grid[currentLocation.Row + 1][currentLocation.Column - 1];
-            if (leftUpperAdjacentSquare.IsOccupied())
-            {
-                possibleMoves.Add(moveFactory.CreateMove(currentSquare, leftUpperAdjacentSquare));
-            }
-
-            Square rightUpperAdjacentSquare = grid[currentLocation.Row + 1][currentLocation.Column + 1];
-            if (rightUpperAdjacentSquare.IsOccupied())
-            {
-                possibleMoves.Add(moveFactory.CreateMove(currentSquare, rightUpperAdjacentSquare));
-            }
+            RegisterPossibleMoveForSpecificDirection(grid, currentSquare, currentLocation, 0, possibleMoves, false);
+            RegisterPossibleMoveForSpecificDirection(grid, currentSquare, currentLocation, -1, possibleMoves, true);
+            RegisterPossibleMoveForSpecificDirection(grid, currentSquare, currentLocation, 1, possibleMoves, true);
 
             return possibleMoves;
         }
 
-        private Move GetPossibleMoveForSpecificDirection(Square[][] grid, Square start, Location currentLocation, int rowDifference, int columnDifference)
+        private void RegisterPossibleMoveForSpecificDirection(Square[][] grid, Square start, Location currentLocation, int columnDifference, 
+            IList<Move> possibleMoves, bool shouldBeOccupied)
         {
-            Square destination = GetDestination(grid, currentLocation, rowDifference, columnDifference);
-            return destination != null ? moveFactory.CreateMove(start, destination) : null;
-        }
-
-        private IEnumerable<Square> GetAllPossibleDestinations()
-        {
-            IList<Square> possibleDestinations = new List<Square>();
-            possibleDestinations
+            Square adjacentSquare = GetDestination(grid, currentLocation, 1, columnDifference);
+            if (adjacentSquare != null && adjacentSquare.IsOccupied() == shouldBeOccupied)
+            {
+                possibleMoves.Add(moveFactory.CreateMove(start, adjacentSquare, _moveOptions));
+            }
         }
     }
 }

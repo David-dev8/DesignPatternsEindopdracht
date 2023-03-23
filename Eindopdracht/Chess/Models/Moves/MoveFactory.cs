@@ -7,8 +7,12 @@ using System.Threading.Tasks;
 
 namespace Chess.Models.Moves
 {
-    public abstract class MoveFactory
+    public class MoveFactory
     {
-        public abstract Move CreateMove(Square start, Square destination, MoveOptions[] options = null);
+        // TODO void moet move worden
+        public void CreateMove(Square start, Square destination, MoveOptions[] options = null)
+        {
+
+        }
     }
 }

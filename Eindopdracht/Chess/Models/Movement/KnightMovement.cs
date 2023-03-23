@@ -13,6 +13,18 @@ namespace Chess.Models.Movement
 {
     public class KnightMovement : MovementPattern
     {
+        private static readonly int[][] _possibleSteps =
+        {
+            new int[] { -1, 2 }, 
+            new int[] { -1, -2 }, 
+            new int[] { 1, 2 }, 
+            new int[] { 1, -2 },
+            new int[] { -2, -1 },
+            new int[] { -2, 1 },
+            new int[] { 2, -1 },
+            new int[] { 2, 1 },
+        };
+
         public KnightMovement(MoveFactory moveFactory) : base(moveFactory)
         {
         }
@@ -21,9 +33,8 @@ namespace Chess.Models.Movement
         {
             IList<Move> possibleMoves = new List<Move>();
             Location currentLocation = GetCurrentLocation(grid, piece.Square);
-            int[][] possibleSteps = {new int[] {-1, 2 }, new int[] {-1, -2 }, new int[] {1, 2 }, new int[] {1, -2 }}; // TODO static en aanvullen
 
-            foreach(int[] step in possibleSteps) 
+            foreach(int[] step in _possibleSteps) 
             {
                 Square destination = GetDestination(grid, currentLocation, step[0], step[1]);
                 if (destination != null)
@@ -31,6 +42,7 @@ namespace Chess.Models.Movement
                     possibleMoves.Add(moveFactory.CreateMove(piece.Square, destination));
                 }
             }
+
             return possibleMoves;
         }
     }

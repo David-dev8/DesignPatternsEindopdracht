@@ -12,6 +12,15 @@ namespace Chess.Models.Movement
 {
     public class OneAdjacentMovement : MovementPattern
     {
+        private static readonly int[][] _possibleSteps =
+        {
+            new int[] { 0, -1 }, 
+            new int[] { 0, 1 }, 
+            new int[] { 1, -1 }, 
+            new int[] { 1, 0 }, 
+            new int[] { 1, 1 }
+        };
+
         public OneAdjacentMovement(MoveFactory moveFactory) : base(moveFactory)
         {
         }
@@ -20,20 +29,16 @@ namespace Chess.Models.Movement
         {
             IList<Move> possibleMoves = new List<Move>();
             Location currentLocation = GetCurrentLocation(grid, piece.Square);
-            for(int rowDifference = 0; rowDifference <= 1; rowDifference++)
+
+            foreach (int[] possibleStep in _possibleSteps)
             {
-                for(int columnDifference = -1; columnDifference <= 1; columnDifference++)
+                Square destination = GetDestination(grid, currentLocation, possibleStep[0], possibleStep[1]);
+                if (destination != null)
                 {
-                    if(rowDifference != 0 && columnDifference != 0)
-                    {
-                        Square destination = GetDestination(grid, currentLocation, rowDifference, columnDifference);
-                        if (destination != null)
-                        {
-                            possibleMoves.Add(moveFactory.CreateMove(piece.Square, destination));
-                        }
-                    }
+                    possibleMoves.Add(moveFactory.CreateMove(piece.Square, destination));
                 }
             }
+
             return possibleMoves;
         }
     }

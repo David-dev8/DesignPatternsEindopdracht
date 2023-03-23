@@ -1,19 +1,22 @@
-﻿using System;
+﻿using Chess.Models.Moves;
+using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 
 namespace Chess.Models.Pieces
 {
     public abstract class PieceFactory
     {
-        private Color _color;
+        protected Color color;
+        protected MoveFactory moveFactory;
 
-        public PieceFactory(Color color) 
+        public PieceFactory(Color color, MoveFactory moveFactory) 
         { 
-            _color = color;
+            this.color = color;
+            this.moveFactory = moveFactory;
         }
 
         public abstract Piece CreateKing();
