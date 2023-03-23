@@ -14,7 +14,10 @@ namespace Chess.Models.Games.Modes
     {
         private const int BOARD_SIZE = 8;
 
-        public ClassicalChess() : base(new RegularPieceFactory(Color.FromRgb(0, 0, 0)), new List<Player>() { new Player() { Color = Color.FromRgb(0, 0, 0) } })
+        public ClassicalChess() : base(new RegularPieceFactory(Color.FromRgb(0, 0, 0)), new List<Player>() { 
+            new Player() { Color = Color.FromRgb(255, 255, 255) },
+            new Player() { Color = Color.FromRgb(0, 0, 0) } 
+        })
         {
         }
 
@@ -57,26 +60,27 @@ namespace Chess.Models.Games.Modes
         {
             // TODO enum for color?
             SetupPiecesForRanks(Squares[0], Squares[1], Color.FromRgb(255, 255, 255));
-            SetupPiecesForRanks(Squares[BOARD_SIZE], Squares[BOARD_SIZE - 1], Color.FromRgb(0, 0, 0));
+            SetupPiecesForRanks(Squares[BOARD_SIZE - 1], Squares[BOARD_SIZE - 2], Color.FromRgb(0, 0, 0));
         }
 
         private void SetupPiecesForRanks(Square[] firstRank, Square[] secondRank, Color color)
         {
             pieceFactory.Color = color;
             
-            firstRank[0].Piece = pieceFactory.CreateRook();
-            firstRank[1].Piece = pieceFactory.CreateKnight();
-            firstRank[2].Piece = pieceFactory.CreateBishop();
-            firstRank[3].Piece = pieceFactory.CreateQueen();
-            firstRank[4].Piece = pieceFactory.CreateKing();
-            firstRank[5].Piece = pieceFactory.CreateBishop();
-            firstRank[6].Piece = pieceFactory.CreateKnight();
-            firstRank[7].Piece = pieceFactory.CreateRook(); // TODO method reference I think
+            //firstRank[0].Piece = pieceFactory.CreateRook();
+            //firstRank[1].Piece = pieceFactory.CreateKnight();
+            //firstRank[2].Piece = pieceFactory.CreateBishop();
+            //firstRank[3].Piece = pieceFactory.CreateQueen();
+            //firstRank[4].Piece = pieceFactory.CreateKing();
+            //firstRank[5].Piece = pieceFactory.CreateBishop();
+            //firstRank[6].Piece = pieceFactory.CreateKnight();
+            //firstRank[7].Piece = pieceFactory.CreateRook(); // TODO method reference I think
 
             // Pawns for every square on the second rank
             foreach(Square square in secondRank)
             {
-                square.Piece = pieceFactory.CreatePawn();
+                square.Piece = new Piece("Assets/Images/regularKing.png", Color.FromRgb(100, 0, 0), new SingleAdvanceMovement(new MoveFactory()));
+                //square.Piece = pieceFactory.CreatePawn();
             }
         }
     }

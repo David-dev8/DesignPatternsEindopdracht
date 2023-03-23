@@ -34,10 +34,11 @@ namespace Chess.Models.Games
 
         public Game(PieceFactory pieceFactory, IList<Player> players)
         {
-            _pieceFactory = pieceFactory;
+            this.pieceFactory = pieceFactory;
             Players = players;
             ActivePlayers = new Queue<Player>(Players);
             Squares = CreateBoard();
+            SetUpPieces();
         }
 
         public void MakeMove(Move move)

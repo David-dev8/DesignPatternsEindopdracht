@@ -4,4 +4,6 @@
     <converters:ArrayFlattenConverter x:Key="CollectionFlattenConverter" />
     <converters:DiagonalAlternationToBrushConverter x:Key="AlternationBrushConverter" />
     <converters:IsSquareContainedInMovesConverter x:Key="IsSquareContainedInMovesConverter" />
+    <converters:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
+    <converters:NullToBooleanConverter x:Key="NullToBooleanConverter" />
 </ResourceDictionary>

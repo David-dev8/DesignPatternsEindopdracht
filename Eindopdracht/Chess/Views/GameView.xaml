@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Chess.Views"
+             xmlns:local="clr-namespace:Chess.Views" 
+             xmlns:customcontrols="clr-namespace:Chess.Views.CustomControls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
@@ -25,15 +26,18 @@
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate TargetType="{x:Type ListViewItem}">
-                                <Border x:Name="Border" Background="{TemplateBinding Background}" >
+                                <Border x:Name="Border" Background="{TemplateBinding Background}">
                                     <ContentPresenter />
                                 </Border>
                                 <ControlTemplate.Triggers>
-                                    <Trigger Property="IsSelected" Value="True">
+                                    <MultiDataTrigger>
+                                        <MultiDataTrigger.Conditions>
+                                            <Condition Binding="{Binding Path=IsSelected, RelativeSource={RelativeSource Self}}" Value="True" />
+                                            <Condition Binding="{Binding Piece, Converter={StaticResource NullToBooleanConverter}}" Value="True" />
+                                        </MultiDataTrigger.Conditions>
                                         <Setter TargetName="Border" Property="BorderBrush" Value="Black"/>
                                         <Setter TargetName="Border" Property="BorderThickness" Value="1"/>
-                                        <Setter TargetName="Border" Property="Opacity" Value="0.5"/>
-                                    </Trigger>
+                                    </MultiDataTrigger>
                                     <DataTrigger Value="True">
                                         <DataTrigger.Binding>
                                             <MultiBinding Converter="{StaticResource IsSquareContainedInMovesConverter}">
@@ -51,12 +55,15 @@
             </ListView.ItemContainerStyle>
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <UniformGrid Columns="8" Rows="8" />
+                    <UniformGrid Columns="8" Rows="8"  />
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <TextBlock>Vakje</TextBlock>
+                    <Grid>
+                        <customcontrols:SVGImage Visibility="{Binding Piece, Converter={StaticResource NullToVisibilityConverter}}" 
+                                                 Source="../Assets/queen.svg" Color="{Binding Piece.Color}" Height="20" />
+                    </Grid>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ListView>
@@ -65,7 +72,9 @@
             <ItemsControl ItemsSource="{Binding Game.Players}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <TextBlock Text="{Binding Name}" />
+                        <StackPanel>
+                            <TextBlock Text="{Binding Name}" />
+                        </StackPanel>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>

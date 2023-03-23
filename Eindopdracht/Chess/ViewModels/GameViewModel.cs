@@ -66,20 +66,17 @@ namespace Chess.ViewModels
         private void DetermineActiveMoves()
         {
             ActiveMoves = new List<Move>();
-            if(_selectedSquare?.Piece != null)
+            Move selectedMove = ActiveMoves.FirstOrDefault(activeMove => activeMove.Destination == _selectedSquare);
+            if(selectedMove != null)
             {
-                Move selectedMove = ActiveMoves.FirstOrDefault(activeMove => activeMove.Destination == _selectedSquare);
-                if(selectedMove != null)
-                {
-                    // Selected a possible move, execute the move
-                    Game.MakeMove(selectedMove);
-                }
-                // Does the selected square have a piece from the current player?
-                else if(_selectedSquare.Piece.Color == Game.CurrentPlayer.Color)
-                {
-                    // Generate possible moves
-                    ActiveMoves = new List<Move>() { new Move() { Destination = Game.Squares[0][0] } }; // TODO
-                }
+                // Selected a possible move, execute the move
+                Game.MakeMove(selectedMove);
+            }
+            // Does the selected square have a piece from the current player?
+            else if(_selectedSquare?.Piece != null && _selectedSquare.Piece.Color == Game.CurrentPlayer.Color)
+            {
+                // Generate possible moves
+                ActiveMoves = new List<Move>() { new Move() { Destination = Game.Squares[0][0] } }; // TODO
             }
         }
     }

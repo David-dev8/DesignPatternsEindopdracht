@@ -8,15 +8,22 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Assets\Images\regularKing.png" />
-    <None Remove="Assets\Images\regularQueen.png" />
-    <None Remove="Assets\Images\regularRook.png" />
+    <None Remove="Views\queen.svg" />
+    <None Remove="Views\suitcase.svg" />
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Assets\Images\regularKing.png" />
-    <Resource Include="Assets\Images\regularQueen.png" />
-    <Resource Include="Assets\Images\regularRook.png" />
+    <PackageReference Include="SharpVectors" Version="1.7.7" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\queen.svg" />
+    <Resource Include="Assets\regularKing.png" />
+    <Resource Include="Assets\regularQueen.png" />
+    <Resource Include="Assets\regularRook.png" />
+    <Resource Include="Assets\suitcase.svg" />
+    <Resource Include="Views\queen.svg" />
+    <Resource Include="Views\suitcase.svg" />
   </ItemGroup>
 
 </Project>
