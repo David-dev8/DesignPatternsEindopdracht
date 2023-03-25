@@ -42,7 +42,7 @@ namespace Chess.Models.Movement
         {
             int newRow = currentLocation.Row + rowDifference;
             int newColumn = currentLocation.Column + columnDifference;
-            return newRow <= grid.GetLength(0) && newColumn <= grid[newRow].Length ?
+            return newRow >= 0 && newRow < grid.Length && newColumn >= 0 && newColumn < grid[newRow].Length ?
                 grid[currentLocation.Row + rowDifference][currentLocation.Column + columnDifference] : null;
         }
     }

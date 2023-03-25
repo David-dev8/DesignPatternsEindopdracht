@@ -1,4 +1,5 @@
-﻿using Chess.Models.Pieces;
+﻿using Chess.Base;
+using Chess.Models.Pieces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,13 +8,28 @@ using System.Threading.Tasks;
 
 namespace Chess.Models.Games
 {
-    public class Square
+    public class Square: Observable
     {
-        public Piece Piece { get; set; }
+        private Piece _piece;
+        public Piece Piece
+        {
+            get
+            {
+                return _piece;
+            }
+            set
+            {
+                _piece = value;
+                if(_piece != null) // TODO
+                {
+                    _piece.Square = this;
+                }
+                NotifyPropertyChanged();
+            }
+        }
 
         public Square() 
         {
-            Piece = null;
         }
 
         public bool IsOccupied()

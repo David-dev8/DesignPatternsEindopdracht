@@ -23,12 +23,12 @@ namespace Chess.Models.Games.Modes
 
         public override IEnumerable<Player> GetWinners()
         {
-            throw new NotImplementedException();
+            return Enumerable.Empty<Player>();
         }
 
         public override bool IsLegal(Move move)
         {
-            throw new NotImplementedException();
+            return true;
         }
 
         protected override Square[][] CreateBoard()
@@ -48,22 +48,21 @@ namespace Chess.Models.Games.Modes
 
         protected override void EliminatePlayers()
         {
-            throw new NotImplementedException();
         }
 
         protected override void IncreaseScore(Player player, Move move)
         {
-            throw new NotImplementedException();
+            
         }
 
         protected override void SetUpPieces()
         {
             // TODO enum for color?
-            SetupPiecesForRanks(Squares[BOARD_SIZE - 1], Squares[BOARD_SIZE - 2], Players[0].Color);
-            SetupPiecesForRanks(Squares[0], Squares[1], Players[1].Color);
+            SetupPiecesForRanks(Squares[BOARD_SIZE - 1], Squares[BOARD_SIZE - 2], AdvanceDirections.DOWN, Players[0].Color);
+            SetupPiecesForRanks(Squares[0], Squares[1], AdvanceDirections.UP, Players[1].Color);
         }
 
-        private void SetupPiecesForRanks(Square[] firstRank, Square[] secondRank, Color color)
+        private void SetupPiecesForRanks(Square[] firstRank, Square[] secondRank, AdvanceDirections direction, Color color)
         {
             pieceFactory.Color = color;
             
@@ -79,7 +78,7 @@ namespace Chess.Models.Games.Modes
             // Pawns for every square on the second rank
             foreach(Square square in secondRank)
             {
-                square.Piece = pieceFactory.CreatePawn();
+                square.Piece = pieceFactory.CreatePawn(direction);
             }
         }
     }

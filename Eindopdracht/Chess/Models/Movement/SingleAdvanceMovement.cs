@@ -12,9 +12,11 @@ namespace Chess.Models.Movement
     public class SingleAdvanceMovement : MovementPattern
     {
         private static readonly MoveOptions[] _moveOptions = { MoveOptions.PROMOTION };
+        private AdvanceDirections _direction;
 
-        public SingleAdvanceMovement(MoveFactory moveFactory) : base(moveFactory)
+        public SingleAdvanceMovement(MoveFactory moveFactory, AdvanceDirections direction) : base(moveFactory)
         {
+            _direction = direction;
         }
 
         public override IEnumerable<Move> GetPossibleMoves(Piece piece, Square[][] grid)
@@ -33,7 +35,7 @@ namespace Chess.Models.Movement
         private void RegisterPossibleMoveForSpecificDirection(Square[][] grid, Square start, Location currentLocation, int columnDifference, 
             IList<Move> possibleMoves, bool shouldBeOccupied)
         {
-            Square adjacentSquare = GetDestination(grid, currentLocation, 1, columnDifference);
+            Square adjacentSquare = GetDestination(grid, currentLocation, -1, columnDifference);
             if (adjacentSquare != null && adjacentSquare.IsOccupied() == shouldBeOccupied)
             {
                 possibleMoves.Add(moveFactory.CreateMove(start, adjacentSquare, _moveOptions));

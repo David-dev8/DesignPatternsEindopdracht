@@ -10,20 +10,21 @@ namespace Chess.Models.Moves
     public class Move
     {
         private IList<AffectedPieceData> _affectedPieces;
-        private Square _start;
-        private Square _destination;
+        public Square Start { get; private set; }
+        public Square Destination { get; private set; }
         
         public Move(Square start, Square destination)
         {
             _affectedPieces = new List<AffectedPieceData>();
-            _start = start;
-            _destination = destination;
+            Start = start;
+            Destination = destination;
         }
 
         public void Make(Game game)
         {
-            _destination.Piece = _start.Piece;
-            _affectedPieces.Add(new AffectedPieceData(_start, _destination, _start.Piece));
+            Destination.Piece = Start.Piece;
+            Start.Piece = null;
+            _affectedPieces.Add(new AffectedPieceData(Start, Destination, Start.Piece));
         }
 
         public void Undo(Game game)

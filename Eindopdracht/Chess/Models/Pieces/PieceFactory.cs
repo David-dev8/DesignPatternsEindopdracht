@@ -22,7 +22,7 @@ namespace Chess.Models.Pieces
 
         public abstract Piece CreateKing();
         public abstract Piece CreateQueen();
-        public abstract Piece CreatePawn();
+        public abstract Piece CreatePawn(AdvanceDirections direction);
         public abstract Piece CreateRook();
         public abstract Piece CreateKnight();
         public abstract Piece CreateBishop();

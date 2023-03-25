@@ -14,7 +14,7 @@ namespace Chess.ViewModels
     public class GameViewModel : BaseViewModel
     {
         private Square _selectedSquare;
-        private IList<Move> _activeMoves;
+        private IEnumerable<Move> _activeMoves;
 
         public Game Game { get; set; }
         public ICommand UndoMoveCommand { get; set; }
@@ -29,10 +29,13 @@ namespace Chess.ViewModels
             {
                 _selectedSquare = value;
                 NotifyPropertyChanged();
-                DetermineActiveMoves();
+                if(_selectedSquare != null)
+                {
+                    DetermineActiveMoves();
+                }
             }
         }
-        public IList<Move> ActiveMoves
+        public IEnumerable<Move> ActiveMoves
         {
             get
             {
@@ -65,18 +68,19 @@ namespace Chess.ViewModels
 
         private void DetermineActiveMoves()
         {
-            ActiveMoves = new List<Move>();
             Move selectedMove = ActiveMoves.FirstOrDefault(activeMove => activeMove.Destination == _selectedSquare);
+            ActiveMoves = new List<Move>();
             if(selectedMove != null)
             {
                 // Selected a possible move, execute the move
                 Game.MakeMove(selectedMove);
+                SelectedSquare = null;
             }
             // Does the selected square have a piece from the current player?
-            else if(_selectedSquare?.Piece != null && _selectedSquare.Piece.Color == Game.CurrentPlayer.Color)
+            else if(_selectedSquare?.Piece != null && _selectedSquare.Piece.Color == Game.CurrentPlayer.Color) // TODO teveel?
             {
                 // Generate possible moves
-                ActiveMoves = new List<Move>() { new Move() { Destination = Game.Squares[0][0] } }; // TODO
+                ActiveMoves = _selectedSquare.Piece.Movement.GetPossibleMoves(_selectedSquare.Piece, Game.Squares).Where(move => Game.IsLegal(move)).ToList(); // TODO
             }
         }
     }

@@ -21,7 +21,7 @@ namespace Chess.Models.Pieces
             Image = image;
             Color = color;
             Movement = movementPattern;
-            Square = null;
+            Square = null; // TODO, ook andersom? bij setten square ook zetten piece
         }
     }
 }
