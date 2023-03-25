@@ -8,4 +8,5 @@
     <converters:NullToBooleanConverter x:Key="NullToBooleanConverter" />
     <converters:RelativePathConverter x:Key="RelativePathConverter" />
     <converters:IsEqualConverter x:Key="IsEqualConverter" />
+    <converters:IsContainedInCollectionConverter x:Key="IsContainedInCollectionConverter" />
 </ResourceDictionary>

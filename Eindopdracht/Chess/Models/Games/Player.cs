@@ -11,5 +11,6 @@ namespace Chess.Models.Games
     {
         public string Name { get; set; } = "Harold";
         public Color Color { get; set; }
+        public int Score { get; set; } = 0;
     }
 }

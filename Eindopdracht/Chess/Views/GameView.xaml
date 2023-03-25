@@ -82,13 +82,45 @@
         </ListView>
         <Grid Grid.Column="1">
             <StackPanel VerticalAlignment="Center">
-                <TextBlock>Players</TextBlock>
+                <TextBlock FontWeight="Bold" FontSize="20">Players</TextBlock>
                 <ItemsControl ItemsSource="{Binding Game.Players}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <StackPanel>
-                                <TextBlock Text="{Binding Name}" />
-                            </StackPanel>
+                            <Grid Margin="0,5">
+                                <Grid.Style>
+                                    <Style TargetType="Grid">
+                                        <Style.Triggers>
+                                            <DataTrigger Value="False">
+                                                <DataTrigger.Binding>
+                                                    <MultiBinding Converter="{StaticResource IsContainedInCollectionConverter}">
+                                                        <Binding />
+                                                        <Binding Path="DataContext.Game.ActivePlayers" RelativeSource="{RelativeSource AncestorType=StackPanel}" />
+                                                    </MultiBinding>
+                                                </DataTrigger.Binding>
+                                                <Setter Property="Opacity" Value="0.5"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Grid.Style>
+                                <Grid.Background>
+                                    <SolidColorBrush Color="#7d7d7d" Opacity="0.5" />
+                                </Grid.Background>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="5*" />
+                                </Grid.ColumnDefinitions>
+                                <Border BorderThickness="3" BorderBrush="Black" Padding="14"
+                                        Width="Auto" Height="{Binding RelativeSource={RelativeSource Self}, Path=ActualWidth}">
+                                    <customcontrols:SVGImage Source="../Assets/pawn.svg" Color="{Binding Color}" />
+                                </Border>
+                                <Border Grid.Column="1" Padding="10,5">
+                                    <StackPanel>
+                                        <TextBlock FontWeight="SemiBold" FontSize="16" Text="{Binding Name}" />
+                                        <TextBlock FontSize="16" Text="Score:" />
+                                        <TextBlock FontSize="16" Text="{Binding Score}" />
+                                    </StackPanel>
+                                </Border>
+                            </Grid>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
