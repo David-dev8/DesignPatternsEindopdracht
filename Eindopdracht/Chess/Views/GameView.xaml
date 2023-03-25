@@ -17,8 +17,10 @@
         </Grid.ColumnDefinitions>
         <ListView Grid.Column="0" BorderThickness="0" 
                   ItemsSource="{Binding Game.Squares,Converter={StaticResource CollectionFlattenConverter}}"
-                  Height="Auto" Width="{Binding ActualHeight, RelativeSource={RelativeSource Self}}"
-                  SelectedItem="{Binding SelectedSquare,Mode=TwoWay}">
+                  Height="400" Width="{Binding ActualHeight, RelativeSource={RelativeSource Self}}"
+                  SelectedItem="{Binding SelectedSquare,Mode=TwoWay}" 
+                  ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                  ScrollViewer.VerticalScrollBarVisibility="Disabled">
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
                     <Setter Property="Margin" Value="0" />
@@ -34,6 +36,14 @@
                                         <MultiDataTrigger.Conditions>
                                             <Condition Binding="{Binding Path=IsSelected, RelativeSource={RelativeSource Self}}" Value="True" />
                                             <Condition Binding="{Binding Piece, Converter={StaticResource NullToBooleanConverter}}" Value="True" />
+                                            <Condition Value="True">
+                                                <Condition.Binding>
+                                                    <MultiBinding Converter="{StaticResource IsEqualConverter}">
+                                                        <Binding Path="Piece.Color" />
+                                                        <Binding Path="DataContext.Game.CurrentPlayer.Color" RelativeSource="{RelativeSource AncestorType=ListView}" />
+                                                    </MultiBinding>
+                                                </Condition.Binding>
+                                            </Condition>
                                         </MultiDataTrigger.Conditions>
                                         <Setter TargetName="Border" Property="BorderBrush" Value="Black"/>
                                         <Setter TargetName="Border" Property="BorderThickness" Value="1"/>
@@ -55,30 +65,37 @@
             </ListView.ItemContainerStyle>
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <UniformGrid Columns="8" Rows="8"  />
+                    <UniformGrid Columns="8" Rows="8" MaxWidth="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType=ListView}}" />
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Grid>
-                        <customcontrols:SVGImage Visibility="{Binding Piece, Converter={StaticResource NullToVisibilityConverter}}" 
+                    <Border Padding="5">
+                        <StackPanel>
+                            <customcontrols:SVGImage Margin="7" Visibility="{Binding Piece, Converter={StaticResource NullToVisibilityConverter}}" 
                                                  UriSource="{Binding Piece.Image,Converter={StaticResource RelativePathConverter},ConverterParameter='../Assets/'}"
-                                                 Color="{Binding Piece.Color}" Height="20" />
-                    </Grid>
+                                                 Color="{Binding Piece.Color}" />
+                        </StackPanel>
+                    </Border>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ListView>
-        <StackPanel Grid.Column="1">
-            <TextBlock>Players</TextBlock>
-            <ItemsControl ItemsSource="{Binding Game.Players}">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel>
-                            <TextBlock Text="{Binding Name}" />
-                        </StackPanel>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
-        </StackPanel>
+        <Grid Grid.Column="1">
+            <StackPanel VerticalAlignment="Center">
+                <TextBlock>Players</TextBlock>
+                <ItemsControl ItemsSource="{Binding Game.Players}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock Text="{Binding Name}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+            <StackPanel VerticalAlignment="Bottom">
+                <Button Command="{Binding QuitCommand}">Quit</Button>
+            </StackPanel>
+        </Grid>
     </Grid>
 </UserControl>

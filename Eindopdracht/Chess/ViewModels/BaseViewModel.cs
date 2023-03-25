@@ -7,11 +7,11 @@ namespace Chess.ViewModels
     /// </summary>
     public class BaseViewModel : Observable
     {
-        protected NavigationService _navigationService;
+        protected NavigationService navigationService;
 
         public BaseViewModel(NavigationService navigationService)
         {
-            _navigationService = navigationService;
+            this.navigationService = navigationService;
         }
     }
 }

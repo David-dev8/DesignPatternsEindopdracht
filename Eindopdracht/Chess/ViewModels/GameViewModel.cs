@@ -60,7 +60,7 @@ namespace Chess.ViewModels
 
         private void Quit()
         {
-
+            navigationService.Navigate(() => new GameModeSelectViewModel(navigationService));
         }
 
         private void DetermineActiveMoves()

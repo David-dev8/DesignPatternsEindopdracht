@@ -12,6 +12,7 @@
     <None Remove="Assets\king.svg" />
     <None Remove="Assets\knight.svg" />
     <None Remove="Assets\pawn.svg" />
+    <None Remove="Assets\queen.svg" />
     <None Remove="Assets\rook.svg" />
   </ItemGroup>
 

@@ -16,6 +16,6 @@
                 <local:GameView />
             </DataTemplate>
         </Grid.Resources>
-        <Frame Content="{Binding CurrentViewModel}" />
+        <Frame Content="{Binding CurrentViewModel}" NavigationUIVisibility="Hidden" />
     </Grid>
 </Window>
