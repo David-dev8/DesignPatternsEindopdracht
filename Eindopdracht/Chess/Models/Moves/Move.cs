@@ -9,16 +9,31 @@ namespace Chess.Models.Moves
 {
     public class Move
     {
-        public Square Start {get; set;}
-        public Square Destination {get; set;}
+        private IList<AffectedPieceData> _affectedPieces;
+        private Square _start;
+        private Square _destination;
+        
+        public Move(Square start, Square destination)
+        {
+            _affectedPieces = new List<AffectedPieceData>();
+            _start = start;
+            _destination = destination;
+        }
 
         public void Make(Game game)
         {
-
+            _destination.Piece = _start.Piece;
+            _affectedPieces.Add(new AffectedPieceData(_start, _destination, _start.Piece));
         }
 
         public void Undo(Game game)
         {
+            foreach(AffectedPieceData affectedPieceData in _affectedPieces)
+            {
+                affectedPieceData.Start.Piece = affectedPieceData.MovedPiece;
+                affectedPieceData.Destination.Piece = null;
+                _affectedPieces.Remove(affectedPieceData);
+            }
         }
     }
 }

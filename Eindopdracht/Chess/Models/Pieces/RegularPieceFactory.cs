@@ -36,9 +36,8 @@ namespace Chess.Models.Pieces
         }
 
         public override Piece CreatePawn()
-        {
+        { 
             return new Piece("pawn.svg", Color, new SingleAdvanceMovement(moveFactory));
-
         }
 
         public override Piece CreateQueen()

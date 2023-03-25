@@ -10,8 +10,9 @@ namespace Chess.Models.Pieces
 {
     public abstract class PieceFactory
     {
-        public Color Color { get; set; }
         protected MoveFactory moveFactory;
+
+        public Color Color { get; set; }
 
         public PieceFactory(Color color, MoveFactory moveFactory) 
         { 
