@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 
 namespace Chess.Models.Movement
 {
@@ -42,8 +43,13 @@ namespace Chess.Models.Movement
         {
             int newRow = currentLocation.Row + rowDifference;
             int newColumn = currentLocation.Column + columnDifference;
-            return newRow >= 0 && newRow < grid.Length && newColumn >= 0 && newColumn < grid[newRow].Length ?
+            return IsWithinBounds(grid, newRow, newColumn) ?
                 grid[currentLocation.Row + rowDifference][currentLocation.Column + columnDifference] : null;
+        }
+
+        protected bool IsWithinBounds(Square[][] grid, int row, int column)
+        {
+            return row >= 0 && row < grid.Length && column >= 0 && column < grid[row].Length;
         }
     }
 }

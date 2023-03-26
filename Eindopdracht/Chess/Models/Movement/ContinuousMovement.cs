@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Documents;
 
 namespace Chess.Models.Movement
 {
@@ -18,17 +19,21 @@ namespace Chess.Models.Movement
         protected IEnumerable<Move> GetPossibleMovesForSpecificDirection(Square[][] grid, Square start, Location currentLocation, int rowsPerStep, int columnsPerStep)
         {
             IList<Move> possibleMoves = new List<Move>();
-            Square destination = null;
+            Square destination;
             int nextRow = currentLocation.Row + rowsPerStep;
             int nextColumn = currentLocation.Column + columnsPerStep;
 
-            while (nextRow > 0 && nextColumn > 0 && destination.IsOccupied())
-            {
+            while(IsWithinBounds(grid, nextRow, nextColumn)) { 
                 destination = grid[nextRow][nextColumn];
                 possibleMoves.Add(moveFactory.CreateMove(start, destination));
+                if(destination.IsOccupied)
+                {
+                    break;
+                }
                 nextRow += rowsPerStep;
                 nextColumn += columnsPerStep;
             }
+
             return possibleMoves;
         }
     }

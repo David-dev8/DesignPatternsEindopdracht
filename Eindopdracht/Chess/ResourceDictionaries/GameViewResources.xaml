@@ -9,4 +9,5 @@
     <converters:RelativePathConverter x:Key="RelativePathConverter" />
     <converters:IsEqualConverter x:Key="IsEqualConverter" />
     <converters:IsContainedInCollectionConverter x:Key="IsContainedInCollectionConverter" />
+    <converters:IsEqualToVisibilityConverter x:Key="IsEqualToVisibilityConverter" />
 </ResourceDictionary>

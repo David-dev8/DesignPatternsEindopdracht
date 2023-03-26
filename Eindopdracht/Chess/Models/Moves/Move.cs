@@ -22,9 +22,15 @@ namespace Chess.Models.Moves
 
         public void Make(Game game)
         {
+            _affectedPieces.Add(new AffectedPieceData(Start, Destination, Start.Piece));
+            if(Destination.Piece != null)
+            {
+                // There is a piece to be captured
+                _affectedPieces.Add(new AffectedPieceData(Destination, null, Destination.Piece));
+            }
+
             Destination.Piece = Start.Piece;
             Start.Piece = null;
-            _affectedPieces.Add(new AffectedPieceData(Start, Destination, Start.Piece));
         }
 
         public void Undo(Game game)
@@ -32,9 +38,12 @@ namespace Chess.Models.Moves
             foreach(AffectedPieceData affectedPieceData in _affectedPieces)
             {
                 affectedPieceData.Start.Piece = affectedPieceData.MovedPiece;
-                affectedPieceData.Destination.Piece = null;
-                _affectedPieces.Remove(affectedPieceData);
+                if(affectedPieceData.Destination != null)
+                {
+                    affectedPieceData.Destination.Piece = null;
+                }
             }
+            _affectedPieces.Clear();
         }
     }
 }

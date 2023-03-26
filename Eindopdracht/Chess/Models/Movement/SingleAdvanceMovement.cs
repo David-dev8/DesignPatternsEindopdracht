@@ -36,7 +36,7 @@ namespace Chess.Models.Movement
             IList<Move> possibleMoves, bool shouldBeOccupied)
         {
             Square adjacentSquare = GetDestination(grid, currentLocation, -1, columnDifference);
-            if (adjacentSquare != null && adjacentSquare.IsOccupied() == shouldBeOccupied)
+            if (adjacentSquare != null && adjacentSquare.IsOccupied == shouldBeOccupied)
             {
                 possibleMoves.Add(moveFactory.CreateMove(start, adjacentSquare, _moveOptions));
             }

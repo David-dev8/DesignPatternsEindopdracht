@@ -29,10 +29,7 @@ namespace Chess.ViewModels
             {
                 _selectedSquare = value;
                 NotifyPropertyChanged();
-                if(_selectedSquare != null)
-                {
-                    DetermineActiveMoves();
-                }
+                DetermineActiveMoves();
             }
         }
         public IEnumerable<Move> ActiveMoves
@@ -51,7 +48,7 @@ namespace Chess.ViewModels
         public GameViewModel(Game game, NavigationService navigationService) : base(navigationService)
         {
             Game = game;
-            UndoMoveCommand = new RelayCommand(UndoMove);
+            UndoMoveCommand = new RelayCommand(UndoMove, (_) => game.CanUndoMove);
             QuitCommand = new RelayCommand(Quit);
             ActiveMoves = new List<Move>();
         }
@@ -59,6 +56,7 @@ namespace Chess.ViewModels
         private void UndoMove()
         {
             Game.UndoMove();
+            SelectedSquare = null;
         }
 
         private void Quit()

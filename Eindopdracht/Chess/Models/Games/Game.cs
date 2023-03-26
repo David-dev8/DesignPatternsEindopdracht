@@ -24,6 +24,13 @@ namespace Chess.Models.Games
                 return GetWinners() != null;
             }
         }
+        public bool CanUndoMove
+        {
+            get
+            {
+                return _movesHistory.Any();
+            }
+        }
         public Player CurrentPlayer
         {
             get
@@ -46,6 +53,7 @@ namespace Chess.Models.Games
             if(IsLegal(move))
             {
                 move.Make(this);
+                _movesHistory.Push(move);
                 IncreaseScore(CurrentPlayer, move);
                 EliminatePlayers();
                 if(!HasEnded)
@@ -67,11 +75,28 @@ namespace Chess.Models.Games
             OnPropertyChanged(nameof(CurrentPlayer));
         }
 
+        //protected Game VirtuallyMakeMove(Move move)
+        //{
+
+        //}
+
+        //private Game Clone()
+        //{
+        //    Game clone = ConstructCopy();
+        //    clone.Squares = Squares.Select(row => row.Select(square =>
+        //    {
+        //        Square newSquare = new Square();
+        //        newSquare.Piece = square.Piece;
+        //    }));
+        //    return clone;
+        //}
+
         public abstract IEnumerable<Player> GetWinners();
         public abstract bool IsLegal(Move move);
         protected abstract Square[][] CreateBoard();
         protected abstract void SetUpPieces();
         protected abstract void EliminatePlayers();
         protected abstract void IncreaseScore(Player player, Move move);
+        //protected abstract Game ConstructCopy();
     }
 }

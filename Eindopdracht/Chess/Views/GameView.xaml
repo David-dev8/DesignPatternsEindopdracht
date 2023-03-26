@@ -10,14 +10,16 @@
     <UserControl.Resources>
         <ResourceDictionary Source="../ResourceDictionaries/GameViewResources.xaml" />
     </UserControl.Resources>
-    <Grid>
+    <Grid Margin="0,100" MinHeight="500">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="8*" />
+            <ColumnDefinition Width="4*" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <ListView Grid.Column="0" BorderThickness="0" 
+        <ListView Grid.Column="1" BorderThickness="0" 
                   ItemsSource="{Binding Game.Squares,Converter={StaticResource CollectionFlattenConverter}}"
-                  Height="400" Width="{Binding ActualHeight, RelativeSource={RelativeSource Self}}"
+                  Width="{Binding ActualHeight, RelativeSource={RelativeSource Self}}"
                   SelectedItem="{Binding SelectedSquare,Mode=TwoWay}" 
                   ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                   ScrollViewer.VerticalScrollBarVisibility="Disabled">
@@ -80,8 +82,8 @@
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ListView>
-        <Grid Grid.Column="1">
-            <StackPanel VerticalAlignment="Center">
+        <Grid Grid.Column="2">
+            <StackPanel VerticalAlignment="Top" Margin="0,40">
                 <TextBlock FontWeight="Bold" FontSize="20">Players</TextBlock>
                 <ItemsControl ItemsSource="{Binding Game.Players}">
                     <ItemsControl.ItemTemplate>
@@ -107,7 +109,8 @@
                                 </Grid.Background>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="5*" />
+                                    <ColumnDefinition Width="3*" />
+                                    <ColumnDefinition Width="2*" />
                                 </Grid.ColumnDefinitions>
                                 <Border BorderThickness="3" BorderBrush="Black" Padding="14"
                                         Width="Auto" Height="{Binding RelativeSource={RelativeSource Self}, Path=ActualWidth}">
@@ -120,14 +123,46 @@
                                         <TextBlock FontSize="16" Text="{Binding Score}" />
                                     </StackPanel>
                                 </Border>
+                                <TextBlock VerticalAlignment="Center" Grid.Column="2" FontSize="16" Text="May move">
+                                    <TextBlock.Visibility>
+                                        <MultiBinding Converter="{StaticResource IsEqualToVisibilityConverter}">
+                                            <Binding />
+                                            <Binding Path="DataContext.Game.CurrentPlayer" RelativeSource="{RelativeSource AncestorType={x:Type local:GameView}}" />
+                                        </MultiBinding>
+                                    </TextBlock.Visibility>
+                                </TextBlock>
                             </Grid>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
             </StackPanel>
-            <StackPanel VerticalAlignment="Bottom">
-                <Button Command="{Binding QuitCommand}">Quit</Button>
-            </StackPanel>
+            <Grid VerticalAlignment="Bottom">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="10" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="0" Command="{Binding UndoMoveCommand}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="20" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <customcontrols:SVGImage Grid.Column="0" Source="../Assets/undoIcon.svg" />
+                        <TextBlock Margin="10,0" FontSize="16" VerticalAlignment="Center" Grid.Column="1">Undo last move</TextBlock>
+                    </Grid>
+                </Button>
+                <Button Grid.Column="2" Command="{Binding QuitCommand}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="20" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <customcontrols:SVGImage Grid.Column="0" Source="../Assets/leaveIcon.svg" />
+                        <TextBlock Margin="10,0" FontSize="16" VerticalAlignment="Center" Grid.Column="1">Quit</TextBlock>
+                    </Grid>
+                </Button>
+            </Grid>
         </Grid>
     </Grid>
 </UserControl>

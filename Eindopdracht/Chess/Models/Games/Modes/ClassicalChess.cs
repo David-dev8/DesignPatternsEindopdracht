@@ -15,7 +15,7 @@ namespace Chess.Models.Games.Modes
         private const int BOARD_SIZE = 8;
 
         public ClassicalChess() : base(new RegularPieceFactory(Color.FromRgb(0, 0, 0)), new List<Player>() { 
-            new Player() { Color = Color.FromRgb(255, 255, 255) },
+            new Player() { Color = Color.FromRgb(255, 0, 0) },
             new Player() { Color = Color.FromRgb(0, 0, 0) } 
         })
         {

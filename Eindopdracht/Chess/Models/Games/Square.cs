@@ -28,13 +28,12 @@ namespace Chess.Models.Games
             }
         }
 
-        public Square() 
+        public bool IsOccupied
         {
-        }
-
-        public bool IsOccupied()
-        {
-            return Piece != null;
+            get
+            {
+                return Piece != null;
+            }
         }
     }
 }

@@ -23,7 +23,7 @@ namespace Chess.Views.CustomControls
         public static readonly DependencyProperty ColorProperty =
             DependencyProperty.Register("Color", typeof(string), typeof(SVGImage), new PropertyMetadata(null));
 
-        static SVGImage()
+        public static SVGImage()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(SVGImage), new FrameworkPropertyMetadata(typeof(SVGImage)));
         }
@@ -46,6 +46,11 @@ namespace Chess.Views.CustomControls
         }
 
         private void SVGImage_Loaded(object sender, RoutedEventArgs e)
+        {
+            SetRightColor();
+        }
+
+        private void SetRightColor()
         {
             if(Color != null)
             {
