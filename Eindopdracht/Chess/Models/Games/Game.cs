@@ -256,6 +256,11 @@ namespace Chess.Models.Games
         /// <param name="player">The player to increase the score for</param>
         /// <param name="move">The move to score for</param>
         protected abstract void IncreaseScore(Player player, Move move);
+
+        /// <summary>
+        /// Constructs a copy of the current game
+        /// </summary>
+        /// <returns>A copy of the current game</returns>
         protected abstract Game ConstructCopy();
     }
 }

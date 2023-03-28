@@ -28,6 +28,8 @@ namespace Chess.Views.CustomControls
             DefaultStyleKeyProperty.OverrideMetadata(typeof(SVGImage), new FrameworkPropertyMetadata(typeof(SVGImage)));
         }
 
+        private IList<Brush> _seenBrushes = new List<Brush>();
+
         public string Color
         {
             get
@@ -40,11 +42,10 @@ namespace Chess.Views.CustomControls
             }
         }
 
-        //private IList<SvgDrawingCanvas> seenDrawings = new List<SvgDrawingCanvas>(); TODO
-
         public SVGImage()
         {
             Loaded += SVGImage_Loaded;
+            LayoutUpdated += SVGImage_Loaded;
         }
 
         private void SVGImage_Loaded(object sender, EventArgs e)
@@ -73,20 +74,29 @@ namespace Chess.Views.CustomControls
 
         private void SetRightColor(GeometryDrawing drawing)
         {
-            var color = (Color)ColorConverter.ConvertFromString(Color);
-            if(color.ToString() == "#FF000000")
+            if(!_seenBrushes.Contains(drawing.Brush))
             {
-                drawing.Brush = new SolidColorBrush()
+                var color = (Color)ColorConverter.ConvertFromString(Color);
+                if (color.ToString() == "#FF000000")
                 {
-                    Color = Invert((Color)ColorConverter.ConvertFromString(drawing.Brush.ToString()))
-                };
-            }
-            else if(drawing.Brush.ToString() == "#FFFFFFFF")
-            {
-                drawing.Brush = new SolidColorBrush()
+                    var brush = new SolidColorBrush()
+                    {
+                        Color = Invert((Color)ColorConverter.ConvertFromString(drawing.Brush.ToString()))
+                    };
+
+                    drawing.Brush = brush;
+                    _seenBrushes.Add(brush);
+                }
+                else if (drawing.Brush.ToString() == "#FFFFFFFF")
                 {
-                    Color = color
-                };
+                    var brush = new SolidColorBrush()
+                    {
+                        Color = color
+                    };
+
+                    drawing.Brush = brush;
+                    _seenBrushes.Add(brush);
+                }
             }
         }
 
