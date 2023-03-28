@@ -47,13 +47,13 @@ namespace Chess.Models.Games.Modes
 
         protected override void SetUpPieces()
         {
-            SetupHorde(AdvanceDirections.UP, Players[0].Color);
-            SetupPiecesForRanks(Squares[0], Squares[1], AdvanceDirections.DOWN, Players[1].Color);
+            SetupHorde(AdvanceDirections.UP, Players[0]);
+            SetupPiecesForRanks(Squares[0], Squares[1], AdvanceDirections.DOWN, Players[1]);
         }
 
-        private void SetupHorde(AdvanceDirections direction, Color color)
+        private void SetupHorde(AdvanceDirections direction, Player player)
         {
-            pieceFactory.Color = color;
+            pieceFactory.Color = player.Color;
             for(int i = Squares.Length - 1; i >= Squares.Length - 4; i--)
             {
                 foreach(Square square in Squares[i])
@@ -62,32 +62,11 @@ namespace Chess.Models.Games.Modes
                 }
             }
 
-            Squares[Squares.Length - 5][1].Piece = pieceFactory.CreatePawn(direction);
+            Squares[Squares.Length - 5][1].Piece = pieceFactory.CreatePawn(direction); // TODO dubbel met bovenstaande code?
             Squares[Squares.Length - 5][2].Piece = pieceFactory.CreatePawn(direction);
 
             Squares[Squares.Length - 5][5].Piece = pieceFactory.CreatePawn(direction);
             Squares[Squares.Length - 5][6].Piece = pieceFactory.CreatePawn(direction);
         }
-
-        private void SetupPiecesForRanks(Square[] firstRank, Square[] secondRank, AdvanceDirections direction, Color color)
-        {
-            pieceFactory.Color = color;
-
-            firstRank[0].Piece = pieceFactory.CreateRook();
-            firstRank[1].Piece = pieceFactory.CreateKnight();
-            firstRank[2].Piece = pieceFactory.CreateBishop();
-            firstRank[3].Piece = pieceFactory.CreateQueen();
-            firstRank[4].Piece = pieceFactory.CreateKing();
-            firstRank[5].Piece = pieceFactory.CreateBishop();
-            firstRank[6].Piece = pieceFactory.CreateKnight();
-            firstRank[7].Piece = pieceFactory.CreateRook(); // TODO method reference I think
-
-            // Pawns for every square on the second rank
-            foreach(Square square in secondRank)
-            {
-                square.Piece = pieceFactory.CreatePawn(direction);
-            }
-        }
-
     }
 }

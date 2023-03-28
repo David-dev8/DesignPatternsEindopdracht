@@ -3,6 +3,7 @@ using Chess.Models.Pieces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
@@ -46,16 +47,9 @@ namespace Chess.Models.Games.Modes
 
         }
 
-        protected override void SetUpPieces()
+        protected override void SetupPiecesForRanks(Square[] firstRank, Square[] secondRank, AdvanceDirections direction, Player player)
         {
-            // TODO enum for color?
-            SetupPiecesForRanks(Squares[BOARD_SIZE - 1], Squares[BOARD_SIZE - 2], AdvanceDirections.UP, Players[0].Color);
-            SetupPiecesForRanks(Squares[0], Squares[1], AdvanceDirections.DOWN, Players[1].Color);
-        }
-
-        private void SetupPiecesForRanks(Square[] firstRank, Square[] secondRank, AdvanceDirections direction, Color color)
-        {
-            pieceFactory.Color = color;
+            pieceFactory.Color = player.Color;
 
             List<Piece> piecesToPlace = new List<Piece>() {
                 pieceFactory.CreateRook(),
@@ -68,6 +62,8 @@ namespace Chess.Models.Games.Modes
             };
             piecesToPlace.AddRange(Enumerable.Range(0, 8).Select(n => pieceFactory.CreatePawn(direction)));
 
+            Piece king = pieceFactory.CreateKing();
+            kings.Add(player, king);
             firstRank[_randomNumberGen.Next(0, firstRank.Length)].Piece = pieceFactory.CreateKing();
 
             foreach (Square square in firstRank.Union(secondRank))

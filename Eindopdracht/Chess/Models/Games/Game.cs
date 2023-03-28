@@ -208,10 +208,10 @@ namespace Chess.Models.Games
         /// <summary>
         /// Sets all the pieces up for the first and second rank.
         /// </summary>
-        /// <param name="firstRank"></param>
-        /// <param name="secondRank"></param>
-        /// <param name="direction"></param>
-        /// <param name="player"></param>
+        /// <param name="firstRank">The first rank to place pieces</param>
+        /// <param name="secondRank">The second rank to place pieces</param>
+        /// <param name="direction">The direction of the pieces to move</param>
+        /// <param name="player">The current player</param>
         protected virtual void SetupPiecesForRanks(Square[] firstRank, Square[] secondRank, AdvanceDirections direction, Player player)
         {
             pieceFactory.Color = player.Color;
@@ -223,18 +223,25 @@ namespace Chess.Models.Games
             Piece king = pieceFactory.CreateKing();
             kings.Add(player, king);
             firstRank[4].Piece = king;
-            //firstRank[5].Piece = pieceFactory.CreateBishop();
-            //firstRank[6].Piece = pieceFactory.CreateKnight();
+            firstRank[5].Piece = pieceFactory.CreateBishop();
+            firstRank[6].Piece = pieceFactory.CreateKnight();
             firstRank[7].Piece = pieceFactory.CreateRook();
 
-            // Pawns for every square on the second rank
-            foreach (Square square in secondRank)
+            SetupPawnsForRank(secondRank, direction);
+        }
+
+        /// <summary>
+        /// Sets all the pawns up for the given rank
+        /// </summary>
+        /// <param name="rank">The rank to place pawns</param>
+        /// <param name="direction">The direction of the pieces to move</param>
+        protected virtual void SetupPawnsForRank(Square[] rank, AdvanceDirections direction)
+        {
+            foreach (Square square in rank)
             {
                 square.Piece = pieceFactory.CreatePawn(direction);
             }
         }
-
-
 
         /// <summary>
         /// Removes a player from a game

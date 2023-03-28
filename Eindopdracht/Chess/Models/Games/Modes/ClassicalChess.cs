@@ -110,34 +110,5 @@ namespace Chess.Models.Games.Modes
         {
             player.Score += GUARENTEED_SCORE_PER_MOVE + move.Score;
         }
-
-        protected override void SetUpPieces()
-        {
-            // TODO enum for color?
-            SetupPiecesForRanks(Squares[BOARD_SIZE - 1], Squares[BOARD_SIZE - 2], AdvanceDirections.UP, Players[0]);
-            SetupPiecesForRanks(Squares[0], Squares[1], AdvanceDirections.DOWN, Players[1]);
-        }
-
-        private void SetupPiecesForRanks(Square[] firstRank, Square[] secondRank, AdvanceDirections direction, Player player)
-        {
-            pieceFactory.Color = player.Color;
-            
-            firstRank[0].Piece = pieceFactory.CreateRook();
-            firstRank[1].Piece = pieceFactory.CreateKnight();
-            firstRank[2].Piece = pieceFactory.CreateBishop();
-            firstRank[3].Piece = pieceFactory.CreateQueen();
-            Piece king = pieceFactory.CreateKing();
-            kings.Add(player, king);
-            firstRank[4].Piece = king;
-            //firstRank[5].Piece = pieceFactory.CreateBishop();
-            //firstRank[6].Piece = pieceFactory.CreateKnight();
-            firstRank[7].Piece = pieceFactory.CreateRook();
-
-            // Pawns for every square on the second rank
-            foreach(Square square in secondRank)
-            {
-                square.Piece = pieceFactory.CreatePawn(direction);
-            }
-        }
     }
 }

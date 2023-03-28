@@ -18,7 +18,7 @@ namespace Chess.Models.Games.Modes
             new Player() { Color = Color.FromRgb(255, 200, 200) },
             new Player() { Color = Color.FromRgb(50, 0, 0) },
             new Player() { Color = Color.FromRgb(0, 50, 0) },
-            new Player() { Color = Color.FromRgb(0, 0, 50) }
+            new Player() { Color = Color.FromRgb(0, 0, 50) } // TODO kleuren?
         })
         {
         }
@@ -71,17 +71,17 @@ namespace Chess.Models.Games.Modes
 
         protected override void SetUpPieces()
         {
-            // TODO enum for color?
-            SetupPiecesForRanks(Squares[BOARD_SIZE - 1], Squares[BOARD_SIZE - 2], AdvanceDirections.UP, Players[0].Color);
-            SetupPiecesForRanks(Squares[0], Squares[1], AdvanceDirections.DOWN, Players[1].Color);
+            SetupPiecesForRanks(Squares[BOARD_SIZE - 1], Squares[BOARD_SIZE - 2], AdvanceDirections.UP, Players[0]);
+            SetupPiecesForRanks(Squares[0], Squares[1], AdvanceDirections.DOWN, Players[1]);
 
-            SetupPiecesForRanks(Squares.Select(row => row[0]).ToArray(), Squares.Select(row => row[1]).ToArray(), AdvanceDirections.RIGHT, Players[2].Color);
-            SetupPiecesForRanks(Squares.Select(row => row[BOARD_SIZE - 1]).ToArray(), Squares.Select(row => row[BOARD_SIZE - 2]).ToArray(), AdvanceDirections.LEFT, Players[3].Color);
+            SetupPiecesForRanks(Squares.Select(row => row[0]).ToArray(), Squares.Select(row => row[1]).ToArray(), AdvanceDirections.RIGHT, Players[2]);
+            SetupPiecesForRanks(Squares.Select(row => row[BOARD_SIZE - 1]).ToArray(), Squares.Select(row => row[BOARD_SIZE - 2]).ToArray(), 
+                AdvanceDirections.LEFT, Players[3]);
         }
 
-        private void SetupPiecesForRanks(Square[] firstRank, Square[] secondRank, AdvanceDirections direction, Color color)
+        protected override void SetupPiecesForRanks(Square[] firstRank, Square[] secondRank, AdvanceDirections direction, Player player)
         {
-            pieceFactory.Color = color;
+            pieceFactory.Color = player.Color;
 
             firstRank[GAP].Piece = pieceFactory.CreateRook();
             firstRank[GAP + 1].Piece = pieceFactory.CreateKnight();
@@ -92,10 +92,14 @@ namespace Chess.Models.Games.Modes
             firstRank[GAP + 6].Piece = pieceFactory.CreateKnight();
             firstRank[GAP + 7].Piece = pieceFactory.CreateRook();
 
-            // Pawns for every square on the second rank
+            SetupPawnsForRank(secondRank, direction);
+        }
+
+        protected override void SetupPawnsForRank(Square[] rank, AdvanceDirections direction)
+        {
             for (int i = GAP; i < BOARD_SIZE - GAP; i++)
             {
-                secondRank[i].Piece = pieceFactory.CreatePawn(direction);
+                rank[i].Piece = pieceFactory.CreatePawn(direction);
             }
         }
 

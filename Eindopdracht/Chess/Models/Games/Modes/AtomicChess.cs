@@ -47,16 +47,9 @@ namespace Chess.Models.Games.Modes
 
         }
 
-        protected override void SetUpPieces()
+        protected override void SetupPiecesForRanks(Square[] firstRank, Square[] secondRank, AdvanceDirections direction, Player player)
         {
-            // TODO enum for color?
-            SetupPiecesForRanks(Squares[BOARD_SIZE - 1], Squares[BOARD_SIZE - 2], AdvanceDirections.UP, Players[0].Color);
-            SetupPiecesForRanks(Squares[0], Squares[1], AdvanceDirections.DOWN, Players[1].Color);
-        }
-
-        private void SetupPiecesForRanks(Square[] firstRank, Square[] secondRank, AdvanceDirections direction, Color color)
-        {
-            pieceFactory.Color = color;
+            pieceFactory.Color = player.Color;
 
             firstRank[0].Piece = pieceFactory.CreateRook();
             firstRank[1].Piece = pieceFactory.CreateKnight();
@@ -65,13 +58,9 @@ namespace Chess.Models.Games.Modes
             firstRank[4].Piece = pieceFactory.CreateKing();
             firstRank[5].Piece = pieceFactory.CreateBishop();
             firstRank[6].Piece = pieceFactory.CreateKnight();
-            firstRank[7].Piece = pieceFactory.CreateRook(); // TODO method reference I think
+            firstRank[7].Piece = pieceFactory.CreateRook();
 
-            // Pawns for every square on the second rank
-            foreach (Square square in secondRank)
-            {
-                square.Piece = pieceFactory.CreatePawn(direction);
-            }
+            SetupPawnsForRank(secondRank, direction);
         }
     }
 }
