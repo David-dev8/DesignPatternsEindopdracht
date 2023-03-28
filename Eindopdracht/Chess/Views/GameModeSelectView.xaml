@@ -45,26 +45,29 @@
                     <ColumnDefinition Width="*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="0" Text="{Binding ChosenGameMode.Key}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30"></TextBlock>
-                
-                <TextBlock Grid.Column="0" Grid.Row="0" Grid.RowSpan="3" Grid.ColumnSpan="3" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="75, 0, 75, 0" Text="{Binding ChosenGameMode.Value}" TextWrapping="Wrap"></TextBlock>
-                
+                <TextBlock Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="0" Text="{Binding ChosenGameMode.Name}" HorizontalAlignment="Center" 
+                           VerticalAlignment="Center" FontSize="30" />
+
+                <TextBlock Grid.Column="0" Grid.Row="0" Grid.RowSpan="3" Grid.ColumnSpan="3" HorizontalAlignment="Center" VerticalAlignment="Center" 
+                           Margin="75, 0, 75, 0" Text="{Binding ChosenGameMode.Description}" TextWrapping="Wrap" />
             </Grid>
         </Border>
-
 
         <Grid Grid.Column="3" Grid.Row="1" Background="White" Opacity="0.5" Margin="5">
             <TextBlock Text="Gamemodes" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="35" FontWeight="Bold" />
         </Grid>
 
         <ScrollViewer Grid.Row="3" Grid.RowSpan="4" Grid.Column="3" VerticalScrollBarVisibility="Hidden">
-        <ItemsControl BorderThickness="0" ItemsSource="{Binding GameModes}">
-            
+            <ListView BorderThickness="0" ItemsSource="{Binding GameModes}" SelectedItem="{Binding ChosenGameMode,Mode=TwoWay}">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                        <Border BorderThickness="5" BorderBrush="Black" Height="150">
-                            <Grid Height="150" Opacity="0.5">
-
+                    <Border BorderThickness="5" BorderBrush="Black" Height="150">
+                        <Grid Height="150" Opacity="0.5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="0.5*"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="0.5*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
                                 <Grid.Style>
                                     <Style TargetType="{x:Type Grid}">
                                         <Style.Triggers>
@@ -77,28 +80,13 @@
                                         </Style.Triggers>
                                     </Style>
                                 </Grid.Style>
-                            
-                                <Grid.InputBindings>
-                                    <MouseBinding MouseAction="LeftClick" Command="{Binding Value}"/>
-                                </Grid.InputBindings>
-
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="0.5*"></ColumnDefinition>
-                                    <ColumnDefinition Width="*"></ColumnDefinition>
-                                    <ColumnDefinition Width="0.5*"></ColumnDefinition>
-                                </Grid.ColumnDefinitions>
-                                
-                                <TextBlock Text="{Binding Key}" Grid.Column="0" Grid.ColumnSpan="3" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="25"></TextBlock>
-                        
-                        </Grid>
+                                <TextBlock Text="{Binding Key}" Grid.Column="0" Grid.ColumnSpan="3" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="25" />
+                            </Grid>
                     </Border>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
-        </ItemsControl>
+        </ListView>
         </ScrollViewer>
-
         <Button Command="{Binding StartCommand}" Grid.Column="1" Grid.Row="5" Background="White" Opacity="0.75" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="50" Width="250" Height="80">Play</Button>
-        
     </Grid>
-    
 </UserControl>
