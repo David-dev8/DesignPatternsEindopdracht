@@ -36,7 +36,11 @@ namespace Chess.Models.Movement
             Square currentSquare = grid.GetCurrentSquare(piece);
             Location currentLocation = grid.GetCurrentLocation(currentSquare);
 
-            possibleMoves.Add(moveFactory.CreateMove(currentSquare, GetDestination(grid, currentLocation, -2, 0, _direction), _moveOptions));
+            Square squareTwoSpacesUp = GetDestination(grid, currentLocation, -2, 0, _direction);
+            if(squareTwoSpacesUp != null)
+            {
+                possibleMoves.Add(moveFactory.CreateMove(currentSquare, squareTwoSpacesUp, _moveOptions));
+            }
 
             RegisterPossibleEnPassantCapture(grid, currentSquare, currentLocation, 1, possibleMoves);
             RegisterPossibleEnPassantCapture(grid, currentSquare, currentLocation, -1, possibleMoves);

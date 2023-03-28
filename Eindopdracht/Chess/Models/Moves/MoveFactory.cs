@@ -1,4 +1,5 @@
 ﻿using Chess.Models.Games;
+using Chess.Models.Pieces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +20,7 @@ namespace Chess.Models.Moves
         /// <param name="destination">The end location of the move to be made</param>
         /// <param name="options">The extra options for the movement</param>
         /// <returns>The move created acording to the input</returns>
-        public Move CreateMove(Square start, Square destination, MoveOptions[] options = null)
+        public Move CreateMove(Square start, Square destination, MoveOptions[] options = null, AdvanceDirections? direction = null)
         {
             Move move = new Move(start, destination);
 
@@ -34,7 +35,7 @@ namespace Chess.Models.Moves
             }
             if(options.Contains(MoveOptions.PROMOTION))
             {
-                move = new PromotionDecorator(move);
+                move = new PromotionDecorator(move, direction.Value);
             }
 
             return move;

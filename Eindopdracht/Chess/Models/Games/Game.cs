@@ -18,10 +18,10 @@ namespace Chess.Models.Games
     /// </summary>
     public abstract class Game: Observable
     {
+        private const int DEFAULT_PROMOTION_RANK = 8;
         private Stack<Move> _movesHistory = new Stack<Move>();
         protected IDictionary<Player, Piece> kings = new Dictionary<Player, Piece>();
         private readonly int _boardSize;
-        protected readonly PieceFactory pieceFactory;
 
         public Square[][] Squares { get; set; }
         public IList<Player> Players { get; set; }
@@ -40,6 +40,7 @@ namespace Chess.Models.Games
                 return _movesHistory.Any();
             }
         }
+        public PieceFactory PieceFactory { get; private set; }
         public Player CurrentPlayer
         {
             get
@@ -47,6 +48,7 @@ namespace Chess.Models.Games
                 return ActivePlayers[0];
             }
         }
+        public int PromotionRank { get; set; } = DEFAULT_PROMOTION_RANK;
         protected IEnumerable<Piece> Pieces
         {
             get
@@ -64,7 +66,7 @@ namespace Chess.Models.Games
         /// <param name="players">A list of players that are participating in the game</param>
         public Game(PieceFactory pieceFactory, int boardSize, IList<Player> players)
         {
-            this.pieceFactory = pieceFactory;
+            this.PieceFactory = pieceFactory;
             Players = players;
             ActivePlayers = new ObservableCollection<Player>(Players);
             _boardSize = boardSize;
@@ -214,18 +216,18 @@ namespace Chess.Models.Games
         /// <param name="player">The current player</param>
         protected virtual void SetupPiecesForRanks(Square[] firstRank, Square[] secondRank, AdvanceDirections direction, Player player)
         {
-            pieceFactory.Color = player.Color;
+            PieceFactory.Color = player.Color;
 
-            firstRank[0].Piece = pieceFactory.CreateRook();
-            firstRank[1].Piece = pieceFactory.CreateKnight();
-            firstRank[2].Piece = pieceFactory.CreateBishop();
-            firstRank[3].Piece = pieceFactory.CreateQueen();
-            Piece king = pieceFactory.CreateKing();
+            firstRank[0].Piece = PieceFactory.CreateRook();
+            firstRank[1].Piece = PieceFactory.CreateKnight();
+            firstRank[2].Piece = PieceFactory.CreateBishop();
+            firstRank[3].Piece = PieceFactory.CreateQueen();
+            Piece king = PieceFactory.CreateKing();
             kings.Add(player, king);
             firstRank[4].Piece = king;
-            firstRank[5].Piece = pieceFactory.CreateBishop();
-            firstRank[6].Piece = pieceFactory.CreateKnight();
-            firstRank[7].Piece = pieceFactory.CreateRook();
+            firstRank[5].Piece = PieceFactory.CreateBishop();
+            firstRank[6].Piece = PieceFactory.CreateKnight();
+            firstRank[7].Piece = PieceFactory.CreateRook();
 
             SetupPawnsForRank(secondRank, direction);
         }
@@ -239,7 +241,7 @@ namespace Chess.Models.Games
         {
             foreach (Square square in rank)
             {
-                square.Piece = pieceFactory.CreatePawn(direction);
+                square.Piece = PieceFactory.CreatePawn(direction);
             }
         }
 

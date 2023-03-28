@@ -46,21 +46,5 @@ namespace Chess.Models.Games.Modes
         {
 
         }
-
-        protected override void SetupPiecesForRanks(Square[] firstRank, Square[] secondRank, AdvanceDirections direction, Player player)
-        {
-            pieceFactory.Color = player.Color;
-
-            firstRank[0].Piece = pieceFactory.CreateRook();
-            firstRank[1].Piece = pieceFactory.CreateKnight();
-            firstRank[2].Piece = pieceFactory.CreateBishop();
-            firstRank[3].Piece = pieceFactory.CreateQueen();
-            firstRank[4].Piece = pieceFactory.CreateKing();
-            firstRank[5].Piece = pieceFactory.CreateBishop();
-            firstRank[6].Piece = pieceFactory.CreateKnight();
-            firstRank[7].Piece = pieceFactory.CreateRook();
-
-            SetupPawnsForRank(secondRank, direction);
-        }
     }
 }

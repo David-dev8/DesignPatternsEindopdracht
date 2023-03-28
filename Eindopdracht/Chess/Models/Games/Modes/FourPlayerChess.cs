@@ -81,16 +81,16 @@ namespace Chess.Models.Games.Modes
 
         protected override void SetupPiecesForRanks(Square[] firstRank, Square[] secondRank, AdvanceDirections direction, Player player)
         {
-            pieceFactory.Color = player.Color;
+            PieceFactory.Color = player.Color;
 
-            firstRank[GAP].Piece = pieceFactory.CreateRook();
-            firstRank[GAP + 1].Piece = pieceFactory.CreateKnight();
-            firstRank[GAP + 2].Piece = pieceFactory.CreateBishop();
-            firstRank[GAP + 3].Piece = pieceFactory.CreateQueen();
-            firstRank[GAP + 4].Piece = pieceFactory.CreateKing();
-            firstRank[GAP + 5].Piece = pieceFactory.CreateBishop();
-            firstRank[GAP + 6].Piece = pieceFactory.CreateKnight();
-            firstRank[GAP + 7].Piece = pieceFactory.CreateRook();
+            firstRank[GAP].Piece = PieceFactory.CreateRook();
+            firstRank[GAP + 1].Piece = PieceFactory.CreateKnight();
+            firstRank[GAP + 2].Piece = PieceFactory.CreateBishop();
+            firstRank[GAP + 3].Piece = PieceFactory.CreateQueen();
+            firstRank[GAP + 4].Piece = PieceFactory.CreateKing();
+            firstRank[GAP + 5].Piece = PieceFactory.CreateBishop();
+            firstRank[GAP + 6].Piece = PieceFactory.CreateKnight();
+            firstRank[GAP + 7].Piece = PieceFactory.CreateRook();
 
             SetupPawnsForRank(secondRank, direction);
         }
@@ -99,7 +99,7 @@ namespace Chess.Models.Games.Modes
         {
             for (int i = GAP; i < BOARD_SIZE - GAP; i++)
             {
-                rank[i].Piece = pieceFactory.CreatePawn(direction);
+                rank[i].Piece = PieceFactory.CreatePawn(direction);
             }
         }
 

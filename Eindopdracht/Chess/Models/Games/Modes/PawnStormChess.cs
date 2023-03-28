@@ -53,20 +53,20 @@ namespace Chess.Models.Games.Modes
 
         private void SetupHorde(AdvanceDirections direction, Player player)
         {
-            pieceFactory.Color = player.Color;
+            PieceFactory.Color = player.Color;
             for(int i = Squares.Length - 1; i >= Squares.Length - 4; i--)
             {
                 foreach(Square square in Squares[i])
                 {
-                    square.Piece = pieceFactory.CreatePawn(direction);
+                    square.Piece = PieceFactory.CreatePawn(direction);
                 }
             }
 
-            Squares[Squares.Length - 5][1].Piece = pieceFactory.CreatePawn(direction); // TODO dubbel met bovenstaande code?
-            Squares[Squares.Length - 5][2].Piece = pieceFactory.CreatePawn(direction);
+            Squares[Squares.Length - 5][1].Piece = PieceFactory.CreatePawn(direction);
+            Squares[Squares.Length - 5][2].Piece = PieceFactory.CreatePawn(direction);
 
-            Squares[Squares.Length - 5][5].Piece = pieceFactory.CreatePawn(direction);
-            Squares[Squares.Length - 5][6].Piece = pieceFactory.CreatePawn(direction);
+            Squares[Squares.Length - 5][5].Piece = PieceFactory.CreatePawn(direction);
+            Squares[Squares.Length - 5][6].Piece = PieceFactory.CreatePawn(direction);
         }
     }
 }

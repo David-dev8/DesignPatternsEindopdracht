@@ -42,7 +42,7 @@ namespace Chess.Models.Movement
             Square adjacentSquare = GetDestination(grid, currentLocation, -1, columnDifference, _direction);
             if (adjacentSquare != null && adjacentSquare.IsOccupied == shouldBeOccupied)
             {
-                possibleMoves.Add(moveFactory.CreateMove(start, adjacentSquare, _moveOptions));
+                possibleMoves.Add(moveFactory.CreateMove(start, adjacentSquare, _moveOptions, _direction));
             }
         }
     }

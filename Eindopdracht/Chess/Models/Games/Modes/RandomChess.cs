@@ -49,33 +49,33 @@ namespace Chess.Models.Games.Modes
 
         protected override void SetupPiecesForRanks(Square[] firstRank, Square[] secondRank, AdvanceDirections direction, Player player)
         {
-            pieceFactory.Color = player.Color;
+            PieceFactory.Color = player.Color;
 
             List<Piece> piecesToPlace = new List<Piece>() {
-                pieceFactory.CreateRook(),
-                pieceFactory.CreateRook(),
-                pieceFactory.CreateKnight(),
-                pieceFactory.CreateQueen(),
-                pieceFactory.CreateKnight(),
-                pieceFactory.CreateBishop(),
-                pieceFactory.CreateBishop(),
+                PieceFactory.CreateRook(),
+                PieceFactory.CreateRook(),
+                PieceFactory.CreateKnight(),
+                PieceFactory.CreateQueen(),
+                PieceFactory.CreateKnight(),
+                PieceFactory.CreateBishop(),
+                PieceFactory.CreateBishop(),
             };
-            piecesToPlace.AddRange(Enumerable.Range(0, 8).Select(n => pieceFactory.CreatePawn(direction)));
+            piecesToPlace.AddRange(Enumerable.Range(0, 8).Select(n => PieceFactory.CreatePawn(direction)));
 
-            Piece king = pieceFactory.CreateKing();
+            Piece king = PieceFactory.CreateKing();
             kings.Add(player, king);
-            firstRank[_randomNumberGen.Next(0, firstRank.Length)].Piece = pieceFactory.CreateKing();
+            firstRank[_randomNumberGen.Next(0, firstRank.Length)].Piece = PieceFactory.CreateKing();
 
             foreach (Square square in firstRank.Union(secondRank))
             {
                 if(square.Piece == null)
                 {
-                    square.Piece = getAndRemoveFromArray(piecesToPlace, _randomNumberGen.Next(0, piecesToPlace.Count));
+                    square.Piece = GetAndRemoveFromArray(piecesToPlace, _randomNumberGen.Next(0, piecesToPlace.Count));
                 }
             }
         }
 
-        private Piece getAndRemoveFromArray(List<Piece> inputArray, int index)
+        private Piece GetAndRemoveFromArray(List<Piece> inputArray, int index)
         {
             Piece pieceToReturn = inputArray[index];
             inputArray.Remove(pieceToReturn);
