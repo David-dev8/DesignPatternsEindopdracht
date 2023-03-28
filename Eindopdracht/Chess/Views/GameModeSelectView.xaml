@@ -6,7 +6,103 @@
              xmlns:local="clr-namespace:Chess.Views"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-        <TextBlock>Welcome. Choose a mode.</TextBlock>
+
+    <!--body {
+  background-image: linear-gradient(45deg, #808080 25%, transparent 25%), linear-gradient(-45deg, #808080 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #808080 75%), linear-gradient(-45deg, transparent 75%, #808080 75%);
+  background-size: 20px 20px;
+  background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+}-->
+
+    <Grid >
+        <Grid.Background>
+            <ImageBrush ImageSource="C:\Users\timaa\Documents\GitHub\DesignPatternsEindopdracht\Eindopdracht\Chess\Assets\background.jpeg" >
+                
+            </ImageBrush>
+        </Grid.Background>
+
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="5*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="6*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <TextBlock Background="White" Opacity="0.5" Text="  Chess  " Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="35" FontWeight="Bold"></TextBlock>
+
+        <Border BorderThickness="5" Grid.Row="1" Grid.RowSpan="3" Grid.Column="1" Margin="50, 50, 50, 50" BorderBrush="Black">
+            <Grid Background="White" Opacity="0.5">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="0" Text="{Binding ChosenGameMode.Key}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30"></TextBlock>
+                
+                <TextBlock Grid.Column="0" Grid.Row="0" Grid.RowSpan="3" Grid.ColumnSpan="3" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="75, 0, 75, 0" Text="{Binding ChosenGameMode.Value}" TextWrapping="Wrap"></TextBlock>
+                
+            </Grid>
+        </Border>
+
+
+        <TextBlock Background="White" Opacity="0.5" Text="   Gamemodes   " Grid.Column="3" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="35" FontWeight="Bold"></TextBlock>
+
+        <ScrollViewer Grid.Row="1" Grid.RowSpan="4" Grid.Column="3" Margin="50, 50, 50, 0" VerticalScrollBarVisibility="Hidden">
+        <ItemsControl BorderThickness="0" ItemsSource="{Binding GameModes}">
+            
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                        <Border BorderThickness="5" BorderBrush="Black" Width="625" Height="150" Margin="25,25,0,0">
+                            <Grid Width="625" Height="150" Opacity="0.5">
+
+                                <Grid.Style>
+                                    <Style TargetType="{x:Type Grid}">
+                                        <Style.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Background" Value="LightGray"></Setter>
+                                            </Trigger>
+                                            <Trigger Property="IsMouseOver" Value="False">
+                                                <Setter Property="Background" Value="White"></Setter>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Grid.Style>
+                            
+                                <Grid.InputBindings>
+                                    <MouseBinding MouseAction="LeftClick" Command="{Binding Value}"/>
+                                </Grid.InputBindings>
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+
+                            <TextBlock Text="{Binding Key}" Grid.Column="0" Grid.ColumnSpan="3" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="25"></TextBlock>
+                        
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+        </ScrollViewer>
+
+        <Button Command="{Binding StartCommand}" Grid.Column="1" Grid.Row="4" Background="White" Opacity="0.75" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="50" Width="250" Height="80">Play</Button>
+        
     </Grid>
+    
 </UserControl>
