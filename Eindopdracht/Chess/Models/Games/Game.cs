@@ -67,9 +67,9 @@ namespace Chess.Models.Games
             this.pieceFactory = pieceFactory;
             Players = players;
             ActivePlayers = new ObservableCollection<Player>(Players);
+            _boardSize = boardSize;
             Squares = CreateBoard();
             SetUpPieces();
-            _boardSize = boardSize;
         }
 
         /// <summary>
@@ -156,15 +156,12 @@ namespace Chess.Models.Games
         /// <returns>The ammount of moves this piece can make</returns>
         public int GetAmountOfMovesForSpecificPiece(Piece piece)
         {
-            int amountOfMoves = 0;
-            foreach (Move move in _movesHistory)
-            {
-                if (move.IsAffected(piece))
-                {
-                    amountOfMoves++;
-                }
-            }
-            return amountOfMoves;
+            return GetMovesForSpecificPiece(piece).Count();
+        }
+
+        public IEnumerable<Move> GetMovesForSpecificPiece(Piece piece)
+        {
+            return _movesHistory.Where(move => move.IsAffected(piece)).ToList();
         }
 
         /// <summary>

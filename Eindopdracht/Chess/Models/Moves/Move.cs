@@ -80,12 +80,14 @@ namespace Chess.Models.Moves
             return new Move(start, destination);
         }
 
+        // TODO CLONE VOOR BASEMOVEDECORATOR
+
         /// <summary>
         /// Checks if a piece is affected by this movement
         /// </summary>
         /// <param name="piece">The piece to check for</param>
         /// <returns>A boolean value indicating wether the given piece is affected by the movement </returns>
-        public bool IsAffected(Piece piece)
+        public virtual bool IsAffected(Piece piece)
         {
             foreach(AffectedPieceData affectedPieceData in affectedPieces)
             {

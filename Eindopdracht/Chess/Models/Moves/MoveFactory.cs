@@ -28,12 +28,13 @@ namespace Chess.Models.Moves
             {
                 move = new CastleDecorator(move);
             }
-            if(options.Contains(MoveOptions.ENPASSANT_CAPTURE))
+            if(options.Contains(MoveOptions.ENPASSANT))
             {
-                move = new EnPassantCaptureDecorator(move);
+                move = new EnPassantDecorator(move);
             }
             if(options.Contains(MoveOptions.PROMOTION))
             {
+                move = new PromotionDecorator(move);
             }
 
             return move;

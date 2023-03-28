@@ -13,6 +13,6 @@ namespace Chess.Models.Moves
     {
         PROMOTION,
         CASTLING,
-        ENPASSANT_CAPTURE
+        ENPASSANT
     }
 }

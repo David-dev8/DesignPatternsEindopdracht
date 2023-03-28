@@ -1,4 +1,5 @@
 ﻿using Chess.Models.Games;
+using Chess.Models.Pieces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +23,11 @@ namespace Chess.Models.Moves
         public override void Make(Game game)
         {
             _moveWrappee.Make(game);
+        }
+
+        public override bool IsAffected(Piece piece)
+        {
+            return base.IsAffected(piece) || _moveWrappee.IsAffected(piece);
         }
 
         public override void Undo(Game game)

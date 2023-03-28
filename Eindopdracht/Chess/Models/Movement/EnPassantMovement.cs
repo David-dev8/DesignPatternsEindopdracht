@@ -16,7 +16,7 @@ namespace Chess.Models.Movement
     /// </summary>
     public class EnPassantMovement : MovementPattern
     {
-        private static readonly MoveOptions[] _moveOptions = { MoveOptions.ENPASSANT_CAPTURE };
+        private static readonly MoveOptions[] _moveOptions = { MoveOptions.ENPASSANT };
         private AdvanceDirections _direction;
 
         public EnPassantMovement(MoveFactory moveFactory, AdvanceDirections direction) : base(moveFactory)
@@ -36,29 +36,24 @@ namespace Chess.Models.Movement
             Square currentSquare = grid.GetCurrentSquare(piece);
             Location currentLocation = grid.GetCurrentLocation(currentSquare);
 
-            possibleMoves.Add(moveFactory.CreateMove(currentSquare, GetDestination(grid, currentLocation, 2, 0, _direction)));
+            possibleMoves.Add(moveFactory.CreateMove(currentSquare, GetDestination(grid, currentLocation, -2, 0, _direction), _moveOptions));
 
-            //// Is there a piece next to us with en passant movement as well?
-            //if(destination.Piece.Movement.HasAbility(movement => movement is CastleMovement))
-            //    possibleMoves.Add(moveFactory.CreateMove(currentSquare, GetDestination(grid, currentLocation, 2, 0, _direction)));
-
-
+            RegisterPossibleEnPassantCapture(grid, currentSquare, currentLocation, 1, possibleMoves);
+            RegisterPossibleEnPassantCapture(grid, currentSquare, currentLocation, -1, possibleMoves);
 
             return possibleMoves;
+        }
 
-            
-
-            //IList<Move> possibleMoves = new List<Move>();
-            //Square currentSquare = grid.GetCurrentSquare(piece);
-            //Location currentLocation = grid.GetCurrentLocation(currentSquare);
-
-            //Square destination = GetDestination(grid, currentLocation, 0, 2);
-            //if (destination != null)
-            //{
-            //    possibleMoves.Add(moveFactory.CreateMove(currentSquare, destination));
-            //}
-
-            //return possibleMoves;
+        private void RegisterPossibleEnPassantCapture(Square[][] grid, Square start, Location currentLocation, int columnDifference,
+            IList<Move> possibleMoves)
+        {
+            // Is there a piece next to us with en passant movement as well?
+            Square adjacentSquare = GetDestination(grid, currentLocation, 0, columnDifference, _direction);
+            if(adjacentSquare?.Piece != null && adjacentSquare.Piece.Movement.HasAbility(movement => movement is EnPassantMovement)
+                && adjacentSquare.Piece.Color != start.Piece.Color)
+            {
+                possibleMoves.Add(moveFactory.CreateMove(start, GetDestination(grid, currentLocation, -1, columnDifference, _direction), _moveOptions));
+            }
         }
     }
 }

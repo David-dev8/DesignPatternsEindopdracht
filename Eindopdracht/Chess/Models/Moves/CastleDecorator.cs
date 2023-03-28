@@ -44,7 +44,7 @@ namespace Chess.Models.Moves
         public override bool CanBeMade(Game game)
         {
             // Check if one of the castling pieces has already moved, because then castling is not allowed
-            return game.GetAmountOfMovesForSpecificPiece(Start.Piece) == 0 && 
+            return game.GetAmountOfMovesForSpecificPiece(Start.Piece) == 0 &&
                 game.GetAmountOfMovesForSpecificPiece(GetSquareNextToDestination(game.Squares, 1, true).Piece) == 0;
         }
     }
