@@ -22,7 +22,7 @@ namespace Chess.Models.Games.Modes
 
         public override IEnumerable<Player> GetWinners()
         {
-            return Enumerable.Empty<Player>();
+            return null;
         }
 
         public override bool IsLegal(Move move)

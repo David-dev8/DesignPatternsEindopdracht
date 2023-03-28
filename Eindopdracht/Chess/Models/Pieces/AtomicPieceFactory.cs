@@ -19,7 +19,7 @@ namespace Chess.Models.Pieces
         /// </summary>
         /// <param name="color">The color of the pieces to create</param>
         /// <param name="direction">The direction the created pieces will considder forward</param>
-        public AtomicPieceFactory(Color color, AdvanceDirections direction) : base(color, direction, new MoveFactory())
+        public AtomicPieceFactory(Color color, AdvanceDirections direction) : base(color, direction, new ExplosiveMoveFactory())
         {
 
         }
@@ -31,6 +31,8 @@ namespace Chess.Models.Pieces
 
         public override Piece CreateKing()
         {
+            // A king cannot explode
+            MoveFactory moveFactory = new MoveFactory();
             CompositeMovement movementPattern = new CompositeMovement(moveFactory);
             movementPattern.AddMovementPattern(new OneAdjacentMovement(moveFactory));
             movementPattern.AddMovementPattern(new CastleMovement(moveFactory, Direction));
@@ -59,8 +61,6 @@ namespace Chess.Models.Pieces
         public override Piece CreateRook()
         {
             return new Piece("rook.svg", Color, new StraightLineMovement(moveFactory));
-
         }
-
     }
 }

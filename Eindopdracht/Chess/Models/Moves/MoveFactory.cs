@@ -19,8 +19,9 @@ namespace Chess.Models.Moves
         /// <param name="start">The start location of the move to created</param>
         /// <param name="destination">The end location of the move to be made</param>
         /// <param name="options">The extra options for the movement</param>
+        /// <param name="direction">The main direction in which the move takes place</param>
         /// <returns>The move created acording to the input</returns>
-        public Move CreateMove(Square start, Square destination, MoveOptions[] options = null, AdvanceDirections? direction = null)
+        public virtual Move CreateMove(Square start, Square destination, MoveOptions[] options = null, AdvanceDirections? direction = null)
         {
             Move move = new Move(start, destination);
 
