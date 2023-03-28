@@ -1,4 +1,6 @@
 ﻿using Chess.Base;
+using Chess.Models.Games;
+using Chess.Models.Games.Modes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -58,7 +60,10 @@ namespace Chess.ViewModels
 
         public void StartGame()
         {
-            _navigationService.Navigate(() => new GameViewModel(_navigationService));
+
+            Game GameToStart = new ClassicalChess();
+
+            navigationService.Navigate(() => new GameViewModel(GameToStart, navigationService));
         }
 
 
