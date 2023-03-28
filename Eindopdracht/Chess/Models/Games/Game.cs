@@ -7,6 +7,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -18,6 +19,7 @@ namespace Chess.Models.Games
     public abstract class Game: Observable
     {
         private Stack<Move> _movesHistory = new Stack<Move>();
+        protected IDictionary<Player, Piece> kings = new Dictionary<Player, Piece>();
         private readonly int _boardSize;
         protected readonly PieceFactory pieceFactory;
 
@@ -184,11 +186,11 @@ namespace Chess.Models.Games
         /// <returns>A board as a 2 dimensional array of squares</returns>
         protected virtual Square[][] CreateBoard()
         {
-            var board = new Square[BOARD_SIZE][];
-            for (int i = 0; i < BOARD_SIZE; i++)
+            var board = new Square[_boardSize][];
+            for (int i = 0; i < _boardSize; i++)
             {
-                var row = new Square[BOARD_SIZE];
-                for (int j = 0; j < BOARD_SIZE; j++)
+                var row = new Square[_boardSize];
+                for (int j = 0; j < _boardSize; j++)
                 {
                     row[j] = new Square();
                 }
@@ -200,7 +202,42 @@ namespace Chess.Models.Games
         /// <summary>
         /// Sets all the pieces up at the desired location before the start of the game
         /// </summary>
-        protected abstract void SetUpPieces();
+        protected virtual void SetUpPieces()
+        {
+            SetupPiecesForRanks(Squares[_boardSize - 1], Squares[_boardSize - 2], AdvanceDirections.UP, Players[0]);
+            SetupPiecesForRanks(Squares[0], Squares[1], AdvanceDirections.DOWN, Players[1]);
+        }
+
+        /// <summary>
+        /// Sets all the pieces up for the first and second rank.
+        /// </summary>
+        /// <param name="firstRank"></param>
+        /// <param name="secondRank"></param>
+        /// <param name="direction"></param>
+        /// <param name="player"></param>
+        protected virtual void SetupPiecesForRanks(Square[] firstRank, Square[] secondRank, AdvanceDirections direction, Player player)
+        {
+            pieceFactory.Color = player.Color;
+
+            firstRank[0].Piece = pieceFactory.CreateRook();
+            firstRank[1].Piece = pieceFactory.CreateKnight();
+            firstRank[2].Piece = pieceFactory.CreateBishop();
+            firstRank[3].Piece = pieceFactory.CreateQueen();
+            Piece king = pieceFactory.CreateKing();
+            kings.Add(player, king);
+            firstRank[4].Piece = king;
+            //firstRank[5].Piece = pieceFactory.CreateBishop();
+            //firstRank[6].Piece = pieceFactory.CreateKnight();
+            firstRank[7].Piece = pieceFactory.CreateRook();
+
+            // Pawns for every square on the second rank
+            foreach (Square square in secondRank)
+            {
+                square.Piece = pieceFactory.CreatePawn(direction);
+            }
+        }
+
+
 
         /// <summary>
         /// Removes a player from a game

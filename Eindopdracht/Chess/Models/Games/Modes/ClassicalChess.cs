@@ -15,7 +15,6 @@ namespace Chess.Models.Games.Modes
     {
         private const int GUARENTEED_SCORE_PER_MOVE = 20;
         private const int BOARD_SIZE = 8;
-        private IDictionary<Player, Piece> kings = new Dictionary<Player, Piece>();
 
         public ClassicalChess() : base(new RegularPieceFactory(Color.FromRgb(0, 0, 0), AdvanceDirections.UP), BOARD_SIZE, new List<Player>() { 
             new Player() { Color = Color.FromRgb(255, 0, 0) },
