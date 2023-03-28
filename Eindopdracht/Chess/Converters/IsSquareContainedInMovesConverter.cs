@@ -11,6 +11,10 @@ using System.Windows.Data;
 
 namespace Chess.Converters
 {
+
+    /// <summary>
+    /// A converter that converts 2 values into a list of moves indicating wether the first input is part of the second
+    /// </summary>
     public class IsSquareContainedInMovesConverter : IMultiValueConverter
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)

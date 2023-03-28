@@ -9,6 +9,9 @@ using System.Windows.Media;
 
 namespace Chess.Converters
 {
+    /// <summary>
+    /// Converts a brush into brush based on the amount of times this object is called, every even use will get 1 color and every uneven use gets another.
+    /// </summary>
     public class DiagonalAlternationToBrushConverter : IValueConverter
     {
         private int count = 0;
@@ -21,7 +24,7 @@ namespace Chess.Converters
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            int rowCount = (int)value;
+            int rowCount = (int)value; // TODO werkt niet voor 4 player
 
             SolidColorBrush colorBrush = _alternatingBrushes[(count + (int)(count / rowCount)) % _alternatingBrushes.Length];
             count++;

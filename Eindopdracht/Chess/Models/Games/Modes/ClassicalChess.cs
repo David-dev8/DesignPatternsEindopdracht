@@ -1,6 +1,7 @@
 ﻿using Chess.Models.Movement;
 using Chess.Models.Moves;
 using Chess.Models.Pieces;
+using Chess.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,9 +13,11 @@ namespace Chess.Models.Games.Modes
 {
     public class ClassicalChess : Game
     {
+        private const int GUARENTEED_SCORE_PER_MOVE = 20;
         private const int BOARD_SIZE = 8;
+        private IDictionary<Player, Piece> kings = new Dictionary<Player, Piece>();
 
-        public ClassicalChess() : base(new RegularPieceFactory(Color.FromRgb(0, 0, 0)), new List<Player>() { 
+        public ClassicalChess() : base(new RegularPieceFactory(Color.FromRgb(0, 0, 0), AdvanceDirections.UP), BOARD_SIZE, new List<Player>() { 
             new Player() { Color = Color.FromRgb(255, 0, 0) },
             new Player() { Color = Color.FromRgb(0, 0, 0) } 
         })
@@ -23,57 +26,113 @@ namespace Chess.Models.Games.Modes
 
         public override IEnumerable<Player> GetWinners()
         {
-            return Enumerable.Empty<Player>();
+            // Is there only one player left?
+            if(ActivePlayers.Count == 1)
+            {
+                // This means someone has been checkmated and there is a winner
+                return new List<Player>() { ActivePlayers[0] };
+            }
+            // Is there a draw? This occurs when a player has no legal moves
+            else if(ActivePlayers.Any(player =>
+            {
+                return !Pieces.Where(piece => piece?.Color == player.Color).Any(piece =>
+                {
+                    return piece.Movement.GetPossibleMoves(piece, Squares).Any();
+                });
+            }))
+            {
+                // Nobody won, because there is a draw
+                return Enumerable.Empty<Player>();
+            }
+            // The game goes on
+            return null;
         }
 
         public override bool IsLegal(Move move)
         {
+            if(move.Destination.Piece?.Color == CurrentPlayer.Color)
+            {
+                // Not allowed to capture your own piece
+                return false;
+            }
+
+            ClassicalChess clone = (ClassicalChess)VirtuallyMakeMove(move);
+            // Is the king of the player whose turn it is in check? If so, the move was not legal
+            if(clone.InCheck(CurrentPlayer))
+            {
+                return false;
+            }
+
             return true;
         }
 
-        protected override Square[][] CreateBoard()
+        private bool InCheck(Player player)
         {
-            var board = new Square[BOARD_SIZE][];
-            for(int i = 0; i < BOARD_SIZE; i++)
-            {
-                var row = new Square[BOARD_SIZE];
-                for(int j = 0; j < BOARD_SIZE; j++)
-                {
-                    row[j] = new Square();
-                }
-                board[i] = row;
-            }
-            return board;
+            // Can any of the opponents pieces capture the king of the player?
+            return Pieces.Where(piece => piece.Color != player.Color).Any(piece => {
+                IEnumerable<Move> Moves = piece.Movement.GetPossibleMoves(piece, Squares);
+                return Moves.Any(move => move.Destination.Piece == kings[player]);
+            });
+        }
+
+        protected override Game ConstructCopy()
+        {
+            ClassicalChess copy = new ClassicalChess();
+            copy.kings = kings;
+            return copy;
         }
 
         protected override void EliminatePlayers()
         {
+            // Eliminate each player that is in check and whose king has no legal moves
+            for(int i = Players.Count - 1; i >= 0; i--)
+            {
+                Player player = Players[i];
+                if(InCheck(player))
+                {
+                    // Can the player make any move to get out of the check?
+                    // If this is not the case, the player is checkmated
+                    if(!Pieces.Where(piece => piece?.Color == player.Color).Any(piece =>
+                    {
+                        IEnumerable<Move> Moves = piece.Movement.GetPossibleMoves(piece, Squares);
+                        return Moves.Any(move => {
+                            ClassicalChess game = (ClassicalChess)VirtuallyMakeMove(move);
+                            return !game.InCheck(player);
+                        });
+                    }))
+                    {
+                        ActivePlayers.Remove(player);
+                    }
+                }
+            }
         }
 
         protected override void IncreaseScore(Player player, Move move)
         {
-            
+            player.Score += GUARENTEED_SCORE_PER_MOVE + move.Score;
         }
 
         protected override void SetUpPieces()
         {
             // TODO enum for color?
-            SetupPiecesForRanks(Squares[BOARD_SIZE - 1], Squares[BOARD_SIZE - 2], AdvanceDirections.DOWN, Players[0].Color);
-            SetupPiecesForRanks(Squares[0], Squares[1], AdvanceDirections.UP, Players[1].Color);
+            SetupPiecesForRanks(Squares[BOARD_SIZE - 1], Squares[BOARD_SIZE - 2], AdvanceDirections.UP, Players[0]);
+            SetupPiecesForRanks(Squares[0], Squares[1], AdvanceDirections.DOWN, Players[1]);
         }
 
-        private void SetupPiecesForRanks(Square[] firstRank, Square[] secondRank, AdvanceDirections direction, Color color)
+        private void SetupPiecesForRanks(Square[] firstRank, Square[] secondRank, AdvanceDirections direction, Player player)
         {
-            pieceFactory.Color = color;
+            pieceFactory.Color = player.Color;
             
             firstRank[0].Piece = pieceFactory.CreateRook();
             firstRank[1].Piece = pieceFactory.CreateKnight();
             firstRank[2].Piece = pieceFactory.CreateBishop();
             firstRank[3].Piece = pieceFactory.CreateQueen();
-            firstRank[4].Piece = pieceFactory.CreateKing();
-            firstRank[5].Piece = pieceFactory.CreateBishop();
-            firstRank[6].Piece = pieceFactory.CreateKnight();
-            firstRank[7].Piece = pieceFactory.CreateRook(); // TODO method reference I think
+            Piece king = pieceFactory.CreateKing();
+            kings.Add(player, king);
+            firstRank[4].Piece = king;
+            //firstRank[5].Piece = pieceFactory.CreateBishop();
+            //firstRank[6].Piece = pieceFactory.CreateKnight();
+            firstRank[7].Piece = pieceFactory.CreateRook();
 
             // Pawns for every square on the second rank
             foreach(Square square in secondRank)

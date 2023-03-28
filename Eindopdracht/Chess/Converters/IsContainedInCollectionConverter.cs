@@ -9,6 +9,10 @@ using System.Windows.Data;
 
 namespace Chess.Converters
 {
+
+    /// <summary>
+    /// Converts a pair of inputs into a boolean indicating if the first value is found within the second
+    /// </summary>
     public class IsContainedInCollectionConverter : IMultiValueConverter
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)

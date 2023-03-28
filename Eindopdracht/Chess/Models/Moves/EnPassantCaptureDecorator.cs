@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace Chess.Models.Moves
 {
-    /// <summary>
-    /// The decorator for moves that explode around themselfs
-    /// </summary>
-    public class ExplosionCaptureDecorator
+    public class EnPassantCaptureDecorator : BaseMoveDecorator
     {
+        public EnPassantCaptureDecorator(Move move) : base(move)
+        {
+        }
     }
 }

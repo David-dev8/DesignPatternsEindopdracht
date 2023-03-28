@@ -10,6 +10,10 @@ using System.Windows.Media.Imaging;
 
 namespace Chess.Converters
 {
+
+    /// <summary>
+    /// A converter that converts a local path into an absolute path
+    /// </summary>
     public class RelativePathConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)

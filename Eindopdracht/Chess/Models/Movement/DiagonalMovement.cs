@@ -1,4 +1,5 @@
-﻿using Chess.Models.Games;
+﻿using Chess.Extensions;
+using Chess.Models.Games;
 using Chess.Models.Moves;
 using Chess.Models.Pieces;
 using System;
@@ -9,9 +10,12 @@ using System.Threading.Tasks;
 
 namespace Chess.Models.Movement
 {
+    /// <summary>
+    /// Creates a diagonal movement
+    /// </summary>
     public class DiagonalMovement : ContinuousMovement
     {
-        private static readonly int[][] _possibleSteps =
+        protected static readonly int[][] POSSIBLE_STEPS =
         {
             new int[] { -1, -1 },
             new int[] { -1, 1 },
@@ -19,21 +23,8 @@ namespace Chess.Models.Movement
             new int[] { 1, 1 }
         };
 
-        public DiagonalMovement(MoveFactory moveFactory) : base(moveFactory)
+        public DiagonalMovement(MoveFactory moveFactory) : base(moveFactory, POSSIBLE_STEPS)
         {
-        }
-
-        public override IEnumerable<Move> GetPossibleMoves(Piece piece, Square[][] grid)
-        {
-            List<Move> possibleMoves = new List<Move>();
-            Location currentLocation = GetCurrentLocation(grid, piece.Square);
-
-            foreach (int[] possibleStep in _possibleSteps)
-            {
-                possibleMoves.AddRange(GetPossibleMovesForSpecificDirection(grid, piece.Square, currentLocation, possibleStep[0], possibleStep[1]));
-            }
-
-            return possibleMoves;
         }
     }
 }

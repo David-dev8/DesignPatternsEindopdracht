@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Chess.Models.Moves
 {
+    /// <summary>
+    /// A factory to create movements that end with explosions
+    /// </summary>
     public class ExplosiveMoveFactory
     {
     }

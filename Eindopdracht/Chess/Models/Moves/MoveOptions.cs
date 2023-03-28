@@ -6,9 +6,13 @@ using System.Threading.Tasks;
 
 namespace Chess.Models.Moves
 {
+    /// <summary>
+    /// The enum containing all posible options
+    /// </summary>
     public enum MoveOptions
     {
         PROMOTION,
-        CASTLING
+        CASTLING,
+        ENPASSANT_CAPTURE
     }
 }

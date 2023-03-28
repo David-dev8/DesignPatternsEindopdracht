@@ -6,11 +6,14 @@ using System.Threading.Tasks;
 
 namespace Chess.Models.Pieces
 {
+    /// <summary>
+    /// The enum containing all the posible move directions
+    /// </summary>
     public enum AdvanceDirections
     {
         UP,
-        DOWN,
         RIGHT,
+        DOWN,
         LEFT
     }
 }

@@ -7,17 +7,11 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
 
-    <!--body {
-  background-image: linear-gradient(45deg, #808080 25%, transparent 25%), linear-gradient(-45deg, #808080 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #808080 75%), linear-gradient(-45deg, transparent 75%, #808080 75%);
-  background-size: 20px 20px;
-  background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
-}-->
-
     <Grid >
         <Grid.Background>
-            <ImageBrush ImageSource="C:\Users\timaa\Documents\GitHub\DesignPatternsEindopdracht\Eindopdracht\Chess\Assets\background.jpeg" >
-                
-            </ImageBrush>
+            <ImageBrush ImageSource="../Assets/background.jpeg" />
+
+
         </Grid.Background>
 
 

@@ -6,6 +6,8 @@
     <converters:IsSquareContainedInMovesConverter x:Key="IsSquareContainedInMovesConverter" />
     <converters:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
     <converters:NullToBooleanConverter x:Key="NullToBooleanConverter" />
+    <converters:InverseBooleanToVisibilityConverter x:Key="InverseBooleanToVisibilityConverter" />
+    <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     <converters:RelativePathConverter x:Key="RelativePathConverter" />
     <converters:IsEqualConverter x:Key="IsEqualConverter" />
     <converters:IsContainedInCollectionConverter x:Key="IsContainedInCollectionConverter" />

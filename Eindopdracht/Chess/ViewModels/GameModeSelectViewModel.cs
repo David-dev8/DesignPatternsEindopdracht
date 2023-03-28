@@ -10,6 +10,9 @@ using System.Windows.Input;
 
 namespace Chess.ViewModels
 {
+    /// <summary>
+    /// This viewmodel is for the page where you can select a gamemode
+    /// </summary>
     public class GameModeSelectViewModel : BaseViewModel
     {
 
@@ -27,6 +30,10 @@ namespace Chess.ViewModels
             }
         }
 
+        /// <summary>
+        /// Creates the game viewmodel
+        /// </summary>
+        /// <param name="navigationService">The navigationservice to navigate with</param>
         public GameModeSelectViewModel(NavigationService navigationService) : base(navigationService)
         {
             GameDescriptions = new Dictionary<String, String>();
@@ -53,15 +60,22 @@ namespace Chess.ViewModels
 
         }
 
+        /// <summary>
+        /// Sets a gamemode as selected
+        /// </summary>
+        /// <param name="gamemode">The gamemode to be selected</param>
         public void SelectGameMode(String gamemode)
         {
             ChosenGameMode = new KeyValuePair<String, String>(gamemode, GameDescriptions[gamemode]);
         }
 
+        /// <summary>
+        /// Starts a game with the selected gamemode and navigate to the game page
+        /// </summary>
         public void StartGame()
         {
 
-            Game GameToStart = new ClassicalChess();
+            Game GameToStart = GameModeFactory.CreateGame(ChosenGameMode.Key);
 
             navigationService.Navigate(() => new GameViewModel(GameToStart, navigationService));
         }

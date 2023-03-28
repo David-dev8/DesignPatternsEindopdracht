@@ -17,6 +17,16 @@
             <ColumnDefinition Width="4*" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
+        <Grid ZIndex="1" Grid.Column="1" Visibility="{Binding Game.HasEnded,Converter={StaticResource BooleanToVisibilityConverter}}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="7.5*" />
+            </Grid.RowDefinitions>
+            <Grid.Background>
+                <ImageBrush ImageSource="../Assets/winAndLose.png" />
+            </Grid.Background>
+            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30" FontWeight="SemiBold" Text="Congratulations, player 1 wins!" Foreground="White" /> 
+        </Grid> 
         <ListView Grid.Column="1" BorderThickness="0" 
                   ItemsSource="{Binding Game.Squares,Converter={StaticResource CollectionFlattenConverter}}"
                   Width="{Binding ActualHeight, RelativeSource={RelativeSource Self}}"
@@ -63,11 +73,16 @@
                             </ControlTemplate>
                         </Setter.Value>
                     </Setter>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding .}" Value="{x:Null}">
+                            <Setter Property="Background" Value="Transparent" />
+                        </DataTrigger>
+                    </Style.Triggers>        
                 </Style>
             </ListView.ItemContainerStyle>
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <UniformGrid Columns="8" Rows="8" MaxWidth="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType=ListView}}" />
+                    <UniformGrid Columns="{Binding Game.Squares[0].Length}" Rows="{Binding Game.Squares.Length}" MaxWidth="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType=ListView}}" />
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>

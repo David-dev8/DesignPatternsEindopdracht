@@ -8,8 +8,14 @@ using System.Threading.Tasks;
 
 namespace Chess.Models.Games
 {
+    /// <summary>
+    /// The square is one of the squares on the chessboard
+    /// </summary>
     public class Square: Observable
     {
+        /// <summary>
+        /// The piece standing on this square
+        /// </summary>
         private Piece _piece;
         public Piece Piece
         {
@@ -20,14 +26,13 @@ namespace Chess.Models.Games
             set
             {
                 _piece = value;
-                if(_piece != null) // TODO
-                {
-                    _piece.Square = this;
-                }
                 NotifyPropertyChanged();
             }
         }
 
+        /// <summary>
+        /// Returns wether or not this space already has a piece on it
+        /// </summary>
         public bool IsOccupied
         {
             get

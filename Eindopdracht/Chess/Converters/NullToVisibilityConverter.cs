@@ -9,6 +9,10 @@ using System.Windows.Data;
 
 namespace Chess.Converters
 {
+
+    /// <summary>
+    /// A converter that converts a null value into a visibilty. making all null values collapsed
+    /// </summary>
     public class NullToVisibilityConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)

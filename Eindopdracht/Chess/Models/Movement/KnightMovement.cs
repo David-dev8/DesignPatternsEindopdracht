@@ -1,4 +1,5 @@
-﻿using Chess.Models.Games;
+﻿using Chess.Extensions;
+using Chess.Models.Games;
 using Chess.Models.Moves;
 using Chess.Models.Pieces;
 using System;
@@ -11,9 +12,12 @@ using System.Windows.Controls;
 
 namespace Chess.Models.Movement
 {
+    /// <summary>
+    /// The patern for knight movements
+    /// </summary>
     public class KnightMovement : MovementPattern
     {
-        private static readonly int[][] _possibleSteps =
+        protected static readonly int[][] POSSIBLE_STEPS =
         {
             new int[] { -1, 2 }, 
             new int[] { -1, -2 }, 
@@ -32,14 +36,15 @@ namespace Chess.Models.Movement
         public override IEnumerable<Move> GetPossibleMoves(Piece piece, Square[][] grid)
         {
             IList<Move> possibleMoves = new List<Move>();
-            Location currentLocation = GetCurrentLocation(grid, piece.Square);
+            Square square = grid.GetCurrentSquare(piece);
+            Location currentLocation = grid.GetCurrentLocation(square);
 
-            foreach(int[] step in _possibleSteps) 
+            foreach (int[] step in POSSIBLE_STEPS)
             {
                 Square destination = GetDestination(grid, currentLocation, step[0], step[1]);
                 if (destination != null)
                 {
-                    possibleMoves.Add(moveFactory.CreateMove(piece.Square, destination));
+                    possibleMoves.Add(moveFactory.CreateMove(square, destination));
                 }
             }
 

@@ -3,6 +3,9 @@ using System;
 
 namespace Chess.Base
 {
+    /// <summary>
+    /// Stores wich viewmodel is actively being shown
+    /// </summary>
     public class NavigationStore
     {
         private BaseViewModel _currentViewModel;

@@ -40,12 +40,14 @@ namespace Chess.Views.CustomControls
             }
         }
 
+        //private IList<SvgDrawingCanvas> seenDrawings = new List<SvgDrawingCanvas>(); TODO
+
         public SVGImage()
         {
             Loaded += SVGImage_Loaded;
         }
 
-        private void SVGImage_Loaded(object sender, RoutedEventArgs e)
+        private void SVGImage_Loaded(object sender, EventArgs e)
         {
             SetRightColor();
         }

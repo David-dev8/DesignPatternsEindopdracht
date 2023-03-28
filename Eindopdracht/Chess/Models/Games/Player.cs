@@ -7,10 +7,25 @@ using System.Windows.Media;
 
 namespace Chess.Models.Games
 {
+
+    /// <summary>
+    /// This object stores a participant for a game
+    /// </summary>
     public class Player
     {
+        /// <summary>
+        /// The name of the player
+        /// </summary>
         public string Name { get; set; } = "Harold";
+
+        /// <summary>
+        /// The color this player plays as
+        /// </summary>
         public Color Color { get; set; }
+
+        /// <summary>
+        /// The score of the player
+        /// </summary>
         public int Score { get; set; } = 0;
     }
 }

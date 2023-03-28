@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Chess.Extensions;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
@@ -9,30 +10,15 @@ using System.Windows.Data;
 
 namespace Chess.Converters
 {
+    /// <summary>
+    /// Converts a multidimentional array into a single dimentional array
+    /// </summary>
     public class ArrayFlattenConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            ICollection<object> currentIteration = (ICollection<object>)value;
-            while(currentIteration.Any(element => element is Array)) { 
-                IList<object> newIteration = new List<object>();
-                foreach(var item in currentIteration)
-                {
-                    if(item is Array array)
-                    {
-                        foreach(var element in array)
-                        {
-                            newIteration.Add(element);
-                        }
-                    } 
-                    else
-                    {
-                        newIteration.Add(item);
-                    }
-                }
-                currentIteration = newIteration;
-            }
-            return currentIteration;
+            ICollection<object> array = (ICollection<object>)value;
+            return array.Flatten<object>();
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

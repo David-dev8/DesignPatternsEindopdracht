@@ -1,4 +1,5 @@
-﻿using Chess.Models.Games;
+﻿using Chess.Extensions;
+using Chess.Models.Games;
 using Chess.Models.Moves;
 using Chess.Models.Pieces;
 using System;
@@ -10,9 +11,12 @@ using System.Threading.Tasks;
 
 namespace Chess.Models.Movement
 {
+    /// <summary>
+    /// The patern for adjacent movements like a kings movement
+    /// </summary>
     public class OneAdjacentMovement : MovementPattern
     {
-        private static readonly int[][] _possibleSteps =
+        protected static readonly int[][] POSSIBLE_STEPS =
         {
             new int[] { 0, -1 }, 
             new int[] { 0, 1 }, 
@@ -28,14 +32,15 @@ namespace Chess.Models.Movement
         public override IEnumerable<Move> GetPossibleMoves(Piece piece, Square[][] grid)
         {
             IList<Move> possibleMoves = new List<Move>();
-            Location currentLocation = GetCurrentLocation(grid, piece.Square);
+            Square square = grid.GetCurrentSquare(piece);
+            Location currentLocation = grid.GetCurrentLocation(square);
 
-            foreach (int[] possibleStep in _possibleSteps)
+            foreach (int[] possibleStep in POSSIBLE_STEPS)
             {
                 Square destination = GetDestination(grid, currentLocation, possibleStep[0], possibleStep[1]);
                 if (destination != null)
                 {
-                    possibleMoves.Add(moveFactory.CreateMove(piece.Square, destination));
+                    possibleMoves.Add(moveFactory.CreateMove(square, destination));
                 }
             }
 

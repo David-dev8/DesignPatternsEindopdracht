@@ -1,4 +1,5 @@
-﻿using Chess.Models.Games;
+﻿using Chess.Extensions;
+using Chess.Models.Games;
 using Chess.Models.Moves;
 using Chess.Models.Pieces;
 using System;
@@ -9,6 +10,9 @@ using System.Threading.Tasks;
 
 namespace Chess.Models.Movement
 {
+    /// <summary>
+    /// The movementpatern for a single move forward like a pawn
+    /// </summary>
     public class SingleAdvanceMovement : MovementPattern
     {
         private static readonly MoveOptions[] _moveOptions = { MoveOptions.PROMOTION };
@@ -22,8 +26,8 @@ namespace Chess.Models.Movement
         public override IEnumerable<Move> GetPossibleMoves(Piece piece, Square[][] grid)
         {
             IList<Move> possibleMoves = new List<Move>();
-            Square currentSquare = piece.Square;
-            Location currentLocation = GetCurrentLocation(grid, currentSquare);
+            Square currentSquare = grid.GetCurrentSquare(piece);
+            Location currentLocation = grid.GetCurrentLocation(currentSquare);
 
             RegisterPossibleMoveForSpecificDirection(grid, currentSquare, currentLocation, 0, possibleMoves, false);
             RegisterPossibleMoveForSpecificDirection(grid, currentSquare, currentLocation, -1, possibleMoves, true);
@@ -35,7 +39,7 @@ namespace Chess.Models.Movement
         private void RegisterPossibleMoveForSpecificDirection(Square[][] grid, Square start, Location currentLocation, int columnDifference, 
             IList<Move> possibleMoves, bool shouldBeOccupied)
         {
-            Square adjacentSquare = GetDestination(grid, currentLocation, -1, columnDifference);
+            Square adjacentSquare = GetDestination(grid, currentLocation, -1, columnDifference, _direction);
             if (adjacentSquare != null && adjacentSquare.IsOccupied == shouldBeOccupied)
             {
                 possibleMoves.Add(moveFactory.CreateMove(start, adjacentSquare, _moveOptions));

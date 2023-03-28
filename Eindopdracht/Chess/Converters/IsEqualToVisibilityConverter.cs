@@ -9,6 +9,10 @@ using System.Windows.Data;
 
 namespace Chess.Converters
 {
+
+    /// <summary>
+    /// A converter that converts 2 values into a visibility, returning visible when both inputs are the same
+    /// </summary>
     public class IsEqualToVisibilityConverter : IMultiValueConverter
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)

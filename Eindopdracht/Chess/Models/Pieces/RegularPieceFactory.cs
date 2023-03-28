@@ -9,9 +9,17 @@ using System.Windows.Media;
 
 namespace Chess.Models.Pieces
 {
+    /// <summary>
+    /// A factory that creates normal pieces
+    /// </summary>
     public class RegularPieceFactory : PieceFactory
     {
-        public RegularPieceFactory(Color color) : base(color, new MoveFactory())
+        /// <summary>
+        /// Creates a normal piece factory
+        /// </summary>
+        /// <param name="color">The color of the pieces to produce</param>
+        /// <param name="direction">The direction the created pieces will consider forward</param>
+        public RegularPieceFactory(Color color, AdvanceDirections direction) : base(color, direction, new MoveFactory())
         {
             
         }
@@ -25,7 +33,7 @@ namespace Chess.Models.Pieces
         {
             CompositeMovement movementPattern = new CompositeMovement(moveFactory);
             movementPattern.AddMovementPattern(new OneAdjacentMovement(moveFactory));
-            movementPattern.AddMovementPattern(new CastleMovement(moveFactory));
+            movementPattern.AddMovementPattern(new CastleMovement(moveFactory, Direction, true));
             return new Piece("king.svg", Color, movementPattern);
         }
 
@@ -36,8 +44,11 @@ namespace Chess.Models.Pieces
         }
 
         public override Piece CreatePawn(AdvanceDirections direction)
-        { 
-            return new Piece("pawn.svg", Color, new SingleAdvanceMovement(moveFactory, direction));
+        {
+            CompositeMovement movementPattern = new CompositeMovement(moveFactory);
+            movementPattern.AddMovementPattern(new SingleAdvanceMovement(moveFactory, direction));
+            movementPattern.AddMovementPattern(new EnPassantMovement(moveFactory, direction));
+            return new Piece("pawn.svg", Color, movementPattern);
         }
 
         public override Piece CreateQueen()
@@ -50,7 +61,10 @@ namespace Chess.Models.Pieces
 
         public override Piece CreateRook()
         {
-            return new Piece("rook.svg", Color, new StraightLineMovement(moveFactory));
+            CompositeMovement movementPattern = new CompositeMovement(moveFactory);
+            movementPattern.AddMovementPattern(new StraightLineMovement(moveFactory));
+            movementPattern.AddMovementPattern(new CastleMovement(moveFactory, Direction));
+            return new Piece("rook.svg", Color, movementPattern);
 
         }
     }

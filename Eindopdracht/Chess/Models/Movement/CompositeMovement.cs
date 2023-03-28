@@ -9,20 +9,35 @@ using System.Threading.Tasks;
 
 namespace Chess.Models.Movement
 {
+    /// <summary>
+    /// A compsit movement that can contain multiple movementspaterns
+    /// </summary>
     public class CompositeMovement : MovementPattern
     {
         private IList<MovementPattern> _movementPatterns;
 
+        /// <summary>
+        /// Creates a Composit movement
+        /// </summary>
+        /// <param name="moveFactory">The factory to use for the moves</param>
         public CompositeMovement(MoveFactory moveFactory) : base(moveFactory) 
         { 
             _movementPatterns= new List<MovementPattern>();
         }
 
+        /// <summary>
+        /// Add a movementpetern to the composit
+        /// </summary>
+        /// <param name="movementPattern">The movement pattern to add</param>
         public void AddMovementPattern(MovementPattern movementPattern)
         {
             _movementPatterns.Add(movementPattern);
         }
 
+        /// <summary>
+        /// Removes a movement patern from the composit
+        /// </summary>
+        /// <param name="movementPattern">The movement patern to remove</param>
         public void RemoveMovementPattern(MovementPattern movementPattern)
         {
             _movementPatterns.Remove(movementPattern);
@@ -36,6 +51,11 @@ namespace Chess.Models.Movement
                 possibleMoves.AddRange(movementPattern.GetPossibleMoves(piece, grid));
             }
             return possibleMoves;
+        }
+
+        public override bool HasAbility(Func<MovementPattern, bool> abilityCheck)
+        {
+            return _movementPatterns.Any(movement => movement.HasAbility(abilityCheck));
         }
     }
 }
