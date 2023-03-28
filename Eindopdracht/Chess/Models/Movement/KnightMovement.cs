@@ -7,21 +7,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 
 namespace Chess.Models.Movement
 {
-    public class OneAdjacentMovement : MovementPattern
+    public class KnightMovement : MovementPattern
     {
         private static readonly int[][] _possibleSteps =
         {
-            new int[] { 0, -1 }, 
-            new int[] { 0, 1 }, 
-            new int[] { 1, -1 }, 
-            new int[] { 1, 0 }, 
-            new int[] { 1, 1 }
+            new int[] { -1, 2 }, 
+            new int[] { -1, -2 }, 
+            new int[] { 1, 2 }, 
+            new int[] { 1, -2 },
+            new int[] { -2, -1 },
+            new int[] { -2, 1 },
+            new int[] { 2, -1 },
+            new int[] { 2, 1 },
         };
 
-        public OneAdjacentMovement(MoveFactory moveFactory) : base(moveFactory)
+        public KnightMovement(MoveFactory moveFactory) : base(moveFactory)
         {
         }
 
@@ -30,9 +34,9 @@ namespace Chess.Models.Movement
             IList<Move> possibleMoves = new List<Move>();
             Location currentLocation = GetCurrentLocation(grid, piece.Square);
 
-            foreach (int[] possibleStep in _possibleSteps)
+            foreach(int[] step in _possibleSteps) 
             {
-                Square destination = GetDestination(grid, currentLocation, possibleStep[0], possibleStep[1]);
+                Square destination = GetDestination(grid, currentLocation, step[0], step[1]);
                 if (destination != null)
                 {
                     possibleMoves.Add(moveFactory.CreateMove(piece.Square, destination));

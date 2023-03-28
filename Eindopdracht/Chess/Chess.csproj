@@ -8,17 +8,38 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Assets\background.jpeg" />
-    <None Remove="Views\background.jpeg" />
-  </ItemGroup>
-
-  <ItemGroup>
     <EmbeddedResource Include="Assets\background.jpeg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Assets\bishop.svg" />
+    <None Remove="Assets\king.svg" />
+    <None Remove="Assets\knight.svg" />
+    <None Remove="Assets\leaveIcon.svg" />
+    <None Remove="Assets\pawn.svg" />
+    <None Remove="Assets\queen.svg" />
+    <None Remove="Assets\rook.svg" />
+    <None Remove="Assets\undo.svg" />
+    <None Remove="Assets\undoIcon.svg" />
+    <None Remove="Assets\background.jpeg" />
+    <None Remove="Views\background.jpeg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="SharpVectors" Version="1.7.7" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\bishop.svg" />
+    <Resource Include="Assets\king.svg" />
+    <Resource Include="Assets\knight.svg" />
+    <Resource Include="Assets\leaveIcon.svg" />
+    <Resource Include="Assets\pawn.svg" />
+    <Resource Include="Assets\queen.svg" />
+    <Resource Include="Assets\rook.svg" />
+    <Resource Include="Assets\undoIcon.svg" />
     <Resource Include="Views\background.jpeg" />
   </ItemGroup>
 

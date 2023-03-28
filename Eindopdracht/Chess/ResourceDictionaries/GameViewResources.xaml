@@ -1,0 +1,13 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+                    xmlns:converters="clr-namespace:Chess.Converters">
+    <converters:ArrayFlattenConverter x:Key="CollectionFlattenConverter" />
+    <converters:DiagonalAlternationToBrushConverter x:Key="AlternationBrushConverter" />
+    <converters:IsSquareContainedInMovesConverter x:Key="IsSquareContainedInMovesConverter" />
+    <converters:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
+    <converters:NullToBooleanConverter x:Key="NullToBooleanConverter" />
+    <converters:RelativePathConverter x:Key="RelativePathConverter" />
+    <converters:IsEqualConverter x:Key="IsEqualConverter" />
+    <converters:IsContainedInCollectionConverter x:Key="IsContainedInCollectionConverter" />
+    <converters:IsEqualToVisibilityConverter x:Key="IsEqualToVisibilityConverter" />
+</ResourceDictionary>
