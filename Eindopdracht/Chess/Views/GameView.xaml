@@ -34,7 +34,8 @@
                   SelectedItem="{Binding SelectedSquare,Mode=TwoWay}" 
                   Opacity="{Binding Game.HasEnded,Converter={StaticResource BooleanToOpacityConverter}}"
                   ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                  ScrollViewer.VerticalScrollBarVisibility="Disabled">
+                  ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                  IsEnabled="{Binding Game.HasEnded,Converter={StaticResource BooleanInverseConverter}}">
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
                     <Setter Property="Margin" Value="0" />
