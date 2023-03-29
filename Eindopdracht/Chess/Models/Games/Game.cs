@@ -1,5 +1,6 @@
 ﻿using Chess.Base;
 using Chess.Extensions;
+using Chess.Models.Games.Modes;
 using Chess.Models.Moves;
 using Chess.Models.Pieces;
 using System;
@@ -25,7 +26,7 @@ namespace Chess.Models.Games
 
         public Square[][] Squares { get; set; }
         public IList<Player> Players { get; set; }
-        public ObservableCollection<Player> ActivePlayers { get; set; }
+        public IList<Player> ActivePlayers { get; set; }
         public bool HasEnded
         {
             get
@@ -37,7 +38,7 @@ namespace Chess.Models.Games
         {
             get
             {
-                return _movesHistory.Any();
+                return !HasEnded && _movesHistory.Any();
             }
         }
         public PieceFactory PieceFactory { get; private set; }
@@ -53,7 +54,7 @@ namespace Chess.Models.Games
         {
             get
             {
-                return Squares.Flatten<Square>().Select(square => square.Piece).Where(piece => piece != null);
+                return Squares.Flatten<Square>().Where(square => square != null && square.IsOccupied).Select(square => square.Piece);
             }
         }
 
@@ -68,7 +69,7 @@ namespace Chess.Models.Games
         {
             this.PieceFactory = pieceFactory;
             Players = players;
-            ActivePlayers = new ObservableCollection<Player>(Players);
+            ActivePlayers = new List<Player>(Players);
             _boardSize = boardSize;
             Squares = CreateBoard();
             SetUpPieces();
@@ -80,7 +81,7 @@ namespace Chess.Models.Games
         /// <param name="move">The move to make</param>
         public void MakeMove(Move move)
         {
-            if(IsLegal(move))
+            if(!HasEnded && IsLegal(move))
             {
                 move.Make(this);
                 _movesHistory.Push(move);
@@ -90,6 +91,10 @@ namespace Chess.Models.Games
                 {
                     SetNextPlayer();
                 }
+                else
+                {
+                    NotifyPropertyChanged(nameof(HasEnded));
+                }
             }
         }
 
@@ -98,9 +103,12 @@ namespace Chess.Models.Games
         /// </summary>
         public void UndoMove()
         {
-            Move lastMove = _movesHistory.Pop();
-            lastMove.Undo(this);
-            SetPreviousPlayer();
+            if(CanUndoMove)
+            {
+                Move lastMove = _movesHistory.Pop();
+                lastMove.Undo(this);
+                SetPreviousPlayer();
+            }
         }
 
         /// <summary>
@@ -147,6 +155,7 @@ namespace Chess.Models.Games
         private Game Clone()
         {
             Game clone = ConstructCopy();
+            clone.kings = kings;
             clone.Squares = Squares.Select(row => row.Select(square => new Square() { Piece = square.Piece }).ToArray()).ToArray();
             return clone;
         }
@@ -230,6 +239,38 @@ namespace Chess.Models.Games
             firstRank[7].Piece = PieceFactory.CreateRook();
 
             SetupPawnsForRank(secondRank, direction);
+        }
+
+        public bool InCheck(Player player)
+        {
+            // Can any of the opponents pieces capture the king of the player?
+            return Pieces.Where(piece => !piece.Color.Equals(player.Color)).Any(piece => {
+                IEnumerable<Move> Moves = piece.Movement.GetPossibleMoves(piece, Squares);
+                return Moves.Any(move => move.Destination.Piece == kings[player]);
+            });
+        }
+
+        // TODO default implementatie
+
+        // TODO Comment en refact
+        public bool IsCheckmated(Player player)
+        {
+            if(InCheck(player))
+            {
+                // Can the player make any move to get out of the check?
+                // If this is not the case, the player is checkmated
+                return !Pieces.Where(piece => piece?.Color == player.Color).Any(piece =>
+                {
+                    IEnumerable<Move> Moves = piece.Movement.GetPossibleMoves(piece, Squares).Where(move => IsLegal(move) &&
+                                (!move.Destination.IsOccupied || move.Start.Piece.Color != move.Destination.Piece.Color));
+                    return Moves.Any(move =>
+                    {
+                        Game game = VirtuallyMakeMove(move);
+                        return !game.InCheck(player) && game.Squares.GetCurrentSquare(kings[player]) != null;
+                    });
+                });
+            }
+            return false;
         }
 
         /// <summary>

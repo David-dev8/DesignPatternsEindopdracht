@@ -12,33 +12,18 @@ namespace Chess.Models.Games.Modes
     /// <summary>
     /// Contains all functionalities for four player chess
     /// </summary>
-    public class FourPlayerChess : Game
+    public class FourPlayerChess : ClassicalChess
     {
         private const int GAP = 3;
         private const int BOARD_SIZE = 14;
 
-        public FourPlayerChess() : base(new RegularPieceFactory(Color.FromRgb(0, 0, 0), AdvanceDirections.UP), BOARD_SIZE, new List<Player>() {
-            new Player() { Color = Color.FromRgb(255, 200, 200) },
-            new Player() { Color = Color.FromRgb(50, 0, 0) },
-            new Player() { Color = Color.FromRgb(0, 50, 0) },
-            new Player() { Color = Color.FromRgb(0, 0, 50) } // TODO kleuren?
+        public FourPlayerChess() : base(null, new List<Player>() {
+            new Player() { Color = Color.FromRgb(191, 59, 67) },
+            new Player() { Color = Color.FromRgb(65, 133, 191) },
+            new Player() { Color = Color.FromRgb(78, 145, 97) },
+            new Player() { Color = Color.FromRgb(192, 149, 38) } // TODO kleuren?
         })
         {
-        }
-
-        public override IEnumerable<Player> GetWinners()
-        {
-            return Enumerable.Empty<Player>();
-        }
-
-        public override bool IsLegal(Move move)
-        {
-            return true;
-        }
-
-        protected override Game ConstructCopy()
-        {
-            throw new NotImplementedException();
         }
 
         protected override Square[][] CreateBoard()
@@ -58,13 +43,6 @@ namespace Chess.Models.Games.Modes
                 board[i] = row;
             }
             return board;
-        }
-
-        protected override void EliminatePlayers()
-        {
-
-
-
         }
 
         protected override void IncreaseScore(Player player, Move move)
@@ -105,6 +83,5 @@ namespace Chess.Models.Games.Modes
                 rank[i].Piece = PieceFactory.CreatePawn(direction);
             }
         }
-
     }
 }

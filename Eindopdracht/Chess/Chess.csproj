@@ -9,6 +9,19 @@
 
   <ItemGroup>
     <None Remove="Assets\bishop.svg" />
+    <None Remove="Assets\corruptedBishop.svg" />
+    <None Remove="Assets\corruptedKing.svg" />
+    <None Remove="Assets\corruptedKnight.svg" />
+    <None Remove="Assets\corruptedPawn.svg" />
+    <None Remove="Assets\corruptedQueen.svg" />
+    <None Remove="Assets\corruptedRook.svg" />
+    <None Remove="Assets\explosionBishop.svg" />
+    <None Remove="Assets\explosiveBishop.svg" />
+    <None Remove="Assets\explosiveKnight.svg" />
+    <None Remove="Assets\explosivePawn.svg" />
+    <None Remove="Assets\explosiveQueen.svg" />
+    <None Remove="Assets\explosiveRook.svg" />
+    <None Remove="Assets\forbiddenExplosionKing.svg" />
     <None Remove="Assets\king.svg" />
     <None Remove="Assets\knight.svg" />
     <None Remove="Assets\leaveIcon.svg" />
@@ -30,6 +43,18 @@
 
   <ItemGroup>
     <Resource Include="Assets\bishop.svg" />
+    <Resource Include="Assets\corruptedBishop.svg" />
+    <Resource Include="Assets\corruptedKing.svg" />
+    <Resource Include="Assets\corruptedKnight.svg" />
+    <Resource Include="Assets\corruptedPawn.svg" />
+    <Resource Include="Assets\corruptedQueen.svg" />
+    <Resource Include="Assets\corruptedRook.svg" />
+    <Resource Include="Assets\explosiveBishop.svg" />
+    <Resource Include="Assets\explosiveKnight.svg" />
+    <Resource Include="Assets\explosivePawn.svg" />
+    <Resource Include="Assets\explosiveQueen.svg" />
+    <Resource Include="Assets\explosiveRook.svg" />
+    <Resource Include="Assets\forbiddenExplosionKing.svg" />
     <Resource Include="Assets\king.svg" />
     <Resource Include="Assets\knight.svg" />
     <Resource Include="Assets\leaveIcon.svg" />

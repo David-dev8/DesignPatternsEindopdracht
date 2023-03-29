@@ -25,6 +25,7 @@ namespace Chess.Models.Games.Modes
                 new ModeInfo("Four player chess", "Like clasical chess this mode does not implement any new pieces or interactions, however it does implement double the players. Take on 3 other players or cooperate to win in this 4 player chess mode."),
                 new ModeInfo("Pawnstorm chess", "In this mode one player plays chess just like normal on a normal board with normal pieces. The second player however will have no normal pieces except for a lot of pawns."),
                 new ModeInfo("Random chess", "In this gamemode both players will still have all their normal pieces. But their starting possition will be randomised"),
+                new ModeInfo("Corrupted chess", "Oh no! All pieces got corrupted and all of a sudden have completely different abilities. Can you handle the situation?"),
             };
         }
     }

@@ -20,6 +20,7 @@ namespace Chess.Models.Games.Modes
                 "Four player chess" => new FourPlayerChess(),
                 "Pawnstorm chess" => new PawnStormChess(),
                 "Random chess" => new RandomChess(),
+                "Corrupted chess" => new CorruptedChess(),
                 _ => new ClassicalChess(),
             };
         }

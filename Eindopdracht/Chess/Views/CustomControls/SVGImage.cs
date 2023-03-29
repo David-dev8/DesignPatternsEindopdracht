@@ -87,7 +87,7 @@ namespace Chess.Views.CustomControls
             if(!_seenBrushes.Contains(drawing.Brush))
             {
                 var color = (Color)ColorConverter.ConvertFromString(Color);
-                if (color.ToString() == "#FF000000")
+                if (color.ToString() == "#FF000000" && (drawing.Brush.ToString() == "#FF000000" || drawing.Brush.ToString() == "#FFFFFFFF"))
                 {
                     var brush = new SolidColorBrush()
                     {

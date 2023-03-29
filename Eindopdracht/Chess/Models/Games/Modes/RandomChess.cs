@@ -13,41 +13,15 @@ namespace Chess.Models.Games.Modes
     /// <summary>
     /// Contains all functionalities for random chess
     /// </summary>
-    public class RandomChess : Game
+    public class RandomChess : ClassicalChess
     {
-
-        private const int BOARD_SIZE = 8;
+        private const int MINIMUM_SCORE_PER_MOVE = 10;
+        private const int MAXIMUM_SCORE_PER_MOVE = 20;
         private Random _randomNumberGen = new Random();
-
-        public RandomChess() : base(new RegularPieceFactory(Color.FromRgb(0, 0, 0), AdvanceDirections.UP), BOARD_SIZE, new List<Player>() {
-            new Player() { Color = Color.FromRgb(255, 255, 255) },
-            new Player() { Color = Color.FromRgb(0, 0, 0) }
-        })
-        {
-        }
-
-        public override IEnumerable<Player> GetWinners()
-        {
-            return Enumerable.Empty<Player>();
-        }
-
-        public override bool IsLegal(Move move)
-        {
-            return true;
-        }
-
-        protected override Game ConstructCopy()
-        {
-            throw new NotImplementedException();
-        }
-
-        protected override void EliminatePlayers()
-        {
-        }
 
         protected override void IncreaseScore(Player player, Move move)
         {
-
+            player.Score += _randomNumberGen.Next(MINIMUM_SCORE_PER_MOVE, MAXIMUM_SCORE_PER_MOVE + 1);
         }
 
         protected override void SetupPiecesForRanks(Square[] firstRank, Square[] secondRank, AdvanceDirections direction, Player player)
@@ -67,7 +41,7 @@ namespace Chess.Models.Games.Modes
 
             Piece king = PieceFactory.CreateKing();
             kings.Add(player, king);
-            firstRank[_randomNumberGen.Next(0, firstRank.Length)].Piece = PieceFactory.CreateKing();
+            firstRank[_randomNumberGen.Next(0, firstRank.Length)].Piece = king;
 
             foreach (Square square in firstRank.Union(secondRank))
             {
@@ -84,6 +58,5 @@ namespace Chess.Models.Games.Modes
             inputArray.Remove(pieceToReturn);
             return pieceToReturn;  
         }
-
     }
 }

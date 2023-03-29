@@ -37,7 +37,7 @@ namespace Chess.Models.Movement
             Location currentLocation = grid.GetCurrentLocation(currentSquare);
 
             Square squareTwoSpacesUp = GetDestination(grid, currentLocation, -2, 0, _direction);
-            if(squareTwoSpacesUp != null)
+            if(squareTwoSpacesUp != null && !squareTwoSpacesUp.IsOccupied)
             {
                 possibleMoves.Add(moveFactory.CreateMove(currentSquare, squareTwoSpacesUp, _moveOptions));
             }
@@ -64,7 +64,11 @@ namespace Chess.Models.Movement
             if(adjacentSquare?.Piece != null && adjacentSquare.Piece.Movement.HasAbility(movement => movement is EnPassantMovement)
                 && adjacentSquare.Piece.Color != start.Piece.Color)
             {
-                possibleMoves.Add(moveFactory.CreateMove(start, GetDestination(grid, currentLocation, -1, columnDifference, _direction), _moveOptions));
+                Square destination = GetDestination(grid, currentLocation, -1, columnDifference, _direction);
+                if(destination != null)
+                {
+                    possibleMoves.Add(moveFactory.CreateMove(start, destination, _moveOptions));
+                }
             }
         }
     }

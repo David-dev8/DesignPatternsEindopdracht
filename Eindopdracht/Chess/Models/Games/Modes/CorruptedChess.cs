@@ -1,7 +1,5 @@
-﻿using Chess.Models.Movement;
-using Chess.Models.Moves;
+﻿using Chess.Models.Moves;
 using Chess.Models.Pieces;
-using Chess.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,20 +9,12 @@ using System.Windows.Media;
 
 namespace Chess.Models.Games.Modes
 {
-    /// <summary>
-    /// Contains all functionalities for classical chess
-    /// </summary>
-    public class ClassicalChess : Game
+    public class CorruptedChess: ClassicalChess
     {
         private const int GUARENTEED_SCORE_PER_MOVE = 20;
         private const int BOARD_SIZE = 8;
 
-        public ClassicalChess(PieceFactory pieceFactory = null, IList<Player> players = null) : base(
-            pieceFactory ?? new RegularPieceFactory(Color.FromRgb(0, 0, 0), AdvanceDirections.UP), BOARD_SIZE, 
-            players ?? new List<Player>() { 
-                new Player() { Name = "Player 1", Color = Color.FromRgb(255, 0, 0) },
-                new Player() { Name = "Player 2", Color = Color.FromRgb(0, 0, 0) } 
-            })
+        public CorruptedChess() : base(new CorruptedPieceFactory(Color.FromRgb(0, 0, 0), AdvanceDirections.UP))
         {
         }
 
@@ -54,13 +44,13 @@ namespace Chess.Models.Games.Modes
 
         public override bool IsLegal(Move move)
         {
-            if(move.Destination.Piece?.Color == CurrentPlayer.Color || !move.CanBeMade(this))
+            if(move.Destination.Piece?.Color == CurrentPlayer.Color)
             {
                 // Not allowed to capture your own piece
                 return false;
             }
 
-            Game clone = VirtuallyMakeMove(move);
+            CorruptedChess clone = (CorruptedChess)VirtuallyMakeMove(move);
             // Is the king of the player whose turn it is in check? If so, the move was not legal
             if(clone.InCheck(CurrentPlayer))
             {
@@ -70,15 +60,46 @@ namespace Chess.Models.Games.Modes
             return true;
         }
 
+        private bool InCheck(Player player)
+        {
+            // Can any of the opponents pieces capture the king of the player?
+            return Pieces.Where(piece => piece.Color != player.Color).Any(piece => {
+                IEnumerable<Move> Moves = piece.Movement.GetPossibleMoves(piece, Squares);
+                return Moves.Any(move => move.Destination.Piece == kings[player]);
+            });
+        }
+
         protected override Game ConstructCopy()
         {
-            return new ClassicalChess();
+            CorruptedChess copy = new CorruptedChess();
+            copy.kings = kings;
+            return copy;
         }
 
         protected override void EliminatePlayers()
         {
-            // Eliminate each player that is in check and whose king has no legal moves, i.e. is checkmated
-            ActivePlayers = ActivePlayers.Where(player => !IsCheckmated(player)).ToList();
+            // Eliminate each player that is in check and whose king has no legal moves
+            for(int i = Players.Count - 1; i >= 0; i--)
+            {
+                Player player = Players[i];
+                if(InCheck(player))
+                {
+                    // Can the player make any move to get out of the check?
+                    // If this is not the case, the player is checkmated
+                    if(!Pieces.Where(piece => piece?.Color == player.Color).Any(piece =>
+                    {
+                        IEnumerable<Move> Moves = piece.Movement.GetPossibleMoves(piece, Squares);
+                        return Moves.Any(move => {
+                            // TODO typecast
+                            CorruptedChess game = (CorruptedChess)VirtuallyMakeMove(move);
+                            return !game.InCheck(player);
+                        });
+                    }))
+                    {
+                        ActivePlayers.Remove(player);
+                    }
+                }
+            }
         }
 
         protected override void IncreaseScore(Player player, Move move)

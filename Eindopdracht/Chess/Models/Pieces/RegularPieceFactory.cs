@@ -65,7 +65,6 @@ namespace Chess.Models.Pieces
             movementPattern.AddMovementPattern(new StraightLineMovement(moveFactory));
             movementPattern.AddMovementPattern(new CastleMovement(moveFactory, Direction));
             return new Piece("rook.svg", Color, movementPattern);
-
         }
     }
 }

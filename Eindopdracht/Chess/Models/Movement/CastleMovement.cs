@@ -71,9 +71,14 @@ namespace Chess.Models.Movement
                 destination = GetDestination(grid, currentLocation, 0, nextColumn, _direction);
                 if(destination.IsOccupied)
                 {
-                    if(destination.Piece.Movement.HasAbility(movement => movement is CastleMovement))
+                    if(destination.Piece.Movement.HasAbility(movement => movement is CastleMovement) &&
+                        destination.Piece.Color == start.Piece.Color)
                     {
-                        possibleMoves.Add(moveFactory.CreateMove(start, GetDestination(grid, currentLocation, 0, columnDifference * 2, _direction), _moveOptions));
+                        Square squareToCastleTo = GetDestination(grid, currentLocation, 0, columnDifference * 2, _direction);
+                        if(squareToCastleTo != null)
+                        {
+                            possibleMoves.Add(moveFactory.CreateMove(start, squareToCastleTo, _moveOptions));
+                        }
                     }
                     break;
                 }

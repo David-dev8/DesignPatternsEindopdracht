@@ -1,5 +1,6 @@
 ﻿using Chess.Extensions;
 using Chess.Models.Games;
+using Chess.Models.Pieces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,22 +20,23 @@ namespace Chess.Models.Moves
 
         public override void Make(Game game)
         {
+            Piece pieceToCapture = Destination.Piece;
             base.Make(game);
 
-            Location destinationLocation = game.Squares.GetCurrentLocation(Destination);
-            for(int i = -1; i <= 1; i++)
+            if(pieceToCapture != null)
             {
-                for(int j = -1; j <= 1; j++)
+                // Explode, this even includesthe piece that made the move
+                Location destinationLocation = game.Squares.GetCurrentLocation(Destination);
+                for(int i = -1; i <= 1; i++)
                 {
-                    if(i == 0 && j == 0)
+                    for(int j = -1; j <= 1; j++)
                     {
-                        continue;
-                    }
-                    Square neighbour = game.Squares.ElementAtOrDefault(destinationLocation.Row + i)?.ElementAtOrDefault(destinationLocation.Column + j);
-                    if(neighbour?.Piece != null)
-                    {
-                        affectedPieces.Add(new AffectedPieceData(neighbour, null, neighbour.Piece));
-                        neighbour.Piece = null;
+                        Square neighbour = game.Squares.ElementAtOrDefault(destinationLocation.Row + i)?.ElementAtOrDefault(destinationLocation.Column + j);
+                        if(neighbour?.Piece != null)
+                        {
+                            affectedPieces.Add(new AffectedPieceData(neighbour, null, neighbour.Piece));
+                            neighbour.Piece = null;
+                        }
                     }
                 }
             }

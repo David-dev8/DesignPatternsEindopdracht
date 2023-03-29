@@ -16,7 +16,7 @@ namespace Chess.Models.Games
         /// <summary>
         /// The name of the player
         /// </summary>
-        public string Name { get; set; } = "Harold";
+        public string Name { get; set; }
 
         /// <summary>
         /// The color this player plays as

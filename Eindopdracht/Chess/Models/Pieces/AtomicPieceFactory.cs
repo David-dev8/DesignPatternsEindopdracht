@@ -26,28 +26,25 @@ namespace Chess.Models.Pieces
 
         public override Piece CreateBishop()
         {
-            return new Piece("bishop.svg", Color, new DiagonalMovement(moveFactory));
+            return new Piece("explosiveBishop.svg", Color, new DiagonalMovement(moveFactory));
         }
 
         public override Piece CreateKing()
         {
-            // A king cannot explode
+            // A king cannot explode, therefore do not use the factory for explosive moves
             MoveFactory moveFactory = new MoveFactory();
-            CompositeMovement movementPattern = new CompositeMovement(moveFactory);
-            movementPattern.AddMovementPattern(new OneAdjacentMovement(moveFactory));
-            movementPattern.AddMovementPattern(new CastleMovement(moveFactory, Direction));
-            return new Piece("king.svg", Color, movementPattern);
+            return new Piece("forbiddenExplosionKing.svg", Color, new OneAdjacentMovement(moveFactory));
         }
 
         public override Piece CreateKnight()
         {
-            return new Piece("knight.svg", Color, new KnightMovement(moveFactory));
+            return new Piece("explosiveKnight.svg", Color, new KnightMovement(moveFactory));
 
         }
 
         public override Piece CreatePawn(AdvanceDirections direction)
         {
-            return new Piece("pawn.svg", Color, new SingleAdvanceMovement(moveFactory, direction));
+            return new Piece("explosivePawn.svg", Color, new SingleAdvanceMovement(moveFactory, direction));
         }
 
         public override Piece CreateQueen()
@@ -55,12 +52,12 @@ namespace Chess.Models.Pieces
             CompositeMovement movementPattern = new CompositeMovement(moveFactory);
             movementPattern.AddMovementPattern(new DiagonalMovement(moveFactory));
             movementPattern.AddMovementPattern(new StraightLineMovement(moveFactory));
-            return new Piece("queen.svg", Color, movementPattern);
+            return new Piece("explosiveQueen.svg", Color, movementPattern);
         }
 
         public override Piece CreateRook()
         {
-            return new Piece("rook.svg", Color, new StraightLineMovement(moveFactory));
+            return new Piece("explosiveRook.svg", Color, new StraightLineMovement(moveFactory));
         }
     }
 }

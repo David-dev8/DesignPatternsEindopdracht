@@ -22,7 +22,10 @@ namespace Chess.Models.Movement
             new int[] { 0, 1 }, 
             new int[] { 1, -1 }, 
             new int[] { 1, 0 }, 
-            new int[] { 1, 1 }
+            new int[] { 1, 1 },
+            new int[] { -1, -1 },
+            new int[] { -1, 0 },
+            new int[] { -1, 1 }
         };
 
         public OneAdjacentMovement(MoveFactory moveFactory) : base(moveFactory)
