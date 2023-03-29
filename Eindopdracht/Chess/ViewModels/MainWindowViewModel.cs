@@ -5,12 +5,15 @@ using System.Windows.Input;
 
 namespace Chess.ViewModels
 {
+    /// <summary>
+    /// This is the main viewmodel
+    /// </summary>
     public class MainWindowViewModel : Observable
     {
         private readonly NavigationStore _navigationStore;
 
         /// <summary>
-        /// Deze property geeft toegang tot de huidige ViewModel.
+        /// This property gives access to the current ViewModel
         /// </summary>
         public BaseViewModel CurrentViewModel
         {
@@ -25,9 +28,9 @@ namespace Chess.ViewModels
         }
 
         /// <summary>
-        /// Creëert een ViewModel voor de MainWindow met een navigationStore.
+        /// Creates a ViewModel for the MainWindow with a navigationStore
         /// </summary>
-        /// <param name="navigationStore">De navigationStore die wordt gebruikt voor navigatie.</param>
+        /// <param name="navigationStore">The navigationStore used for navigation</param>
         public MainWindowViewModel(NavigationStore navigationStore)
         {
             _navigationStore = navigationStore;

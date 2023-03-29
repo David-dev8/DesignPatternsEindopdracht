@@ -36,6 +36,15 @@ namespace Chess.Models.Movement
             return possibleMoves;
         }
 
+        /// <summary>
+        /// Registers all possible moves for a specific direction for a specific piece 
+        /// </summary>
+        /// <param name="grid">The grid to perform it on</param>
+        /// <param name="start">The current square of the piece</param>
+        /// <param name="currentLocation">The current location of the piece</param>
+        /// <param name="columnDifference">The difference to the column this piece has started in</param>
+        /// <param name="possibleMoves">A list with all possible moves</param>
+        /// <param name="shouldBeOccupied">Indicates whether the destination should be occupied</param>
         private void RegisterPossibleMoveForSpecificDirection(Square[][] grid, Square start, Location currentLocation, int columnDifference, 
             IList<Move> possibleMoves, bool shouldBeOccupied)
         {

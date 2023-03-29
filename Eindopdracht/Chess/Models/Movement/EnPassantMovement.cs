@@ -48,6 +48,14 @@ namespace Chess.Models.Movement
             return possibleMoves;
         }
 
+        /// <summary>
+        /// Register all possible en passent captures
+        /// </summary>
+        /// <param name="grid">The grid to perform it on</param>
+        /// <param name="start">The current square of the piece</param>
+        /// <param name="currentLocation">The current location of the piece</param>
+        /// <param name="columnDifference">The difference to the column this piece has started in</param>
+        /// <param name="possibleMoves">All possible moves</param>
         private void RegisterPossibleEnPassantCapture(Square[][] grid, Square start, Location currentLocation, int columnDifference,
             IList<Move> possibleMoves)
         {

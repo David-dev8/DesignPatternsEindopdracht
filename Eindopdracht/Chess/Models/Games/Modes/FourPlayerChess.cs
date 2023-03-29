@@ -9,6 +9,9 @@ using System.Windows.Media;
 
 namespace Chess.Models.Games.Modes
 {
+    /// <summary>
+    /// Contains all functionalities for four player chess
+    /// </summary>
     public class FourPlayerChess : Game
     {
         private const int GAP = 3;

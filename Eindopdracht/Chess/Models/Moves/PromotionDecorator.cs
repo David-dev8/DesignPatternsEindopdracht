@@ -35,6 +35,13 @@ namespace Chess.Models.Moves
             }
         }
 
+        /// <summary>
+        /// Indicates if a piece reached a promotion square
+        /// </summary>
+        /// <param name="game">The current game</param>
+        /// <param name="destination">The destination of a move</param>
+        /// <param name="start">The start of a move</param>
+        /// <returns></returns>
         private bool ReachedPromotionSquare(Game game, int destination, int start)
         {
             return destination - start != 0 && (destination == game.PromotionRank - 1 || destination == game.Squares.Length - game.PromotionRank);

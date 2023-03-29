@@ -11,6 +11,9 @@ using System.Windows.Media;
 
 namespace Chess.Models.Games.Modes
 {
+    /// <summary>
+    /// Contains all functionalities for classical chess
+    /// </summary>
     public class ClassicalChess : Game
     {
         private const int GUARENTEED_SCORE_PER_MOVE = 20;

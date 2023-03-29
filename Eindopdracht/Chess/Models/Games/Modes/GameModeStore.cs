@@ -7,8 +7,15 @@ using System.Threading.Tasks;
 
 namespace Chess.Models.Games.Modes
 {
+    /// <summary>
+    /// Creates all possible GameModes
+    /// </summary>
     public static class GameModeStore
     {
+        /// <summary>
+        /// Gets information of all possible GameModes
+        /// </summary>
+        /// <returns></returns>
         public static IEnumerable<ModeInfo> GetModeInfos()
         {
             return new List<ModeInfo>()

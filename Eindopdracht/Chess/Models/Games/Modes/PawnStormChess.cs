@@ -9,6 +9,9 @@ using System.Windows.Media;
 
 namespace Chess.Models.Games.Modes
 {
+    /// <summary>
+    /// Contains all functionalities for pawn storm chess
+    /// </summary>
     public class PawnStormChess : Game
     {
 

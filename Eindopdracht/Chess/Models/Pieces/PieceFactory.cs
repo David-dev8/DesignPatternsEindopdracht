@@ -23,7 +23,7 @@ namespace Chess.Models.Pieces
         /// </summary>
         /// <param name="color">The color of the pieces to create</param>
         /// <param name="direction">The direction the created peices consider forward</param>
-        /// <param name="moveFactory">?</param>
+        /// <param name="moveFactory">The factory for creating moves</param>
         public PieceFactory(Color color, AdvanceDirections direction, MoveFactory moveFactory) 
         { 
             Color = color;
@@ -35,27 +35,32 @@ namespace Chess.Models.Pieces
         /// </summary>
         /// <returns>A piece that acts and looks like king</returns>
         public abstract Piece CreateKing();
+
         /// <summary>
         /// Creates a queen piece
         /// </summary>
         /// <returns>A piece that acts and looks like queen</returns>
         public abstract Piece CreateQueen();
+
         /// <summary>
         /// Creates a pawn piece
         /// </summary>
         /// <param name="direction">The direction the pawn will move towards</param>
         /// <returns>A piece that looks acts and looks like a pawn</returns>
         public abstract Piece CreatePawn(AdvanceDirections direction);
+
         /// <summary>
         /// Creates a rook piece
         /// </summary>
         /// <returns>A piece that acts and looks like rook</returns>
         public abstract Piece CreateRook();
+
         /// <summary>
         /// Creates a knight piece
         /// </summary>
         /// <returns>A piece that acts and looks like knight</returns>
         public abstract Piece CreateKnight();
+
         /// <summary>
         /// Creates a bishop piece
         /// </summary>

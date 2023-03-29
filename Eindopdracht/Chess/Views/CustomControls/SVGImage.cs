@@ -18,6 +18,9 @@ using System.Reflection;
 
 namespace Chess.Views.CustomControls
 { 
+    /// <summary>
+    /// Represents a SVG image with a dynamic color
+    /// </summary>
     public class SVGImage : SvgViewbox
     {
         public static readonly DependencyProperty ColorProperty =
@@ -53,6 +56,9 @@ namespace Chess.Views.CustomControls
             SetRightColor();
         }
 
+        /// <summary>
+        /// Sets the right color for this object
+        /// </summary>
         private void SetRightColor()
         {
             if(Color != null)
@@ -72,6 +78,10 @@ namespace Chess.Views.CustomControls
             }
         }
 
+        /// <summary>
+        /// Sets the right color for the given drawing
+        /// </summary>
+        /// <param name="drawing">The drawing whose color should be changed</param>
         private void SetRightColor(GeometryDrawing drawing)
         {
             if(!_seenBrushes.Contains(drawing.Brush))
@@ -100,6 +110,11 @@ namespace Chess.Views.CustomControls
             }
         }
 
+        /// <summary>
+        /// Inverts a given color
+        /// </summary>
+        /// <param name="color"The color to be inverted></param>
+        /// <returns>The inverted color</returns>
         private Color Invert(Color color)
         {
             return System.Windows.Media.Color.FromRgb(

@@ -4,31 +4,28 @@ using System.Runtime.CompilerServices;
 namespace Chess.Base
 {
     /// <summary>
-    /// Deze klasse biedt de basis voor klasses die gesubscribede klasses kunnen notificeren wanneer een property wordt gewijzigd.
+    /// This class provides some base functions for classes that can notify subscribed classes when a property is changed.
     /// </summary>
     public abstract class Observable : INotifyPropertyChanged
     {
-        /// <summary>
-        /// Dit event zorgt ervoor dat de gesubscribede klassen op de hoogte worden gesteld van wijzigingen.
-        /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
 
         /// <summary>
-        /// Deze methode kan worden aangeroepen in een bepaalde property, waarbij de naam van deze property 
-        /// moet worden vermeld. Hierdoor wordt de PropertyChanged event afgevuurd.
+        /// This method could be called inside a particular property.
+        /// The name of the specific property must be provided.
         /// </summary>
-        /// <param name="propertyName">De naam van de property die is veranderd</param>
+        /// <param name="propertyName">The name of the property that will change</param>
         protected void OnPropertyChanged(string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         /// <summary>
-        /// Deze methode kan worden aangeroepen in een bepaalde property, waarbij de naam van deze property 
-        /// niet meer hoeft te worden vermeld. Hierdoor wordt de PropertyChanged event afgevuurd.
+        /// This method could be called inside a particular property.
+        /// The name of the specific property is optional, it will be taken automatically.
         /// </summary>
-        /// <param name="propertyName">De naam van de property die is veranderd.</param>
+        /// <param name="propertyName">The name of the property that will change</param>
         protected void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

@@ -14,6 +14,10 @@ namespace Chess.Base
     {
         private NavigationStore _navigationStore;
 
+        /// <summary>
+        /// Constructs a NavigationService with the given NavigationStore
+        /// </summary>
+        /// <param name="navigationStore">The navigationstore with the current view model</param>
         public NavigationService(NavigationStore navigationStore)
         {
             _navigationStore = navigationStore;

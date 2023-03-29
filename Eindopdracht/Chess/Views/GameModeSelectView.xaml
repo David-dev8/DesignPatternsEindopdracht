@@ -57,36 +57,35 @@
             <TextBlock Text="Gamemodes" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="35" FontWeight="Bold" />
         </Grid>
 
-        <ScrollViewer Grid.Row="3" Grid.RowSpan="4" Grid.Column="3" VerticalScrollBarVisibility="Hidden">
-            <ListView BorderThickness="0" ItemsSource="{Binding GameModes}" SelectedItem="{Binding ChosenGameMode,Mode=TwoWay}">
+        <ListView Background="LightGray" Opacity="0.5" ScrollViewer.VerticalScrollBarVisibility="Hidden" Grid.Row="3" Grid.RowSpan="4" Grid.Column="3" BorderThickness="0" ItemsSource="{Binding GameModes}" SelectedItem="{Binding ChosenGameMode,Mode=TwoWay}">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <Border BorderThickness="5" BorderBrush="Black" Height="150">
-                        <Grid Height="150" Opacity="0.5">
+                        <Grid Height="150">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="0.5*"></ColumnDefinition>
                                 <ColumnDefinition Width="*"></ColumnDefinition>
                                 <ColumnDefinition Width="0.5*"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
-                                <Grid.Style>
-                                    <Style TargetType="{x:Type Grid}">
-                                        <Style.Triggers>
-                                            <Trigger Property="IsMouseOver" Value="True">
-                                                <Setter Property="Background" Value="LightGray"></Setter>
-                                            </Trigger>
-                                            <Trigger Property="IsMouseOver" Value="False">
-                                                <Setter Property="Background" Value="White"></Setter>
-                                            </Trigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </Grid.Style>
-                                <TextBlock Text="{Binding Key}" Grid.Column="0" Grid.ColumnSpan="3" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="25" />
-                            </Grid>
+                            <TextBlock Text="{Binding Name}" Grid.Column="0" Grid.ColumnSpan="3" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="25" />
+                        </Grid>
                     </Border>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                    <Setter Property="Padding" Value="0" />
+                    <Setter Property="Margin" Value="0" />
+                    <Setter Property="BorderThickness" Value="0" />
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="LightGray"></Setter>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </ListView.ItemContainerStyle>
         </ListView>
-        </ScrollViewer>
         <Button Command="{Binding StartCommand}" Grid.Column="1" Grid.Row="5" Background="White" Opacity="0.75" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="50" Width="250" Height="80">Play</Button>
     </Grid>
 </UserControl>

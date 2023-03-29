@@ -4,8 +4,7 @@ using System.Windows.Input;
 namespace Chess.Base
 {
     /// <summary>
-    /// Deze klasse vertegenwoordigt een command die wordt uitgevoerd wanneer hij voldoet aan de voorwaarden die zijn 
-    /// meegegeven via de canExecute.
+    /// Represents a command that will be executed if the given conditions of canExecute are true.
     /// </summary>
     public class RelayCommand : ICommand
     {
@@ -13,9 +12,9 @@ namespace Chess.Base
         private readonly Action _execute;
 
         /// <summary>
-        /// Creëert een RelayCommand met een gegeven methode die wordt uitgevoerd, wanneer deze wordt geactiveerd.
+        /// Constructs a RelayCommand with a executable method
         /// </summary>
-        /// <param name="execute">De uit te voeren methode</param>
+        /// <param name="execute">The method to be executed</param>
         public RelayCommand(Action execute)
         {
             _canExecute = null;
@@ -23,20 +22,16 @@ namespace Chess.Base
         }
 
         /// <summary>
-        /// Creëert een RelayCommand met een gegeven methode die wordt uitgevoerd, wanneer deze wordt geactiveerd. 
-        /// Voordat hij deze methode uitvoert, wordt er eerst gecontroleerd of hij mag worden uitgevoerd.
+        /// Constructs a RelayCommand with a executable method, but it should only execute if the given conditions are true.
         /// </summary>
-        /// <param name="execute">De uit te voeren methode.</param>
-        /// <param name="canExecute">De methode waarin wordt gecontroleerd of de execute methode mag worden uitgevoerd.</param>
+        /// <param name="execute">The method to be executed</param>
+        /// <param name="canExecute">A method with some conditions</param>
         public RelayCommand(Action execute, Predicate<object> canExecute)
         {
             _canExecute = canExecute;
             _execute = execute;
         }
 
-        /// <summary>
-        /// Dit event handelt het eventuele veranderen van de mogelijkheid om uit te voeren, af.
-        /// </summary>
         public event EventHandler CanExecuteChanged
         {
             add
@@ -50,18 +45,17 @@ namespace Chess.Base
         }
 
         /// <summary>
-        /// Deze methode controleert of de execute methode mag worden uitgevoerd.
+        /// Checks whether the executable method is allowed to execute.
         /// </summary>
-        /// <param name="parameter">Het object dat de canExecute nodig heeft.</param>
-        /// <returns>Als de _canExecute methode niet is geset wordt er altijd true gereturnd, anders wordt de uitkomst van de 
-        /// canExecute gereturnt.</returns>
+        /// <param name="parameter">The object that canExecute needed</param>
+        /// <returns>True if canExecute is not set, the result of canExecute otherwise</returns>
         public bool CanExecute(object parameter)
         {
             return _canExecute == null ? true : _canExecute(parameter);
         }
 
         /// <summary>
-        /// Voert de gegeven execute methode uit.
+        /// Executes the executable method
         /// </summary>
         public void Execute(object parameter)
         {

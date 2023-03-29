@@ -26,6 +26,13 @@ namespace Chess.Models.Moves
             start.Piece = null;
         }
 
+        /// <summary>
+        /// Gets the next square to the destination
+        /// </summary>
+        /// <param name="grid">The grid to perform it on</param>
+        /// <param name="sideDirection">The direction to move</param>
+        /// <param name="shouldLookTwice">Should look for a second time</param>
+        /// <returns></returns>
         private Square GetSquareNextToDestination(Square[][] grid, int sideDirection, bool shouldLookTwice = false)
         {
             Location destinationLocation = grid.GetCurrentLocation(Destination);

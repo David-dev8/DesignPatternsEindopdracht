@@ -10,6 +10,9 @@ using System.Windows.Media;
 
 namespace Chess.Models.Games.Modes
 {
+    /// <summary>
+    /// Contains all functionalities for random chess
+    /// </summary>
     public class RandomChess : Game
     {
 
