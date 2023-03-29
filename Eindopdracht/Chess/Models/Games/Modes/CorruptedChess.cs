@@ -15,7 +15,7 @@ namespace Chess.Models.Games.Modes
         private const int MAXIMUM_SCORE_UNCERTAINTY = 5;
         private Random _random = new Random();
 
-        public CorruptedChess() : base(new CorruptedPieceFactory(Color.FromRgb(0, 0, 0), AdvanceDirections.UP))
+        public CorruptedChess() : base(new CorruptedPieceFactory(Color.FromRgb(255, 255, 255), AdvanceDirections.UP))
         {
         }
 

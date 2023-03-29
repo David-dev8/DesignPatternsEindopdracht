@@ -17,7 +17,7 @@ namespace Chess.Models.Games.Modes
         private const int SCORE_SETBACK = 2;
         private const int BOARD_SIZE = 8;
 
-        public AtomicChess() : base(new AtomicPieceFactory(Color.FromRgb(0, 0, 0), AdvanceDirections.UP), BOARD_SIZE, new List<Player>() {
+        public AtomicChess() : base(new AtomicPieceFactory(Color.FromRgb(255, 255, 255), AdvanceDirections.UP), BOARD_SIZE, new List<Player>() {
             new Player("Player 1", Color.FromRgb(255, 255, 255)), 
             new Player("Player 2", Color.FromRgb(0, 0, 0))
         })

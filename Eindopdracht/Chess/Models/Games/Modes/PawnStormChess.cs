@@ -33,7 +33,7 @@ namespace Chess.Models.Games.Modes
             }
         }
 
-        public PawnStormChess() : base(new RegularPieceFactory(Color.FromRgb(0, 0, 0), AdvanceDirections.UP), BOARD_SIZE, new List<Player>() {
+        public PawnStormChess() : base(new RegularPieceFactory(Color.FromRgb(255, 255, 255), AdvanceDirections.UP), BOARD_SIZE, new List<Player>() {
             new Player("Player 1", Color.FromRgb(255, 255, 255)),
             new Player("Player 2", Color.FromRgb(0, 0, 0))
         })

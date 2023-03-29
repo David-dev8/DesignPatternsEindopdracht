@@ -22,7 +22,7 @@ namespace Chess.Models.Games.Modes
         public ClassicalChess(PieceFactory pieceFactory = null, IList<Player> players = null) : base(
             pieceFactory ?? new RegularPieceFactory(Color.FromRgb(0, 0, 0), AdvanceDirections.UP), BOARD_SIZE, 
             players ?? new List<Player>() { 
-                new Player("Player 1", Color.FromRgb(255, 0, 0)),
+                new Player("Player 1", Color.FromRgb(255, 255, 255)),
                 new Player("Player 2", Color.FromRgb(0, 0, 0)) 
             })
         {
@@ -41,7 +41,7 @@ namespace Chess.Models.Games.Modes
             {
                 return !Pieces.Where(piece => piece?.Color == player.Color).Any(piece =>
                 {
-                    return piece.Movement.GetPossibleMoves(piece, Squares).Any();
+                    return piece.Movement.GetPossibleMoves(piece, Squares).Where(move => IsLegal(move)).Any();
                 });
             }))
             {
