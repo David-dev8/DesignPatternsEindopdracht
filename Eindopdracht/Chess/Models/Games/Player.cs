@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Chess.Base;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,8 +12,10 @@ namespace Chess.Models.Games
     /// <summary>
     /// This object stores a participant for a game
     /// </summary>
-    public class Player
+    public class Player: Observable
     {
+        private int _score = 0;
+
         /// <summary>
         /// The name of the player
         /// </summary>
@@ -26,6 +29,23 @@ namespace Chess.Models.Games
         /// <summary>
         /// The score of the player
         /// </summary>
-        public int Score { get; set; } = 0;
+        public int Score
+        {
+            get
+            {
+                return _score;
+            }
+            set
+            {
+                _score = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        public Player(string name, Color color)
+        {
+            Name = name;
+            Color = color;
+        }
     }
 }

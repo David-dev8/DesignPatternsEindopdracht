@@ -35,5 +35,17 @@ namespace Chess.Models.Moves
            base.Undo(game);
            _moveWrappee.Undo(game);
         }
+
+        public override Move Clone(Square start, Square destination)
+        {
+            return ConstructCopy(_moveWrappee.Clone(start, destination));
+        }
+
+        public override int CalculateScore()
+        {
+            return base.CalculateScore() + _moveWrappee.CalculateScore();
+        }
+
+        protected abstract BaseMoveDecorator ConstructCopy(Move move);
     }
 }

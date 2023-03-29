@@ -16,14 +16,14 @@ namespace Chess.Models.Games.Modes
     /// </summary>
     public class ClassicalChess : Game
     {
-        private const int GUARENTEED_SCORE_PER_MOVE = 20;
+        private const int GUARENTEED_SCORE_PER_MOVE = 2;
         private const int BOARD_SIZE = 8;
 
         public ClassicalChess(PieceFactory pieceFactory = null, IList<Player> players = null) : base(
             pieceFactory ?? new RegularPieceFactory(Color.FromRgb(0, 0, 0), AdvanceDirections.UP), BOARD_SIZE, 
             players ?? new List<Player>() { 
-                new Player() { Name = "Player 1", Color = Color.FromRgb(255, 0, 0) },
-                new Player() { Name = "Player 2", Color = Color.FromRgb(0, 0, 0) } 
+                new Player("Player 1", Color.FromRgb(255, 0, 0)),
+                new Player("Player 2", Color.FromRgb(0, 0, 0)) 
             })
         {
         }

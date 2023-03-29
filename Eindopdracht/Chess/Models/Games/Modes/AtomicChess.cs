@@ -12,19 +12,22 @@ namespace Chess.Models.Games.Modes
 {
     public class AtomicChess: Game
     {
+        // Since this is atomic and pieces explode, moves will be likely to yield a high score
+        // Therefore introduce a setback on the score
+        private const int SCORE_SETBACK = 2;
         private const int BOARD_SIZE = 8;
 
         public AtomicChess() : base(new AtomicPieceFactory(Color.FromRgb(0, 0, 0), AdvanceDirections.UP), BOARD_SIZE, new List<Player>() {
-            new Player() { Color = Color.FromRgb(255, 255, 255) },
-            new Player() { Color = Color.FromRgb(0, 0, 0) }
+            new Player("Player 1", Color.FromRgb(255, 255, 255)), 
+            new Player("Player 2", Color.FromRgb(0, 0, 0))
         })
         {
         }
 
         public override IEnumerable<Player> GetWinners()
         {
-            // Only one king means we have a winner
-            return kings.Count == 1 ? new List<Player>() { kings.First().Key } : null;
+            // Only one player means we have a winner (the other king has exploded)
+            return ActivePlayers.Count == 1 ? new List<Player>() { ActivePlayers.First() } : null;
         }
 
         public override bool IsLegal(Move move)
@@ -58,7 +61,7 @@ namespace Chess.Models.Games.Modes
 
         protected override void IncreaseScore(Player player, Move move)
         {
-
+            player.Score += Math.Max(0, move.Score - SCORE_SETBACK);
         }
     }
 }

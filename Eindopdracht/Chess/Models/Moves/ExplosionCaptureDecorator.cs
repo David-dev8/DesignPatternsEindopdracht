@@ -41,5 +41,10 @@ namespace Chess.Models.Moves
                 }
             }
         }
+
+        protected override BaseMoveDecorator ConstructCopy(Move move)
+        {
+            return new ExplosionCaptureDecorator(move);
+        }
     }
 }

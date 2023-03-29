@@ -54,5 +54,10 @@ namespace Chess.Models.Moves
             return game.GetAmountOfMovesForSpecificPiece(Start.Piece) == 0 &&
                 game.GetAmountOfMovesForSpecificPiece(GetSquareNextToDestination(game.Squares, 1, true).Piece) == 0;
         }
+
+        protected override BaseMoveDecorator ConstructCopy(Move move)
+        {
+            return new CastleDecorator(move);
+        }
     }
 }

@@ -35,6 +35,11 @@ namespace Chess.Models.Moves
             }
         }
 
+        protected override BaseMoveDecorator ConstructCopy(Move move)
+        {
+            return new PromotionDecorator(move, _direction);
+        }
+
         /// <summary>
         /// Indicates if a piece reached a promotion square
         /// </summary>

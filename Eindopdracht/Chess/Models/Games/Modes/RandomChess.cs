@@ -17,11 +17,11 @@ namespace Chess.Models.Games.Modes
     {
         private const int MINIMUM_SCORE_PER_MOVE = 10;
         private const int MAXIMUM_SCORE_PER_MOVE = 20;
-        private Random _randomNumberGen = new Random();
+        private Random _random = new Random();
 
         protected override void IncreaseScore(Player player, Move move)
         {
-            player.Score += _randomNumberGen.Next(MINIMUM_SCORE_PER_MOVE, MAXIMUM_SCORE_PER_MOVE + 1);
+            player.Score += _random.Next(MINIMUM_SCORE_PER_MOVE, MAXIMUM_SCORE_PER_MOVE + 1);
         }
 
         protected override void SetupPiecesForRanks(Square[] firstRank, Square[] secondRank, AdvanceDirections direction, Player player)
@@ -41,14 +41,11 @@ namespace Chess.Models.Games.Modes
 
             Piece king = PieceFactory.CreateKing();
             kings.Add(player, king);
-            firstRank[_randomNumberGen.Next(0, firstRank.Length)].Piece = king;
+            firstRank[_random.Next(0, firstRank.Length)].Piece = king;
 
             foreach (Square square in firstRank.Union(secondRank))
             {
-                if(square.Piece == null)
-                {
-                    square.Piece = GetAndRemoveFromArray(piecesToPlace, _randomNumberGen.Next(0, piecesToPlace.Count));
-                }
+                square.Piece ??= GetAndRemoveFromArray(piecesToPlace, _random.Next(0, piecesToPlace.Count));
             }
         }
 

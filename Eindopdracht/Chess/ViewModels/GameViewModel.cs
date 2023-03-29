@@ -79,7 +79,8 @@ namespace Chess.ViewModels
         }
 
         /// <summary>
-        /// TODO uitleggen
+        /// Determines what moves will become active, based on the currently selected square
+        /// If a square is selected that coincides with an active move, the move will be made as well
         /// </summary>
         private void DetermineActiveMoves()
         {
@@ -92,10 +93,10 @@ namespace Chess.ViewModels
                 SelectedSquare = null;
             }
             // Does the selected square have a piece from the current player?
-            else if(_selectedSquare?.Piece != null && _selectedSquare.Piece.Color == Game.CurrentPlayer.Color) // TODO teveel?
+            else if(_selectedSquare?.Piece != null && _selectedSquare.Piece.Color == Game.CurrentPlayer.Color)
             {
                 // Generate possible moves
-                ActiveMoves = _selectedSquare.Piece.Movement.GetPossibleMoves(_selectedSquare.Piece, Game.Squares).Where(move => Game.IsLegal(move) && move.CanBeMade(Game)).ToList(); // TODO
+                ActiveMoves = _selectedSquare.Piece.Movement.GetPossibleMoves(_selectedSquare.Piece, Game.Squares).Where(move => Game.IsLegal(move) && move.CanBeMade(Game)).ToList();
             }
         }
     }

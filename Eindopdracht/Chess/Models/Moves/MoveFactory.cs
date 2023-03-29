@@ -23,6 +23,11 @@ namespace Chess.Models.Moves
         /// <returns>The move created acording to the input</returns>
         public virtual Move CreateMove(Square start, Square destination, MoveOptions[] options = null, AdvanceDirections? direction = null)
         {
+            if(destination == null)
+            {
+                Console.WriteLine("ja");
+            }
+
             Move move = new Move(start, destination);
 
             options ??= new MoveOptions[0];

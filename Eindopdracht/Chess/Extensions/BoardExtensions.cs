@@ -25,10 +25,13 @@ namespace Chess.Extensions
             {
                 for(int column = 0; column < grid[row].Length; column++)
                 {
-                    Piece pieceAtSquare = grid[row][column].Piece;
-                    if(currentPiece.Equals(pieceAtSquare))
+                    if(grid[row][column] != null)
                     {
-                        return grid[row][column];
+                        Piece pieceAtSquare = grid[row][column].Piece;
+                        if(currentPiece.Equals(pieceAtSquare))
+                        {
+                            return grid[row][column];
+                        }
                     }
                 }
             }
@@ -47,7 +50,7 @@ namespace Chess.Extensions
             {
                 for(int column = 0; column < grid[row].Length; column++)
                 {
-                    if(grid[row][column].Equals(currentSquare))
+                    if(grid[row][column] != null && grid[row][column].Equals(currentSquare))
                     {
                         return new Location(row, column);
                     }

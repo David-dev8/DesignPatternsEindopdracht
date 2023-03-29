@@ -38,10 +38,10 @@ namespace Chess.Models.Movement
             Square square = grid.GetCurrentSquare(piece);
             Location currentLocation = grid.GetCurrentLocation(square);
 
-            foreach (int[] possibleStep in POSSIBLE_STEPS)
+            foreach(int[] possibleStep in POSSIBLE_STEPS)
             {
                 Square destination = GetDestination(grid, currentLocation, possibleStep[0], possibleStep[1]);
-                if (destination != null)
+                if(destination != null)
                 {
                     possibleMoves.Add(moveFactory.CreateMove(square, destination));
                 }

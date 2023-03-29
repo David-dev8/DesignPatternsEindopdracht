@@ -5,6 +5,7 @@
     <TargetFramework>net6.0-windows</TargetFramework>
     <Nullable>disable</Nullable>
     <UseWPF>true</UseWPF>
+    <ApplicationIcon>Assets\ChessIcon.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -35,6 +36,10 @@
     <None Remove="Models\Games\Modes\NewFile1.txt" />
     <None Remove="Models\Pieces\NewFile1.txt" />
     <None Remove="Models\Pieces\RandomPieceFactory" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Assets\ChessIcon.ico" />
   </ItemGroup>
 
   <ItemGroup>

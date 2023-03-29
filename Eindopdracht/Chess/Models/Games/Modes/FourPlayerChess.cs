@@ -18,10 +18,10 @@ namespace Chess.Models.Games.Modes
         private const int BOARD_SIZE = 14;
 
         public FourPlayerChess() : base(null, new List<Player>() {
-            new Player() { Color = Color.FromRgb(191, 59, 67) },
-            new Player() { Color = Color.FromRgb(65, 133, 191) },
-            new Player() { Color = Color.FromRgb(78, 145, 97) },
-            new Player() { Color = Color.FromRgb(192, 149, 38) } // TODO kleuren?
+            new Player("Player 1", Color.FromRgb(191, 59, 67)),
+            new Player("Player 2", Color.FromRgb(65, 133, 191)),
+            new Player("Player 3", Color.FromRgb(78, 145, 97)),
+            new Player("Player 4", Color.FromRgb(192, 149, 38))
         })
         {
         }
@@ -47,15 +47,16 @@ namespace Chess.Models.Games.Modes
 
         protected override void IncreaseScore(Player player, Move move)
         {
-
+            // The more players there are, the higher the score
+            player.Score += move.Score * ActivePlayers.Count;
         }
 
         protected override void SetUpPieces()
         {
             SetupPiecesForRanks(Squares[BOARD_SIZE - 1], Squares[BOARD_SIZE - 2], AdvanceDirections.UP, Players[0]);
-            SetupPiecesForRanks(Squares[0], Squares[1], AdvanceDirections.DOWN, Players[1]);
+            SetupPiecesForRanks(Squares[0], Squares[1], AdvanceDirections.DOWN, Players[2]);
 
-            SetupPiecesForRanks(Squares.Select(row => row[0]).ToArray(), Squares.Select(row => row[1]).ToArray(), AdvanceDirections.RIGHT, Players[2]);
+            SetupPiecesForRanks(Squares.Select(row => row[0]).ToArray(), Squares.Select(row => row[1]).ToArray(), AdvanceDirections.RIGHT, Players[1]);
             SetupPiecesForRanks(Squares.Select(row => row[BOARD_SIZE - 1]).ToArray(), Squares.Select(row => row[BOARD_SIZE - 2]).ToArray(), 
                 AdvanceDirections.LEFT, Players[3]);
         }
@@ -68,7 +69,9 @@ namespace Chess.Models.Games.Modes
             firstRank[GAP + 1].Piece = PieceFactory.CreateKnight();
             firstRank[GAP + 2].Piece = PieceFactory.CreateBishop();
             firstRank[GAP + 3].Piece = PieceFactory.CreateQueen();
-            firstRank[GAP + 4].Piece = PieceFactory.CreateKing();
+            Piece king = PieceFactory.CreateKing();
+            kings.Add(player, king);
+            firstRank[GAP + 4].Piece = king;
             firstRank[GAP + 5].Piece = PieceFactory.CreateBishop();
             firstRank[GAP + 6].Piece = PieceFactory.CreateKnight();
             firstRank[GAP + 7].Piece = PieceFactory.CreateRook();

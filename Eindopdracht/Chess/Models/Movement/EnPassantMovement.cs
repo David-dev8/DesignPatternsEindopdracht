@@ -36,8 +36,9 @@ namespace Chess.Models.Movement
             Square currentSquare = grid.GetCurrentSquare(piece);
             Location currentLocation = grid.GetCurrentLocation(currentSquare);
 
+            Square squareOneSpaceUp = GetDestination(grid, currentLocation, -1, 0, _direction);
             Square squareTwoSpacesUp = GetDestination(grid, currentLocation, -2, 0, _direction);
-            if(squareTwoSpacesUp != null && !squareTwoSpacesUp.IsOccupied)
+            if(squareOneSpaceUp != null && !squareOneSpaceUp.IsOccupied && squareTwoSpacesUp != null && !squareTwoSpacesUp.IsOccupied)
             {
                 possibleMoves.Add(moveFactory.CreateMove(currentSquare, squareTwoSpacesUp, _moveOptions));
             }

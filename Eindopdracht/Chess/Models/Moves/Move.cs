@@ -23,7 +23,7 @@ namespace Chess.Models.Moves
         {
             get
             {
-                return affectedPieces.Count * SCORE_PER_AFFECTED_PIECE;
+               return CalculateScore();
             }
         }
         
@@ -75,12 +75,10 @@ namespace Chess.Models.Moves
         /// <param name="start">The square that started this move</param>
         /// <param name="destination">The square this movement ends on</param>
         /// <returns>A cloned movement</returns>
-        public Move Clone(Square start, Square destination)
+        public virtual Move Clone(Square start, Square destination)
         {
             return new Move(start, destination);
         }
-
-        // TODO CLONE VOOR BASEMOVEDECORATOR
 
         /// <summary>
         /// Checks if a piece is affected by this movement
@@ -107,6 +105,15 @@ namespace Chess.Models.Moves
         public virtual bool CanBeMade(Game game)
         {
             return true;
+        }
+
+        /// <summary>
+        /// Calculates the score for this move
+        /// </summary>
+        /// <returns></returns>
+        public virtual int CalculateScore()
+        {
+            return Math.Max(0, (affectedPieces.Count - 1) * SCORE_PER_AFFECTED_PIECE);
         }
     }
 }

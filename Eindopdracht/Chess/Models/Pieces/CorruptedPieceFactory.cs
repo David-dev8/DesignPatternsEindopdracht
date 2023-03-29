@@ -11,7 +11,6 @@ namespace Chess.Models.Pieces
 {
     public class CorruptedPieceFactory : PieceFactory
     {
-        // TODO default advancedirections
         public CorruptedPieceFactory(Color color, AdvanceDirections direction) : base(color, direction, new MoveFactory())
         {
 

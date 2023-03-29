@@ -47,7 +47,6 @@ namespace Chess.Models.Moves
             return null;
         }
 
-        // TODO check bij islegal deze methode
         public override bool CanBeMade(Game game)
         {
             // We can enpassant if a piece next to us just moved up two squares
@@ -71,6 +70,11 @@ namespace Chess.Models.Moves
 
             // We can also move two squares ourselves if we did not move yet
             return game.GetAmountOfMovesForSpecificPiece(Start.Piece) == 0;
+        }
+
+        protected override BaseMoveDecorator ConstructCopy(Move move)
+        {
+            return new EnPassantDecorator(move);
         }
     }
 }

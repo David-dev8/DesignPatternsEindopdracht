@@ -31,7 +31,14 @@ namespace Chess.Models.Games
         {
             get
             {
-                return GetWinners() != null;
+                return Winners != null;
+            }
+        }
+        public IEnumerable<Player> Winners
+        {
+            get
+            {
+                return GetWinners();
             }
         }
         public bool CanUndoMove
@@ -67,7 +74,7 @@ namespace Chess.Models.Games
         /// <param name="players">A list of players that are participating in the game</param>
         public Game(PieceFactory pieceFactory, int boardSize, IList<Player> players)
         {
-            this.PieceFactory = pieceFactory;
+            PieceFactory = pieceFactory;
             Players = players;
             ActivePlayers = new List<Player>(Players);
             _boardSize = boardSize;
@@ -94,6 +101,7 @@ namespace Chess.Models.Games
                 else
                 {
                     NotifyPropertyChanged(nameof(HasEnded));
+                    NotifyPropertyChanged(nameof(Winners));
                 }
             }
         }
@@ -156,7 +164,7 @@ namespace Chess.Models.Games
         {
             Game clone = ConstructCopy();
             clone.kings = kings;
-            clone.Squares = Squares.Select(row => row.Select(square => new Square() { Piece = square.Piece }).ToArray()).ToArray();
+            clone.Squares = Squares.Select(row => row.Select(square => square != null ? new Square() { Piece = square.Piece } : null).ToArray()).ToArray();
             return clone;
         }
 
@@ -174,19 +182,6 @@ namespace Chess.Models.Games
         {
             return _movesHistory.Where(move => move.IsAffected(piece)).ToList();
         }
-
-        /// <summary>
-        /// Gets the winner for the game
-        /// </summary>
-        /// <returns>The players that have won</returns>
-        public abstract IEnumerable<Player> GetWinners();
-
-        /// <summary>
-        /// Checks if a move is possible acording to the rules
-        /// </summary>
-        /// <param name="move">The move to check</param>
-        /// <returns>A boolean value indicating wether the move is posible</returns>
-        public abstract bool IsLegal(Move move);
 
         /// <summary>
         /// Creates the board
@@ -250,9 +245,6 @@ namespace Chess.Models.Games
             });
         }
 
-        // TODO default implementatie
-
-        // TODO Comment en refact
         public bool IsCheckmated(Player player)
         {
             if(InCheck(player))
@@ -285,6 +277,19 @@ namespace Chess.Models.Games
                 square.Piece = PieceFactory.CreatePawn(direction);
             }
         }
+
+        /// <summary>
+        /// Gets the winner for the game
+        /// </summary>
+        /// <returns>The players that have won</returns>
+        public abstract IEnumerable<Player> GetWinners();
+
+        /// <summary>
+        /// Checks if a move is possible acording to the rules
+        /// </summary>
+        /// <param name="move">The move to check</param>
+        /// <returns>A boolean value indicating wether the move is posible</returns>
+        public abstract bool IsLegal(Move move);
 
         /// <summary>
         /// Removes a player from a game

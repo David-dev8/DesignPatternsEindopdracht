@@ -47,6 +47,10 @@ namespace Chess.Models.Movement
 
             while(IsWithinBounds(grid, nextRow, nextColumn)) { 
                 destination = grid[nextRow][nextColumn];
+                if(destination == null)
+                {
+                    break;
+                }
                 possibleMoves.Add(moveFactory.CreateMove(start, destination));
                 if(destination.IsOccupied)
                 {
