@@ -21,9 +21,12 @@ namespace Chess.Models.Moves
             // Swap the other piece from being to one side of the current piece to the other side
             Square start = GetSquareNextToDestination(game.Squares, 1, true);
             Square destination = GetSquareNextToDestination(game.Squares, -1);
-            affectedPieces.Add(new AffectedPieceData(start, destination, start.Piece));
-            destination.Piece = start.Piece;
-            start.Piece = null;
+            if(start != null && destination != null)
+            {
+                affectedPieces.Add(new AffectedPieceData(start, destination, start.Piece));
+                destination.Piece = start.Piece;
+                start.Piece = null;
+            }
         }
 
         /// <summary>
@@ -40,10 +43,10 @@ namespace Chess.Models.Moves
             int rowDirection = Math.Sign(destinationLocation.Row - startLocation.Row);
             int columnDirection = Math.Sign(destinationLocation.Column - startLocation.Column);
 
-            Square square = grid[destinationLocation.Row + sideDirection * rowDirection][destinationLocation.Column + sideDirection * columnDirection];
+            Square square = grid.ElementAtOrDefault(destinationLocation.Row + sideDirection * rowDirection)?.ElementAtOrDefault(destinationLocation.Column + sideDirection * columnDirection);
             if(shouldLookTwice && square.Piece == null)
             {
-                square = grid[destinationLocation.Row + sideDirection * rowDirection * 2][destinationLocation.Column + sideDirection * columnDirection * 2];
+                square = grid.ElementAtOrDefault(destinationLocation.Row + sideDirection * rowDirection * 2)?.ElementAtOrDefault(destinationLocation.Column + sideDirection * columnDirection * 2);
             }
             return square;
         }
