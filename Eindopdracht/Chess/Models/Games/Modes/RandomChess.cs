@@ -27,6 +27,7 @@ namespace Chess.Models.Games.Modes
         protected override void SetupPiecesForRanks(Square[] firstRank, Square[] secondRank, AdvanceDirections direction, Player player)
         {
             PieceFactory.Color = player.Color;
+            PieceFactory.Direction = direction;
 
             List<Piece> piecesToPlace = new List<Piece>() {
                 PieceFactory.CreateRook(),

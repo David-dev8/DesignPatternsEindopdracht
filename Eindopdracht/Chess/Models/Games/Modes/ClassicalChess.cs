@@ -36,20 +36,22 @@ namespace Chess.Models.Games.Modes
                 // This means someone has been checkmated and there is a winner
                 return new List<Player>() { ActivePlayers[0] };
             }
-            // Is there a draw? This occurs when a player has no legal moves
-            else if(ActivePlayers.Any(player =>
-            {
-                return !Pieces.Where(piece => piece?.Color == player.Color).Any(piece =>
-                {
-                    return piece.Movement.GetPossibleMoves(piece, Squares).Where(move => IsLegal(move)).Any();
-                });
-            }))
+            // Is there a draw? This occurs when the current player has no legal moves
+            else if(!HasLegalMoves(CurrentPlayer))
             {
                 // Nobody won, because there is a draw
                 return Enumerable.Empty<Player>();
             }
             // The game goes on
             return null;
+        }
+
+        private bool HasLegalMoves(Player player)
+        {
+            return Pieces.Where(piece => piece?.Color == player.Color).Any(piece =>
+            {
+                return piece.Movement.GetPossibleMoves(piece, Squares).Where(move => IsLegal(move)).Any();
+            });
         }
 
         public override bool IsLegal(Move move)

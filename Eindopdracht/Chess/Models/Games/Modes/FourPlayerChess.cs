@@ -19,6 +19,7 @@ namespace Chess.Models.Games.Modes
     {
         private const int GAP = 3;
         private const int BOARD_SIZE = 14;
+        private const int PROMOTION_RANK = 10;
 
         public FourPlayerChess() : base(null, new List<Player>() {
             new Player("Player 1", Color.FromRgb(191, 59, 67)),
@@ -27,6 +28,7 @@ namespace Chess.Models.Games.Modes
             new Player("Player 4", Color.FromRgb(192, 149, 38))
         })
         {
+            PromotionRank = PROMOTION_RANK;
         }
 
         protected override Square[][] CreateBoard()

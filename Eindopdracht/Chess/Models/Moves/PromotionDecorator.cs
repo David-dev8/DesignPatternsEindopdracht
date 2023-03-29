@@ -24,11 +24,9 @@ namespace Chess.Models.Moves
         {
             base.Make(game);
 
-            Location startLocation = game.Squares.GetCurrentLocation(Start);
             Location destinationLocation = game.Squares.GetCurrentLocation(Destination);
             
-            if(((_direction == AdvanceDirections.UP || _direction == AdvanceDirections.DOWN) && ReachedPromotionSquare(game, destinationLocation.Row, startLocation.Row))
-                || ((_direction == AdvanceDirections.LEFT || _direction == AdvanceDirections.RIGHT) && ReachedPromotionSquare(game, destinationLocation.Column, startLocation.Column)))
+            if(ReachedPromotionSquare(game, destinationLocation, _direction))
             {
                 game.PieceFactory.Color = Destination.Piece.Color;
                 Destination.Piece = game.PieceFactory.CreateQueen();
@@ -47,9 +45,16 @@ namespace Chess.Models.Moves
         /// <param name="destination">The destination of a move</param>
         /// <param name="start">The start of a move</param>
         /// <returns></returns>
-        private bool ReachedPromotionSquare(Game game, int destination, int start)
+        private bool ReachedPromotionSquare(Game game, Location destination, AdvanceDirections direction)
         {
-            return destination - start != 0 && (destination == game.PromotionRank - 1 || destination == game.Squares.Length - game.PromotionRank);
+            return direction switch
+            {
+                AdvanceDirections.UP => destination.Row == game.Squares.Length - game.PromotionRank,
+                AdvanceDirections.DOWN => destination.Row == game.PromotionRank - 1,
+                AdvanceDirections.LEFT => destination.Column == game.Squares.Length - game.PromotionRank,
+                AdvanceDirections.RIGHT => destination.Column == game.PromotionRank - 1,
+                _ => false
+            };
         }
     }
 }

@@ -98,7 +98,8 @@ namespace Chess.Models.Games
                 {
                     SetNextPlayer();
                 }
-                else
+                // Changing players might lead to stalemate, as can be discovered that the new current player has no legal moves
+                if(HasEnded)
                 {
                     NotifyPropertyChanged(nameof(HasEnded));
                     NotifyPropertyChanged(nameof(Winners));
@@ -245,7 +246,7 @@ namespace Chess.Models.Games
         public bool InCheck(Player player)
         {
             // Can any of the opponents pieces capture the king of the player? If so, this means the player is in check
-            return Pieces.Where(piece => !piece.Color.Equals(player.Color)).Any(piece => {
+            return Pieces.Where(piece => piece.Color != player.Color).Any(piece => {
                 IEnumerable<Move> Moves = piece.Movement.GetPossibleMoves(piece, Squares);
                 return Moves.Any(move => move.Destination.Piece == kings[player]);
             });
