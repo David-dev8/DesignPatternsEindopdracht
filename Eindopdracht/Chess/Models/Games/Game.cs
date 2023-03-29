@@ -221,6 +221,7 @@ namespace Chess.Models.Games
         protected virtual void SetupPiecesForRanks(Square[] firstRank, Square[] secondRank, AdvanceDirections direction, Player player)
         {
             PieceFactory.Color = player.Color;
+            PieceFactory.Direction = direction;
 
             firstRank[0].Piece = PieceFactory.CreateRook();
             firstRank[1].Piece = PieceFactory.CreateKnight();
