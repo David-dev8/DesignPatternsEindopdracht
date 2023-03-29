@@ -1,8 +1,11 @@
-﻿using Chess.Models.Moves;
+﻿using Chess.Extensions;
+using Chess.Models.Moves;
 using Chess.Models.Pieces;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
@@ -59,6 +62,31 @@ namespace Chess.Models.Games.Modes
             SetupPiecesForRanks(Squares.Select(row => row[0]).ToArray(), Squares.Select(row => row[1]).ToArray(), AdvanceDirections.RIGHT, Players[1]);
             SetupPiecesForRanks(Squares.Select(row => row[BOARD_SIZE - 1]).ToArray(), Squares.Select(row => row[BOARD_SIZE - 2]).ToArray(), 
                 AdvanceDirections.LEFT, Players[3]);
+        }
+
+        protected override void EliminatePlayers()
+        {
+            // Eliminate each player that is in check and whose king has no legal moves, i.e. is checkmated
+            ActivePlayers = ActivePlayers.Where(player => {
+                if(IsCheckmated(player))
+                {
+                    RemovePiecesForPlayer(player);
+                    return false;
+                }
+                return true;
+            }).ToList();
+        }
+
+        private void RemovePiecesForPlayer(Player player)
+        {
+            movesHistory.Clear();
+            foreach(Square square in Squares.Flatten<Square>())
+            {
+                if(square?.Piece != null && square.Piece.Color == player.Color)
+                {
+                    square.Piece = null;
+                }
+            }
         }
 
         protected override void SetupPiecesForRanks(Square[] firstRank, Square[] secondRank, AdvanceDirections direction, Player player)

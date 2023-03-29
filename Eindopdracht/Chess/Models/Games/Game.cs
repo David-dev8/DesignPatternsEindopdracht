@@ -20,7 +20,7 @@ namespace Chess.Models.Games
     public abstract class Game: Observable
     {
         private const int DEFAULT_PROMOTION_RANK = 8;
-        private Stack<Move> _movesHistory = new Stack<Move>();
+        protected Stack<Move> movesHistory = new Stack<Move>();
         protected IDictionary<Player, Piece> kings = new Dictionary<Player, Piece>();
         private readonly int _boardSize;
 
@@ -45,7 +45,7 @@ namespace Chess.Models.Games
         {
             get
             {
-                return !HasEnded && _movesHistory.Any();
+                return !HasEnded && movesHistory.Any();
             }
         }
         public PieceFactory PieceFactory { get; private set; }
@@ -91,7 +91,7 @@ namespace Chess.Models.Games
             if(!HasEnded && IsLegal(move))
             {
                 move.Make(this);
-                _movesHistory.Push(move);
+                movesHistory.Push(move);
                 IncreaseScore(CurrentPlayer, move);
                 EliminatePlayers();
                 if(!HasEnded)
@@ -113,7 +113,7 @@ namespace Chess.Models.Games
         {
             if(CanUndoMove)
             {
-                Move lastMove = _movesHistory.Pop();
+                Move lastMove = movesHistory.Pop();
                 lastMove.Undo(this);
                 SetPreviousPlayer();
             }
@@ -180,7 +180,7 @@ namespace Chess.Models.Games
 
         public IEnumerable<Move> GetMovesForSpecificPiece(Piece piece)
         {
-            return _movesHistory.Where(move => move.IsAffected(piece)).ToList();
+            return movesHistory.Where(move => move.IsAffected(piece)).ToList();
         }
 
         /// <summary>
@@ -237,15 +237,25 @@ namespace Chess.Models.Games
             SetupPawnsForRank(secondRank, direction);
         }
 
+        /// <summary>
+        /// Checks whether the given player is in check
+        /// </summary>
+        /// <param name="player">The player to check for</param>
+        /// <returns>True if the player is in check, false otherwise</returns>
         public bool InCheck(Player player)
         {
-            // Can any of the opponents pieces capture the king of the player?
+            // Can any of the opponents pieces capture the king of the player? If so, this means the player is in check
             return Pieces.Where(piece => !piece.Color.Equals(player.Color)).Any(piece => {
                 IEnumerable<Move> Moves = piece.Movement.GetPossibleMoves(piece, Squares);
                 return Moves.Any(move => move.Destination.Piece == kings[player]);
             });
         }
 
+        /// <summary>
+        /// Checks whether a given player is checkmated
+        /// </summary>
+        /// <param name="player">The player to check for</param>
+        /// <returns>True if the player is checmated, false otherwise</returns>
         public bool IsCheckmated(Player player)
         {
             if(InCheck(player))
