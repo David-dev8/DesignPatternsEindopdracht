@@ -69,6 +69,10 @@ namespace Chess.Models.Movement
             while(IsWithinBounds(grid, row, currentLocation.Column + nextColumn))
             {
                 destination = GetDestination(grid, currentLocation, 0, nextColumn, _direction);
+                if(destination == null)
+                {
+                    break;
+                }
                 if(destination.IsOccupied)
                 {
                     if(destination.Piece.Movement.HasAbility(movement => movement is CastleMovement) &&
