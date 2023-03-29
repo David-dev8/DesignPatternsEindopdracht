@@ -64,6 +64,7 @@ namespace Chess.Models.Games.Modes
         protected override void SetupPiecesForRanks(Square[] firstRank, Square[] secondRank, AdvanceDirections direction, Player player)
         {
             PieceFactory.Color = player.Color;
+            PieceFactory.Direction = direction;
 
             firstRank[GAP].Piece = PieceFactory.CreateRook();
             firstRank[GAP + 1].Piece = PieceFactory.CreateKnight();
@@ -83,7 +84,7 @@ namespace Chess.Models.Games.Modes
         {
             for (int i = GAP; i < BOARD_SIZE - GAP; i++)
             {
-                rank[i].Piece = PieceFactory.CreatePawn(direction);
+                rank[i].Piece = PieceFactory.CreatePawn();
             }
         }
     }

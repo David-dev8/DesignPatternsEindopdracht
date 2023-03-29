@@ -37,7 +37,7 @@ namespace Chess.Models.Games.Modes
                 PieceFactory.CreateBishop(),
                 PieceFactory.CreateBishop(),
             };
-            piecesToPlace.AddRange(Enumerable.Range(0, 8).Select(n => PieceFactory.CreatePawn(direction)));
+            piecesToPlace.AddRange(Enumerable.Range(0, 8).Select(n => PieceFactory.CreatePawn()));
 
             Piece king = PieceFactory.CreateKing();
             kings.Add(player, king);

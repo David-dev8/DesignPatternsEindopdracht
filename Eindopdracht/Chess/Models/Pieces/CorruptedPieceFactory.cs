@@ -35,7 +35,7 @@ namespace Chess.Models.Pieces
 
         }
 
-        public override Piece CreatePawn(AdvanceDirections direction)
+        public override Piece CreatePawn()
         {
             return new Piece("corruptedPawn.svg", Color, new DiagonalMovement(moveFactory));
         }

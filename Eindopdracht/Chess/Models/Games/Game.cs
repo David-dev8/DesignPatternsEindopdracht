@@ -274,7 +274,7 @@ namespace Chess.Models.Games
         {
             foreach (Square square in rank)
             {
-                square.Piece = PieceFactory.CreatePawn(direction);
+                square.Piece = PieceFactory.CreatePawn();
             }
         }
 

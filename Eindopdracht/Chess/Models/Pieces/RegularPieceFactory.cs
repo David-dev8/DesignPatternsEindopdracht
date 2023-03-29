@@ -43,11 +43,11 @@ namespace Chess.Models.Pieces
 
         }
 
-        public override Piece CreatePawn(AdvanceDirections direction)
+        public override Piece CreatePawn()
         {
             CompositeMovement movementPattern = new CompositeMovement(moveFactory);
-            movementPattern.AddMovementPattern(new SingleAdvanceMovement(moveFactory, direction));
-            movementPattern.AddMovementPattern(new EnPassantMovement(moveFactory, direction));
+            movementPattern.AddMovementPattern(new SingleAdvanceMovement(moveFactory, Direction));
+            movementPattern.AddMovementPattern(new EnPassantMovement(moveFactory, Direction));
             return new Piece("pawn.svg", Color, movementPattern);
         }
 

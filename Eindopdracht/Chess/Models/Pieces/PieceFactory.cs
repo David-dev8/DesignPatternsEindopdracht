@@ -47,7 +47,7 @@ namespace Chess.Models.Pieces
         /// </summary>
         /// <param name="direction">The direction the pawn will move towards</param>
         /// <returns>A piece that looks acts and looks like a pawn</returns>
-        public abstract Piece CreatePawn(AdvanceDirections direction);
+        public abstract Piece CreatePawn();
 
         /// <summary>
         /// Creates a rook piece

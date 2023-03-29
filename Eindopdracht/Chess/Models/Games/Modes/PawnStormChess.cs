@@ -102,15 +102,15 @@ namespace Chess.Models.Games.Modes
             {
                 foreach(Square square in Squares[i])
                 {
-                    square.Piece = PieceFactory.CreatePawn(direction);
+                    square.Piece = PieceFactory.CreatePawn();
                 }
             }
 
-            Squares[Squares.Length - 5][1].Piece = PieceFactory.CreatePawn(direction);
-            Squares[Squares.Length - 5][2].Piece = PieceFactory.CreatePawn(direction);
+            Squares[Squares.Length - 5][1].Piece = PieceFactory.CreatePawn();
+            Squares[Squares.Length - 5][2].Piece = PieceFactory.CreatePawn();
 
-            Squares[Squares.Length - 5][5].Piece = PieceFactory.CreatePawn(direction);
-            Squares[Squares.Length - 5][6].Piece = PieceFactory.CreatePawn(direction);
+            Squares[Squares.Length - 5][5].Piece = PieceFactory.CreatePawn();
+            Squares[Squares.Length - 5][6].Piece = PieceFactory.CreatePawn();
         }
     }
 }
